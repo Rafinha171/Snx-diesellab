@@ -2,7 +2,6 @@
   "buildCommand": "node build.js",
   "outputDirectory": ".",
   "rewrites": [
-    { "source": "/", "destination": "/snx_landing_v2.html" },
-    { "source": "/painel", "destination": "/snx_painel.html" }
+    { "source": "/painel", "destination": "/painel.html" }
   ]
 }
