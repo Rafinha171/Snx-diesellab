@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/snx_landing_v2.html" },
+    { "source": "/painel", "destination": "/snx_painl.html" }
+  ]
+}
