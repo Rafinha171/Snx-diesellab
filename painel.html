@@ -1277,18 +1277,18 @@ animation:typ .9s infinite both;
   <div class="os-header">
     <div>
       <div class="dh-title" style="font-size:28px;">ORDENS DE SERVIÇO</div>
-      <div class="dh-sub">12 ordens no total · 4 abertas</div>
+      <div class="dh-sub" id="os-sub">Carregando...</div>
     </div>
-    <button class="btn-primary" onclick="goTo('diagnostico')">
+    <button class="btn-primary" onclick="openOSModal()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
       Nova OS
     </button>
   </div>
   <div class="os-filters">
-    <button class="filter-btn on">Todas</button>
-    <button class="filter-btn">Abertas</button>
-    <button class="filter-btn">Em Diagnóstico</button>
-    <button class="filter-btn">Concluídas</button>
+    <button class="filter-btn on" onclick="filterOS('todas',this)">Todas</button>
+    <button class="filter-btn" onclick="filterOS('aberta',this)">Abertas</button>
+    <button class="filter-btn" onclick="filterOS('diagnostico',this)">Em Diagnóstico</button>
+    <button class="filter-btn" onclick="filterOS('concluida',this)">Concluídas</button>
   </div>
   <div class="os-table-wrap">
     <table class="os-table">
@@ -1301,51 +1301,9 @@ animation:typ .9s infinite both;
           <th>STATUS</th>
         </tr>
       </thead>
-      <tbody>
-        <tr onclick="goTo('diagnostico')">
-          <td class="plate-cell">RKT-4A82</td>
-          <td class="vehicle-cell">S10 2.8 Duramax</td>
-          <td class="hide-sm" style="color:var(--text2);">Fumaça branca e perda de força</td>
-          <td class="hide-md" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">hoje 14:32</td>
-          <td><span class="badge badge-open">EM DIAG.</span></td>
-        </tr>
-        <tr>
-          <td class="plate-cell">BRA-2E19</td>
-          <td class="vehicle-cell">Hilux SRX 2.8</td>
-          <td class="hide-sm" style="color:var(--text2);">Motor sem força acima de 3000 rpm</td>
-          <td class="hide-md" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">hoje 13:20</td>
-          <td><span class="badge badge-wait">AGUARD.</span></td>
-        </tr>
-        <tr>
-          <td class="plate-cell">MNS-0C57</td>
-          <td class="vehicle-cell">Ranger XLT 3.2</td>
-          <td class="hide-sm" style="color:var(--text2);">DTC P0087 + P0193 simultâneos</td>
-          <td class="hide-md" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">hoje 11:58</td>
-          <td><span class="badge badge-open">EM DIAG.</span></td>
-        </tr>
-        <tr>
-          <td class="plate-cell">JHM-9001</td>
-          <td class="vehicle-cell">Amarok V6 TDI</td>
-          <td class="hide-sm" style="color:var(--text2);">Ruído metálico em aceleração</td>
-          <td class="hide-md" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">hoje 10:15</td>
-          <td><span class="badge badge-done">CONCLUÍDA</span></td>
-        </tr>
-        <tr>
-          <td class="plate-cell">FRC-3377</td>
-          <td class="vehicle-cell">F-4000 MWM 4.12</td>
-          <td class="hide-sm" style="color:var(--text2);">Consumo elevado e fumaça preta</td>
-          <td class="hide-md" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">ontem 16:40</td>
-          <td><span class="badge badge-done">CONCLUÍDA</span></td>
-        </tr>
-        <tr>
-          <td class="plate-cell">PLT-7722</td>
-          <td class="vehicle-cell">Iveco Daily 3.0</td>
-          <td class="hide-sm" style="color:var(--text2);">Partida difícil a frio</td>
-          <td class="hide-md" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">ontem 14:10</td>
-          <td><span class="badge badge-done">CONCLUÍDA</span></td>
-        </tr>
-      </tbody>
+      <tbody id="os-tbody"></tbody>
     </table>
+    <div id="os-empty" style="display:none;text-align:center;padding:48px;color:var(--text3);">Nenhuma ordem de serviço ainda. Clique em "Nova OS" para começar.</div>
   </div>
 </div>
 
@@ -1373,79 +1331,13 @@ animation:typ .9s infinite both;
       <div class="dh-title" style="font-size:28px;">MÃO NA GRAXA</div>
       <div class="dh-sub">Comunidade técnica diesel</div>
     </div>
-    <button class="btn-primary">
+    <button class="btn-primary" onclick="openPostModal()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
       Novo Post
     </button>
   </div>
-  <div class="comm-body">
-    <div class="thread">
-      <div class="th-head">
-        <div class="th-title">Hilux 2.8 2023 com DTC P0087 e P0193 simultâneos — bomba ou sensor?</div>
-        <span class="th-ver">✓ VERIFICADO</span>
-      </div>
-      <div class="th-body">Veículo chegou com pressão de rail caindo bruscamente acima de 2500 rpm. Troquei o sensor de pressão e o problema persistiu. Alguém já viu isso na HP3?</div>
-      <div class="th-foot">
-        <span class="th-author">@mauricio.diesel</span>
-        <span class="th-tag">DENSO HP3</span>
-        <span class="th-tag">HILUX</span>
-        <div class="th-up">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
-          47
-        </div>
-      </div>
-    </div>
-
-    <div class="thread">
-      <div class="th-head">
-        <div class="th-title">Apostila: Calibração de Bicos Piezo Siemens — método passo a passo</div>
-        <span class="th-ver">✓ VERIFICADO</span>
-      </div>
-      <div class="th-body">Compilei um guia completo de calibração para os bicos piezo da VDO/Siemens usados no Amarok e Passat. Inclui valores de referência e tolerâncias máximas por temperatura.</div>
-      <div class="th-foot">
-        <span class="th-author">@snx_admin</span>
-        <span class="th-tag">APOSTILA</span>
-        <span class="th-tag">PIEZO</span>
-        <span class="th-tag">SIEMENS</span>
-        <div class="th-up">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
-          89
-        </div>
-      </div>
-    </div>
-
-    <div class="thread">
-      <div class="th-head">
-        <div class="th-title">S10 Duramax 2016 — fumaça branca intermitente após revisão da CP3</div>
-      </div>
-      <div class="th-body">Fiz revisão completa da CP3 mas o cliente voltou com fumaça branca esporádica em subidas. Pressão de rail está ok (1600 bar em carga). Alguém já viu problema no retorno?</div>
-      <div class="th-foot">
-        <span class="th-author">@rodrigo.tecnico</span>
-        <span class="th-tag">BOSCH CP3</span>
-        <span class="th-tag">S10</span>
-        <span class="th-tag">DURAMAX</span>
-        <div class="th-up">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
-          23
-        </div>
-      </div>
-    </div>
-
-    <div class="thread">
-      <div class="th-head">
-        <div class="th-title">Áudio: Como identificar bico com retorno excessivo pelo osciloscópio</div>
-      </div>
-      <div class="th-body">Gravei um áudio de 8 min explicando o método que uso para identificar bico com retorno fora do padrão usando apenas oscilograma. Sem bancada.</div>
-      <div class="th-foot">
-        <span class="th-author">@leo.injecao</span>
-        <span class="th-tag">🎙 ÁUDIO</span>
-        <span class="th-tag">OSCILOSCÓPIO</span>
-        <div class="th-up">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
-          61
-        </div>
-      </div>
-    </div>
+  <div class="comm-body" id="comm-body">
+    <div id="comm-empty" style="display:none;text-align:center;padding:48px;color:var(--text3);">Nenhum post ainda. Seja o primeiro a compartilhar!</div>
   </div>
 </div>
 ```
@@ -1622,7 +1514,7 @@ function answerFilter(clean){
 }
 
 /* ══ CHAT: free text ══ */
-function sendMessage(){
+async function sendMessage(){
   const ta=document.getElementById('chat-textarea');
   const txt=ta.value.trim();
   if(!txt)return;
@@ -1630,10 +1522,14 @@ function sendMessage(){
   ta.value='';
   ta.style.height='';
   showTyping();
-  setTimeout(()=>{
+  try{
+    const res=await window._ai.freeChat({message:txt});
     removeTyping();
-    addAIMsg(`Entendido. Analisando com base no contexto da OS e no histórico do veículo. Continue o fluxo respondendo as perguntas da árvore para um diagnóstico mais preciso — ou descreva mais detalhes do que observou.`);
-  },1800);
+    addAIMsg(res.message.replace(/\n/g,'<br>'));
+  }catch(e){
+    removeTyping();
+    addAIMsg('Erro ao conectar com a IA. Verifique sua conexão e tente novamente.');
+  }
 }
 
 function addUserMsg(text){
@@ -1746,9 +1642,208 @@ renderDTC();
 setTimeout(animateHypos,400);
 </script>
 
+<!-- ══ MODAL OS ══ -->
+<div id="modal-os" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+  <div style="background:var(--bg2);border:1px solid var(--line2);border-radius:6px;padding:28px;width:min(480px,92vw);max-height:90vh;overflow-y:auto;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.06em;margin-bottom:20px;">NOVA ORDEM DE SERVIÇO</div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div>
+        <label style="font-size:11px;letter-spacing:.08em;color:var(--text3);display:block;margin-bottom:6px;">PLACA</label>
+        <input id="os-placa" type="text" placeholder="ABC-1234" style="width:100%;background:var(--bg3);border:1px solid var(--line2);border-radius:3px;padding:10px 12px;color:var(--text);font-family:inherit;font-size:14px;">
+      </div>
+      <div>
+        <label style="font-size:11px;letter-spacing:.08em;color:var(--text3);display:block;margin-bottom:6px;">VEÍCULO</label>
+        <input id="os-veiculo" type="text" placeholder="Ex: Hilux SRX 2.8 2023" style="width:100%;background:var(--bg3);border:1px solid var(--line2);border-radius:3px;padding:10px 12px;color:var(--text);font-family:inherit;font-size:14px;">
+      </div>
+      <div>
+        <label style="font-size:11px;letter-spacing:.08em;color:var(--text3);display:block;margin-bottom:6px;">QUEIXA DO CLIENTE</label>
+        <textarea id="os-queixa" placeholder="Descreva o problema relatado..." rows="3" style="width:100%;background:var(--bg3);border:1px solid var(--line2);border-radius:3px;padding:10px 12px;color:var(--text);font-family:inherit;font-size:14px;resize:vertical;"></textarea>
+      </div>
+      <div>
+        <label style="font-size:11px;letter-spacing:.08em;color:var(--text3);display:block;margin-bottom:6px;">STATUS</label>
+        <select id="os-status" style="width:100%;background:var(--bg3);border:1px solid var(--line2);border-radius:3px;padding:10px 12px;color:var(--text);font-family:inherit;font-size:14px;">
+          <option value="aberta">Aberta</option>
+          <option value="diagnostico">Em Diagnóstico</option>
+          <option value="concluida">Concluída</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:20px;">
+      <button onclick="closeOSModal()" style="flex:1;padding:12px;background:transparent;border:1px solid var(--line2);border-radius:3px;color:var(--text2);font-family:inherit;font-size:14px;cursor:pointer;">Cancelar</button>
+      <button onclick="salvarOS()" style="flex:2;padding:12px;background:var(--red);border:none;border-radius:3px;color:#fff;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;">Salvar OS</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL POST ══ -->
+<div id="modal-post" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+  <div style="background:var(--bg2);border:1px solid var(--line2);border-radius:6px;padding:28px;width:min(480px,92vw);max-height:90vh;overflow-y:auto;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.06em;margin-bottom:20px;">NOVO POST</div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div>
+        <label style="font-size:11px;letter-spacing:.08em;color:var(--text3);display:block;margin-bottom:6px;">TÍTULO</label>
+        <input id="post-titulo" type="text" placeholder="Descreva o caso ou pergunta..." style="width:100%;background:var(--bg3);border:1px solid var(--line2);border-radius:3px;padding:10px 12px;color:var(--text);font-family:inherit;font-size:14px;">
+      </div>
+      <div>
+        <label style="font-size:11px;letter-spacing:.08em;color:var(--text3);display:block;margin-bottom:6px;">DESCRIÇÃO</label>
+        <textarea id="post-corpo" placeholder="Detalhe o problema, sintomas, o que já foi testado..." rows="4" style="width:100%;background:var(--bg3);border:1px solid var(--line2);border-radius:3px;padding:10px 12px;color:var(--text);font-family:inherit;font-size:14px;resize:vertical;"></textarea>
+      </div>
+      <div>
+        <label style="font-size:11px;letter-spacing:.08em;color:var(--text3);display:block;margin-bottom:6px;">TAGS (separadas por vírgula)</label>
+        <input id="post-tags" type="text" placeholder="Ex: HILUX, DENSO HP3, P0087" style="width:100%;background:var(--bg3);border:1px solid var(--line2);border-radius:3px;padding:10px 12px;color:var(--text);font-family:inherit;font-size:14px;">
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:20px;">
+      <button onclick="closePostModal()" style="flex:1;padding:12px;background:transparent;border:1px solid var(--line2);border-radius:3px;color:var(--text2);font-family:inherit;font-size:14px;cursor:pointer;">Cancelar</button>
+      <button onclick="salvarPost()" style="flex:2;padding:12px;background:var(--red);border:none;border-radius:3px;color:#fff;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;">Publicar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══ ORDENS DE SERVIÇO ══ */
+let osFilter='todas';
+
+function getOS(){return JSON.parse(localStorage.getItem('snx_os')||'[]');}
+function saveOS(list){localStorage.setItem('snx_os',JSON.stringify(list));}
+
+function renderOS(){
+  const list=getOS();
+  const filtered=osFilter==='todas'?list:list.filter(o=>o.status===osFilter);
+  const tbody=document.getElementById('os-tbody');
+  const empty=document.getElementById('os-empty');
+  const sub=document.getElementById('os-sub');
+  const abertas=list.filter(o=>o.status==='aberta'||o.status==='diagnostico').length;
+  sub.textContent=`${list.length} ordem${list.length!==1?'s':''} no total · ${abertas} em aberto`;
+  if(filtered.length===0){tbody.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  const badgeMap={aberta:'<span class="badge badge-wait">ABERTA</span>',diagnostico:'<span class="badge badge-open">EM DIAG.</span>',concluida:'<span class="badge badge-done">CONCLUÍDA</span>'};
+  tbody.innerHTML=filtered.map((o,i)=>`
+    <tr>
+      <td class="plate-cell">${o.placa.toUpperCase()}</td>
+      <td class="vehicle-cell">${o.veiculo}</td>
+      <td class="hide-sm" style="color:var(--text2);">${o.queixa}</td>
+      <td class="hide-md" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">${o.data}</td>
+      <td style="display:flex;gap:8px;align-items:center;">${badgeMap[o.status]}<button onclick="deletarOS(${o.id})" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:0 4px;" title="Excluir">×</button></td>
+    </tr>`).join('');
+}
+
+function filterOS(status,btn){
+  osFilter=status;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderOS();
+}
+
+function openOSModal(){
+  document.getElementById('modal-os').style.display='flex';
+  document.getElementById('os-placa').focus();
+}
+function closeOSModal(){
+  document.getElementById('modal-os').style.display='none';
+  ['os-placa','os-veiculo','os-queixa'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('os-status').value='aberta';
+}
+
+function salvarOS(){
+  const placa=document.getElementById('os-placa').value.trim();
+  const veiculo=document.getElementById('os-veiculo').value.trim();
+  const queixa=document.getElementById('os-queixa').value.trim();
+  const status=document.getElementById('os-status').value;
+  if(!placa||!veiculo){alert('Placa e veículo são obrigatórios.');return;}
+  const list=getOS();
+  const d=new Date();
+  list.unshift({id:Date.now(),placa,veiculo,queixa:queixa||'—',status,data:`${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`});
+  saveOS(list);
+  closeOSModal();
+  renderOS();
+}
+
+function deletarOS(id){
+  if(!confirm('Excluir esta ordem?'))return;
+  saveOS(getOS().filter(o=>o.id!==id));
+  renderOS();
+}
+
+/* ══ COMUNIDADE ══ */
+function getPosts(){
+  const saved=localStorage.getItem('snx_posts');
+  if(saved)return JSON.parse(saved);
+  const defaults=[
+    {id:1,titulo:'Hilux 2.8 2023 com DTC P0087 e P0193 simultâneos — bomba ou sensor?',corpo:'Veículo chegou com pressão de rail caindo bruscamente acima de 2500 rpm. Troquei o sensor de pressão e o problema persistiu. Alguém já viu isso na HP3?',tags:['DENSO HP3','HILUX'],autor:'@mauricio.diesel',ups:47,upvotado:false},
+    {id:2,titulo:'Apostila: Calibração de Bicos Piezo Siemens — método passo a passo',corpo:'Compilei um guia completo de calibração para os bicos piezo da VDO/Siemens usados no Amarok e Passat. Inclui valores de referência e tolerâncias máximas por temperatura.',tags:['APOSTILA','PIEZO','SIEMENS'],autor:'@snx_admin',ups:89,upvotado:false},
+    {id:3,titulo:'S10 Duramax 2016 — fumaça branca intermitente após revisão da CP3',corpo:'Fiz revisão completa da CP3 mas o cliente voltou com fumaça branca esporádica em subidas. Pressão de rail está ok (1600 bar em carga). Alguém já viu problema no retorno?',tags:['BOSCH CP3','S10','DURAMAX'],autor:'@rodrigo.tecnico',ups:23,upvotado:false},
+  ];
+  savePosts(defaults);
+  return defaults;
+}
+function savePosts(list){localStorage.setItem('snx_posts',JSON.stringify(list));}
+
+function renderPosts(){
+  const list=getPosts();
+  const body=document.getElementById('comm-body');
+  const empty=document.getElementById('comm-empty');
+  if(list.length===0){empty.style.display='block';body.innerHTML='';body.appendChild(empty);return;}
+  empty.style.display='none';
+  body.innerHTML=list.map(p=>`
+    <div class="thread">
+      <div class="th-head"><div class="th-title">${p.titulo}</div></div>
+      <div class="th-body">${p.corpo}</div>
+      <div class="th-foot">
+        <span class="th-author">${p.autor}</span>
+        ${p.tags.map(t=>`<span class="th-tag">${t}</span>`).join('')}
+        <div class="th-up" onclick="upvotePost(${p.id})" style="cursor:pointer;${p.upvotado?'color:var(--red);':''}">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+          ${p.ups}
+        </div>
+      </div>
+    </div>`).join('');
+  body.appendChild(empty);
+}
+
+function upvotePost(id){
+  const list=getPosts();
+  const p=list.find(x=>x.id===id);
+  if(!p)return;
+  p.upvotado=!p.upvotado;
+  p.ups+=p.upvotado?1:-1;
+  savePosts(list);
+  renderPosts();
+}
+
+function openPostModal(){
+  document.getElementById('modal-post').style.display='flex';
+  document.getElementById('post-titulo').focus();
+}
+function closePostModal(){
+  document.getElementById('modal-post').style.display='none';
+  ['post-titulo','post-corpo','post-tags'].forEach(id=>document.getElementById(id).value='');
+}
+
+function salvarPost(){
+  const titulo=document.getElementById('post-titulo').value.trim();
+  const corpo=document.getElementById('post-corpo').value.trim();
+  const tagsRaw=document.getElementById('post-tags').value.trim();
+  if(!titulo){alert('Título é obrigatório.');return;}
+  const tags=tagsRaw?tagsRaw.split(',').map(t=>t.trim().toUpperCase()).filter(Boolean):[];
+  const list=getPosts();
+  list.unshift({id:Date.now(),titulo,corpo:corpo||'',tags,autor:'@você',ups:0,upvotado:false});
+  savePosts(list);
+  closePostModal();
+  renderPosts();
+}
+
+/* ══ INIT ══ */
+document.getElementById('modal-os').addEventListener('click',function(e){if(e.target===this)closeOSModal();});
+document.getElementById('modal-post').addEventListener('click',function(e){if(e.target===this)closePostModal();});
+renderOS();
+renderPosts();
+</script>
+
 <script type="module">
-  import { initPanel } from './snx_integration.js';
+  import { initPanel, DiagnosisService } from './snx_integration.js';
   initPanel();
+  window._ai = DiagnosisService;
 </script>
 
 </body>
