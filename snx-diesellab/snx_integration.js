@@ -18,7 +18,7 @@ const { data, error } = await supabase.auth.signUp({
 email, password,
 options: {
 data: { full_name: fullName },
-emailRedirectTo: `${window.location.origin}/painel.html`,
+emailRedirectTo: `${window.location.origin}/painel`,
 }
 });
 if (error) throw error;
@@ -38,7 +38,7 @@ return data;
 
 async logout() {
 await supabase.auth.signOut();
-window.location.href = ‘/snx_landing_v2.html’;
+window.location.href = ‘/’;
 },
 
 async getSession() {
@@ -62,7 +62,7 @@ return supabase.auth.onAuthStateChange((event, session) => callback(event, sessi
 async requireAuth() {
 const session = await this.getSession();
 if (!session) {
-window.location.href = ‘/snx_landing_v2.html?login=required’;
+window.location.href = ‘/?login=required’;
 return null;
 }
 return session;
@@ -109,7 +109,7 @@ export function initLandingAuth() {
 Auth.onAuthChange((event, session) => {
 if (event === ‘SIGNED_IN’ && session) {
 showSuccess(‘Login realizado! Redirecionando…’);
-setTimeout(() => { window.location.href = ‘/painel.html’; }, 1200);
+setTimeout(() => { window.location.href = ‘/painel’; }, 1200);
 }
 });
 
@@ -144,7 +144,7 @@ btn.textContent = ‘Criando conta…’; btn.disabled = true;
 try {
 await Auth.register({ fullName, email, password, workshopName });
 showSuccess(‘Conta criada! Redirecionando…’);
-setTimeout(() => { window.location.href = ‘/painel.html’; }, 1500);
+setTimeout(() => { window.location.href = ‘/painel’; }, 1500);
 } catch (err) {
 showError(getAuthErrorMessage(err));
 btn.textContent = ‘Criar Conta Gratuita’; btn.disabled = false;

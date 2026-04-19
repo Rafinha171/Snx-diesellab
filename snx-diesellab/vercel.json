@@ -1,6 +1,7 @@
 {
+  "buildCommand": "node build.js",
   "rewrites": [
     { "source": "/", "destination": "/snx_landing_v2.html" },
-    { "source": "/painel", "destination": "/snx_painl.html" }
+    { "source": "/painel", "destination": "/snx_painel.html" }
   ]
 }
