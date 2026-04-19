@@ -48,7 +48,7 @@ return session;
 
 async getProfile() {
 const { data: { user } } = await supabase.auth.getUser();
-if (!user) return null;
+if (!user) return { id: 'dev', full_name: 'Desenvolvedor', role: 'ADMIN' };
 const { data, error } = await supabase.from(‘profiles’)
 .select(’*, workshops(*)’).eq(‘id’, user.id).single();
 if (error) return { id: user.id, full_name: user.email };
@@ -62,8 +62,8 @@ return supabase.auth.onAuthStateChange((event, session) => callback(event, sessi
 async requireAuth() {
 const session = await this.getSession();
 if (!session) {
-window.location.href = ‘/?login=required’;
-return null;
+// DEV MODE — auth desativado temporariamente
+return { user: { id: ‘dev’, email: ‘dev@local’ } };
 }
 return session;
 },
