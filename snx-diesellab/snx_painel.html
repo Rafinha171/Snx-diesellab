@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#0a0a0a"/>
+<title>SNX DieselLab — Painel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS + RESET
+═══════════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --red:#e8231a; --red-b:#ff2d24;
+  --red-glow:rgba(232,35,26,.18);
+  --red-soft:rgba(232,35,26,.08);
+  --red-bd:rgba(232,35,26,.3);
+  --bg:#0a0a0a; --bg2:#101010; --bg3:#161616; --bg4:#1e1e1e; --bg5:#242424;
+  --line:rgba(255,255,255,.055);
+  --line2:rgba(255,255,255,.1);
+  --line3:rgba(255,255,255,.16);
+  --text:#efefef; --text2:#909090; --text3:#484848;
+  --green:#22c55e; --green-s:rgba(34,197,94,.12);
+  --amber:#f59e0b; --amber-s:rgba(245,158,11,.12);
+  --blue:#3b82f6;
+  --white:#fff;
+  --r:3px;
+  --sidebar:240px;
+  --topbar:56px;
+  --sab:env(safe-area-inset-bottom);
+  --sal:env(safe-area-inset-left);
+}
+html,body{height:100%;overflow:hidden;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'DM Sans',sans-serif;font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+button{font-family:inherit;cursor:pointer;border:none;}
+input,textarea{font-family:inherit;}
+a{text-decoration:none;color:inherit;}
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-thumb{background:var(--line3);border-radius:2px;}
+::-webkit-scrollbar-track{background:transparent;}
+
+/* ═══════════════════════════════════════════
+NOISE
+═══════════════════════════════════════════ */
+.noise{
+position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.022;
+background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’/%3E%3C/svg%3E”);
+}
+
+/* ═══════════════════════════════════════════
+LAYOUT SHELL
+═══════════════════════════════════════════ */
+.shell{
+display:grid;
+grid-template-columns:var(–sidebar) 1fr;
+grid-template-rows:var(–topbar) 1fr;
+height:100vh;height:100dvh;
+overflow:hidden;
+}
+@media(max-width:768px){
+.shell{grid-template-columns:1fr;grid-template-rows:var(–topbar) 1fr auto;}
+}
+
+/* ═══════════════════════════════════════════
+TOPBAR
+═══════════════════════════════════════════ */
+.topbar{
+grid-column:1/-1;
+background:var(–bg2);
+border-bottom:1px solid var(–line);
+display:flex;align-items:center;
+padding:0 20px;
+gap:16px;
+position:relative;z-index:50;
+}
+.logo{
+font-family:‘Bebas Neue’,sans-serif;
+font-size:20px;letter-spacing:.1em;color:var(–white);
+display:flex;align-items:center;gap:9px;
+flex-shrink:0;
+}
+.ld{
+width:16px;height:16px;
+background:var(–red);transform:rotate(45deg);
+position:relative;flex-shrink:0;
+}
+.ld::after{content:’’;position:absolute;inset:4px;background:var(–bg2);}
+
+.topbar-search{
+flex:1;max-width:320px;position:relative;
+display:none;
+}
+@media(min-width:640px){.topbar-search{display:block;}}
+.ts-input{
+width:100%;background:var(–bg3);
+border:1px solid var(–line);color:var(–text);
+padding:8px 12px 8px 34px;
+font-family:‘DM Mono’,monospace;font-size:13px;
+letter-spacing:.06em;border-radius:var(–r);
+transition:border-color .2s;outline:none;
+}
+.ts-input:focus{border-color:var(–red);}
+.ts-input::placeholder{color:var(–text3);}
+.ts-ico{
+position:absolute;left:10px;top:50%;transform:translateY(-50%);
+color:var(–text3);pointer-events:none;
+}
+
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.tb-btn{
+width:34px;height:34px;background:transparent;
+border:1px solid var(–line);color:var(–text2);
+border-radius:var(–r);display:grid;place-items:center;
+transition:all .15s;position:relative;
+}
+.tb-btn:hover{border-color:var(–line2);color:var(–text);background:var(–bg3);}
+.tb-notif::after{
+content:’’;position:absolute;top:6px;right:6px;
+width:6px;height:6px;border-radius:50%;
+background:var(–red);border:1.5px solid var(–bg2);
+}
+.avatar{
+width:34px;height:34px;border-radius:50%;
+background:linear-gradient(135deg,var(–red) 0%,#7a0f0a 100%);
+border:1px solid var(–line2);
+display:grid;place-items:center;
+font-family:‘Bebas Neue’,sans-serif;font-size:14px;
+color:var(–white);letter-spacing:.05em;flex-shrink:0;
+cursor:pointer;
+}
+.mob-menu-btn{
+display:flex;flex-direction:column;gap:4px;
+width:34px;height:34px;background:transparent;
+border:1px solid var(–line);border-radius:var(–r);
+align-items:center;justify-content:center;
+transition:all .15s;
+}
+@media(min-width:769px){.mob-menu-btn{display:none;}}
+.mob-menu-btn span{
+width:14px;height:1.5px;background:var(–text2);
+border-radius:1px;transition:all .3s;
+}
+
+/* ═══════════════════════════════════════════
+SIDEBAR
+═══════════════════════════════════════════ */
+.sidebar{
+background:var(–bg2);
+border-right:1px solid var(–line);
+overflow-y:auto;
+display:flex;flex-direction:column;
+position:relative;z-index:40;
+transition:transform .3s cubic-bezier(.16,1,.3,1);
+}
+@media(max-width:768px){
+.sidebar{
+position:fixed;left:0;top:var(–topbar);bottom:0;
+width:var(–sidebar);
+transform:translateX(-100%);
+box-shadow:8px 0 40px rgba(0,0,0,.5);
+}
+.sidebar.open{transform:translateX(0);}
+}
+
+.nav-section{padding:20px 12px 8px;}
+.nav-label{
+font-family:‘DM Mono’,monospace;font-size:9px;
+letter-spacing:.2em;color:var(–text3);
+text-transform:uppercase;padding:0 8px;margin-bottom:6px;
+}
+.nav-item{
+display:flex;align-items:center;gap:10px;
+padding:9px 10px;border-radius:var(–r);
+font-size:13px;font-weight:500;color:var(–text2);
+cursor:pointer;transition:all .15s;
+position:relative;border:1px solid transparent;
+margin-bottom:1px;
+}
+.nav-item:hover{background:var(–bg3);color:var(–text);}
+.nav-item.active{
+background:var(–red-soft);color:var(–text);
+border-color:var(–red-bd);
+}
+.nav-item.active::before{
+content:’’;position:absolute;left:-12px;top:50%;
+transform:translateY(-50%);
+width:3px;height:60%;background:var(–red);
+border-radius:0 2px 2px 0;
+}
+.nav-item svg{flex-shrink:0;color:inherit;width:16px;height:16px;}
+.nav-badge{
+margin-left:auto;
+font-family:‘DM Mono’,monospace;font-size:10px;
+padding:2px 7px;border-radius:999px;
+background:var(–red);color:#fff;font-weight:700;
+}
+.nav-badge.gray{background:var(–bg4);color:var(–text2);}
+
+.sidebar-footer{
+margin-top:auto;padding:12px;
+border-top:1px solid var(–line);
+}
+.sf-user{
+display:flex;align-items:center;gap:10px;
+padding:10px;border-radius:var(–r);
+cursor:pointer;transition:background .15s;
+}
+.sf-user:hover{background:var(–bg3);}
+.sf-info{flex:1;min-width:0;}
+.sf-name{font-size:13px;font-weight:600;color:var(–text);}
+.sf-role{font-family:‘DM Mono’,monospace;font-size:10px;color:var(–text3);letter-spacing:.08em;}
+
+/* ═══════════════════════════════════════════
+MAIN CONTENT
+═══════════════════════════════════════════ */
+.main{
+overflow-y:auto;overflow-x:hidden;
+background:var(–bg);
+position:relative;
+}
+
+/* ── SCREENS ── */
+.screen{display:none;height:100%;}
+.screen.active{display:flex;flex-direction:column;}
+
+/* ═══════════════════════════════════════════
+SCREEN: DASHBOARD
+═══════════════════════════════════════════ */
+.dash-header{
+padding:24px 24px 20px;
+border-bottom:1px solid var(–line);
+display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+flex-wrap:wrap;
+}
+@media(min-width:768px){.dash-header{padding:28px 32px 24px;}}
+.dh-title{
+font-family:‘Bebas Neue’,sans-serif;
+font-size:clamp(28px,4vw,38px);letter-spacing:.04em;
+color:var(–white);line-height:1;margin-bottom:4px;
+}
+.dh-sub{font-size:13px;color:var(–text2);}
+
+.btn-primary{
+display:inline-flex;align-items:center;gap:8px;
+padding:10px 20px;background:var(–red);color:#fff;
+font-size:13px;font-weight:700;letter-spacing:.06em;
+border-radius:var(–r);transition:all .2s;flex-shrink:0;
+}
+.btn-primary:hover{background:var(–red-b);box-shadow:0 0 24px var(–red-glow);}
+.btn-primary:active{transform:scale(.97);}
+
+/* KPI row */
+.kpi-row{
+display:grid;grid-template-columns:repeat(2,1fr);
+gap:1px;background:var(–line);
+border-bottom:1px solid var(–line);
+}
+@media(min-width:640px){.kpi-row{grid-template-columns:repeat(4,1fr);}}
+.kpi{
+background:var(–bg);padding:20px 20px;
+transition:background .2s;cursor:default;
+}
+@media(min-width:768px){.kpi{padding:22px 28px;}}
+.kpi:hover{background:var(–bg2);}
+.kpi-val{
+font-family:‘Bebas Neue’,sans-serif;
+font-size:clamp(32px,5vw,42px);letter-spacing:.02em;
+color:var(–white);line-height:1;margin-bottom:4px;
+}
+.kpi-val .r{color:var(–red);}
+.kpi-lbl{font-size:11px;color:var(–text3);letter-spacing:.07em;font-weight:500;}
+.kpi-delta{
+font-family:‘DM Mono’,monospace;font-size:10px;
+color:var(–green);margin-top:4px;
+}
+
+/* Content grid */
+.dash-body{
+padding:24px;
+display:grid;grid-template-columns:1fr;
+gap:20px;flex:1;
+}
+@media(min-width:900px){.dash-body{padding:28px 32px;grid-template-columns:1fr 340px;}}
+
+.panel{
+background:var(–bg2);border:1px solid var(–line);
+border-radius:var(–r);overflow:hidden;
+}
+.panel-head{
+padding:14px 18px;border-bottom:1px solid var(–line);
+display:flex;align-items:center;justify-content:space-between;
+gap:12px;
+}
+.panel-title{
+font-family:‘DM Mono’,monospace;font-size:11px;
+letter-spacing:.14em;color:var(–text2);text-transform:uppercase;
+display:flex;align-items:center;gap:8px;
+}
+.panel-title::before{
+content:’’;width:3px;height:12px;background:var(–red);border-radius:1px;
+}
+.ph-action{
+font-size:12px;color:var(–text3);cursor:pointer;transition:color .15s;
+}
+.ph-action:hover{color:var(–text);}
+
+/* OS List */
+.os-list{display:flex;flex-direction:column;}
+.os-item{
+display:grid;
+grid-template-columns:auto 1fr auto;
+gap:14px;align-items:center;
+padding:14px 18px;border-bottom:1px solid var(–line);
+cursor:pointer;transition:background .15s;
+}
+.os-item:last-child{border-bottom:none;}
+.os-item:hover{background:var(–bg3);}
+.os-plate{
+font-family:‘DM Mono’,monospace;font-size:13px;
+font-weight:700;color:var(–white);letter-spacing:.06em;
+}
+.os-vehicle{font-size:12px;color:var(–text2);margin-top:2px;}
+.os-time{font-family:‘DM Mono’,monospace;font-size:10px;color:var(–text3);}
+.badge{
+padding:3px 9px;border-radius:999px;
+font-family:‘DM Mono’,monospace;font-size:9px;
+font-weight:700;letter-spacing:.1em;white-space:nowrap;
+}
+.badge-open{background:var(–red-soft);color:var(–red);border:1px solid var(–red-bd);}
+.badge-wait{background:var(–amber-s);color:var(–amber);border:1px solid rgba(245,158,11,.3);}
+.badge-done{background:var(–green-s);color:var(–green);border:1px solid rgba(34,197,94,.25);}
+
+/* Activity feed */
+.activity{display:flex;flex-direction:column;}
+.act-item{
+padding:12px 18px;border-bottom:1px solid var(–line);
+display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;
+}
+.act-item:last-child{border-bottom:none;}
+.act-ico{
+width:28px;height:28px;border-radius:50%;
+display:grid;place-items:center;flex-shrink:0;
+}
+.act-ico.red{background:var(–red-soft);}
+.act-ico.green{background:var(–green-s);}
+.act-ico.amber{background:var(–amber-s);}
+.act-ico svg{width:13px;height:13px;}
+.act-ico.red svg{color:var(–red);}
+.act-ico.green svg{color:var(–green);}
+.act-ico.amber svg{color:var(–amber);}
+.act-text{font-size:13px;color:var(–text2);line-height:1.5;}
+.act-text strong{color:var(–text);font-weight:600;}
+.act-time{font-family:‘DM Mono’,monospace;font-size:10px;color:var(–text3);margin-top:3px;}
+
+/* ═══════════════════════════════════════════
+SCREEN: DIAGNÓSTICO (CHAT)
+═══════════════════════════════════════════ */
+.diag-layout{
+display:grid;grid-template-columns:1fr;
+flex:1;overflow:hidden;
+height:100%;
+}
+@media(min-width:900px){.diag-layout{grid-template-columns:1fr 300px;}}
+
+/* Left: chat */
+.diag-chat{
+display:flex;flex-direction:column;
+border-right:1px solid var(–line);
+overflow:hidden;
+}
+.diag-head{
+padding:16px 20px;
+border-bottom:1px solid var(–line);
+display:flex;align-items:center;gap:14px;
+background:var(–bg2);
+flex-shrink:0;
+}
+@media(min-width:768px){.diag-head{padding:16px 24px;}}
+.dh-plate{
+font-family:‘Bebas Neue’,sans-serif;font-size:22px;
+letter-spacing:.08em;color:var(–white);
+}
+.dh-meta{flex:1;min-width:0;}
+.dh-vehicle{font-size:13px;color:var(–text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dh-actions{display:flex;gap:6px;}
+
+/* Progress bar */
+.flow-bar{
+padding:10px 20px;
+border-bottom:1px solid var(–line);
+background:var(–bg2);
+display:flex;align-items:center;gap:12px;
+flex-shrink:0;
+}
+@media(min-width:768px){.flow-bar{padding:10px 24px;}}
+.fb-label{
+font-family:‘DM Mono’,monospace;font-size:10px;
+color:var(–red);letter-spacing:.12em;white-space:nowrap;
+}
+.fb-steps{display:flex;gap:3px;flex:1;}
+.fb-step{flex:1;height:3px;background:var(–bg4);border-radius:1px;}
+.fb-step.done{background:var(–red);}
+.fb-step.cur{background:var(–red);opacity:.55;animation:fb-pulse 1.4s infinite;}
+@keyframes fb-pulse{0%,100%{opacity:.4;}50%{opacity:1;}}
+.fb-tree{
+font-family:‘DM Mono’,monospace;font-size:10px;
+color:var(–text3);letter-spacing:.1em;
+white-space:nowrap;display:none;
+}
+@media(min-width:640px){.fb-tree{display:block;}}
+
+/* Chat messages */
+.chat-msgs{
+flex:1;overflow-y:auto;
+padding:20px;display:flex;flex-direction:column;gap:20px;
+scroll-behavior:smooth;
+}
+@media(min-width:768px){.chat-msgs{padding:24px;}}
+
+.msg{
+display:grid;gap:10px;
+animation:msg-in .35s ease-out backwards;
+}
+@keyframes msg-in{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.msg.ai{grid-template-columns:32px 1fr;max-width:640px;}
+.msg.user{grid-template-columns:1fr 32px;max-width:540px;margin-left:auto;}
+
+.msg-av{
+width:32px;height:32px;border-radius:50%;
+display:grid;place-items:center;
+font-family:‘DM Mono’,monospace;font-size:11px;font-weight:700;
+flex-shrink:0;border:1px solid var(–line2);
+}
+.msg.ai .msg-av{background:var(–red-soft);color:var(–red);border-color:var(–red-bd);}
+.msg.user .msg-av{background:var(–bg4);color:var(–text2);order:2;}
+
+.msg-body{min-width:0;}
+.msg.user .msg-body{order:1;}
+.msg-meta{
+font-family:‘DM Mono’,monospace;font-size:10px;
+color:var(–text3);letter-spacing:.1em;
+margin-bottom:6px;display:flex;align-items:center;gap:8px;
+}
+.msg.user .msg-meta{justify-content:flex-end;}
+.msg-author{color:var(–text2);font-weight:700;}
+.msg.ai .msg-author{color:var(–red);}
+
+.msg-bubble{
+padding:14px 16px;border-radius:var(–r);
+font-size:14px;line-height:1.65;
+}
+.msg.ai .msg-bubble{
+background:var(–bg2);border:1px solid var(–line);
+}
+.msg.user .msg-bubble{
+background:var(–bg3);border:1px solid var(–line2);
+display:inline-block;text-align:left;
+}
+
+/* Question card */
+.q-card{
+border:1px solid var(–line2);
+background:var(–bg2);border-radius:var(–r);overflow:hidden;
+margin-top:4px;
+}
+.qc-head{
+padding:10px 14px;border-bottom:1px solid var(–line);
+display:flex;align-items:center;justify-content:space-between;
+background:rgba(232,35,26,.04);
+}
+.qc-step{
+font-family:‘DM Mono’,monospace;font-size:10px;
+color:var(–red);letter-spacing:.14em;font-weight:700;
+}
+.qc-type{
+font-family:‘DM Mono’,monospace;font-size:9px;
+color:var(–text3);letter-spacing:.12em;
+padding:2px 7px;border:1px solid var(–line);border-radius:2px;
+}
+.qc-body{padding:16px 14px;}
+.qc-prompt{font-size:16px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px;}
+.qc-hint{font-size:12px;color:var(–text2);margin-bottom:14px;font-style:italic;}
+.qc-ref{
+display:flex;align-items:flex-start;gap:8px;
+padding:9px 11px;
+background:var(–bg);border:1px solid var(–line);
+border-left:2px solid var(–red);
+font-family:‘DM Mono’,monospace;font-size:11px;color:var(–text2);
+margin-bottom:14px;border-radius:var(–r);
+}
+.qc-ref strong{color:var(–red);}
+
+.qc-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.qc-opt{
+padding:12px 14px;background:var(–bg);
+border:1px solid var(–line2);color:var(–text);
+font-size:13px;font-weight:600;
+display:flex;align-items:center;justify-content:space-between;
+gap:8px;border-radius:var(–r);cursor:pointer;
+transition:all .15s;text-align:left;
+}
+.qc-opt:hover{border-color:var(–red);background:var(–red-soft);color:var(–red);}
+.qc-opt:active{transform:scale(.97);}
+.qc-opt .kbd{
+font-family:‘DM Mono’,monospace;font-size:9px;
+color:var(–text3);border:1px solid var(–line);
+padding:2px 5px;border-radius:2px;flex-shrink:0;
+}
+.qc-inp-row{display:flex;gap:8px;margin-top:14px;}
+.qc-inp{
+flex:1;background:var(–bg);border:1px solid var(–line2);
+color:var(–text);padding:12px 14px;
+font-family:‘DM Mono’,monospace;font-size:15px;font-weight:600;
+border-radius:var(–r);outline:none;min-height:48px;
+transition:border-color .2s;
+}
+.qc-inp:focus{border-color:var(–red);}
+.qc-sub{
+padding:0 18px;background:var(–red);color:#fff;
+font-size:13px;font-weight:700;border-radius:var(–r);
+transition:all .2s;
+}
+.qc-sub:hover{background:var(–red-b);}
+
+/* Citations */
+.citations{margin-top:12px;padding-top:12px;border-top:1px dashed var(–line);}
+.cit-label{
+font-family:‘DM Mono’,monospace;font-size:9px;
+color:var(–text3);letter-spacing:.18em;margin-bottom:7px;
+}
+.cit{
+display:flex;align-items:center;gap:8px;
+padding:7px 10px;background:var(–bg);
+border:1px solid var(–line);margin-bottom:3px;border-radius:var(–r);
+}
+.cit-w{
+font-family:‘DM Mono’,monospace;font-size:9px;
+padding:2px 6px;background:var(–red-soft);color:var(–red);
+font-weight:700;border-radius:2px;
+}
+.cit-src{font-size:12px;color:var(–text);flex:1;}
+.cit-pg{font-family:‘DM Mono’,monospace;font-size:10px;color:var(–text3);}
+
+/* Hypotheses */
+.hypos{display:flex;flex-direction:column;gap:6px;margin-top:12px;}
+.hypo{
+padding:10px 12px;background:var(–bg);
+border:1px solid var(–line);border-radius:var(–r);
+display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;
+cursor:default;transition:border-color .15s;
+}
+.hypo:hover{border-color:var(–line2);}
+.hypo-lbl{font-size:13px;font-weight:500;}
+.hypo-prob{font-family:‘DM Mono’,monospace;font-size:12px;font-weight:700;}
+.hypo.h .hypo-prob{color:var(–red);}
+.hypo.m .hypo-prob{color:var(–amber);}
+.hypo.l .hypo-prob{color:var(–text3);}
+.hypo-bar{grid-column:1/-1;height:2px;background:var(–bg4);border-radius:1px;overflow:hidden;}
+.hypo-fill{height:100%;border-radius:1px;transition:width .8s cubic-bezier(.16,1,.3,1);}
+.hypo.h .hypo-fill{background:var(–red);}
+.hypo.m .hypo-fill{background:var(–amber);}
+.hypo.l .hypo-fill{background:var(–text3);}
+
+/* Chat input */
+.chat-input{
+border-top:1px solid var(–line);
+background:var(–bg2);flex-shrink:0;
+padding:12px 16px;
+}
+@media(min-width:768px){.chat-input{padding:14px 20px;}}
+.ci-tools{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap;}
+.ci-tool{
+display:flex;align-items:center;gap:5px;
+padding:5px 10px;background:transparent;
+border:1px solid var(–line);color:var(–text2);
+font-family:‘DM Mono’,monospace;font-size:10px;letter-spacing:.08em;
+border-radius:var(–r);transition:all .15s;
+}
+.ci-tool:hover{border-color:var(–red);color:var(–red);}
+.ci-tool:active{transform:scale(.96);}
+.ci-row{display:flex;gap:8px;align-items:flex-end;}
+.ci-textarea{
+flex:1;background:var(–bg);border:1px solid var(–line2);
+color:var(–text);padding:12px 14px;
+font-family:‘DM Sans’,sans-serif;font-size:14px;
+border-radius:var(–r);outline:none;resize:none;
+min-height:48px;max-height:120px;
+transition:border-color .2s;line-height:1.5;
+}
+.ci-textarea:focus{border-color:var(–red);}
+.ci-textarea::placeholder{color:var(–text3);}
+.ci-send{
+width:48px;height:48px;flex-shrink:0;
+background:var(–red);color:#fff;border-radius:var(–r);
+display:grid;place-items:center;transition:all .2s;
+}
+.ci-send:hover{background:var(–red-b);box-shadow:0 0 20px var(–red-glow);}
+.ci-send:active{transform:scale(.95);}
+
+/* Right context */
+.diag-ctx{
+overflow-y:auto;background:var(–bg);
+border-left:1px solid var(–line);
+display:none;
+flex-direction:column;
+}
+@media(min-width:900px){.diag-ctx{display:flex;}}
+.ctx-block{padding:16px;border-bottom:1px solid var(–line);}
+.ctx-label{
+font-family:‘DM Mono’,monospace;font-size:9px;
+letter-spacing:.2em;color:var(–text3);
+text-transform:uppercase;margin-bottom:12px;
+display:flex;align-items:center;gap:8px;
+}
+.ctx-label::before{content:’’;width:3px;height:10px;background:var(–red);border-radius:1px;}
+
+/* Vehicle card */
+.vc-plate{
+font-family:‘DM Mono’,monospace;font-size:20px;
+font-weight:700;letter-spacing:.08em;color:var(–white);
+margin-bottom:2px;
+}
+.vc-model{font-size:15px;font-weight:700;margin-bottom:2px;letter-spacing:-.01em;}
+.vc-engine{font-family:‘DM Mono’,monospace;font-size:11px;color:var(–text2);}
+.vc-specs{
+display:grid;grid-template-columns:1fr 1fr;
+gap:1px;background:var(–line);
+border:1px solid var(–line);margin-top:12px;
+}
+.vc-spec{background:var(–bg2);padding:9px 11px;}
+.vc-sl{font-family:‘DM Mono’,monospace;font-size:9px;color:var(–text3);letter-spacing:.12em;margin-bottom:3px;}
+.vc-sv{font-size:12px;font-weight:600;}
+
+/* Timeline */
+.tl{padding-left:12px;border-left:1px solid var(–line);}
+.tl-item{position:relative;padding-bottom:14px;}
+.tl-item::before{
+content:’’;position:absolute;left:-16px;top:5px;
+width:7px;height:7px;border-radius:50%;
+background:var(–bg);border:1px solid var(–line2);
+}
+.tl-item.cur::before{border-color:var(–red);background:var(–red);}
+.tl-item.ok::before{border-color:var(–green);background:rgba(34,197,94,.3);}
+.tl-date{font-family:‘DM Mono’,monospace;font-size:10px;color:var(–text3);margin-bottom:2px;}
+.tl-title{font-size:13px;font-weight:600;}
+.tl-meta{font-size:12px;color:var(–text2);}
+
+/* ═══════════════════════════════════════════
+SCREEN: ORDENS DE SERVIÇO
+═══════════════════════════════════════════ */
+.os-header{
+padding:20px 24px;border-bottom:1px solid var(–line);
+display:flex;align-items:center;justify-content:space-between;
+gap:12px;flex-wrap:wrap;background:var(–bg2);flex-shrink:0;
+}
+.os-filters{
+display:flex;gap:4px;flex-wrap:wrap;
+padding:12px 24px;border-bottom:1px solid var(–line);
+background:var(–bg2);flex-shrink:0;
+}
+.filter-btn{
+padding:6px 14px;background:transparent;
+border:1px solid var(–line);color:var(–text2);
+font-size:12px;font-weight:500;border-radius:999px;
+transition:all .15s;
+}
+.filter-btn:hover{border-color:var(–line2);color:var(–text);}
+.filter-btn.on{background:var(–red-soft);border-color:var(–red-bd);color:var(–red);}
+.os-table-wrap{flex:1;overflow-y:auto;}
+.os-table{width:100%;border-collapse:collapse;}
+.os-table th{
+padding:10px 20px;text-align:left;
+font-family:‘DM Mono’,monospace;font-size:10px;
+letter-spacing:.14em;color:var(–text3);
+border-bottom:1px solid var(–line);background:var(–bg2);
+position:sticky;top:0;z-index:5;white-space:nowrap;
+}
+@media(min-width:768px){.os-table th{padding:10px 24px;}}
+.os-table td{
+padding:14px 20px;border-bottom:1px solid var(–line);
+font-size:13px;vertical-align:middle;
+}
+@media(min-width:768px){.os-table td{padding:14px 24px;}}
+.os-table tr{cursor:pointer;transition:background .12s;}
+.os-table tr:hover td{background:var(–bg2);}
+.os-table tr:last-child td{border-bottom:none;}
+.plate-cell{
+font-family:‘DM Mono’,monospace;font-size:13px;
+font-weight:700;color:var(–white);letter-spacing:.06em;
+}
+.vehicle-cell{color:var(–text2);}
+.hide-sm{display:none;}
+@media(min-width:640px){.hide-sm{display:table-cell;}}
+.hide-md{display:none;}
+@media(min-width:900px){.hide-md{display:table-cell;}}
+
+/* ═══════════════════════════════════════════
+SCREEN: DTC
+═══════════════════════════════════════════ */
+.dtc-header{
+padding:20px 24px;border-bottom:1px solid var(–line);
+background:var(–bg2);flex-shrink:0;
+}
+.dtc-search-wrap{position:relative;margin-top:14px;}
+.dtc-search{
+width:100%;background:var(–bg3);
+border:1px solid var(–line2);color:var(–text);
+padding:14px 16px 14px 42px;
+font-family:‘DM Mono’,monospace;font-size:16px;
+letter-spacing:.06em;border-radius:var(–r);outline:none;
+transition:border-color .2s;min-height:52px;
+}
+.dtc-search:focus{border-color:var(–red);}
+.dtc-search::placeholder{color:var(–text3);}
+.dtc-si{
+position:absolute;left:14px;top:50%;
+transform:translateY(-50%);color:var(–text3);pointer-events:none;
+}
+.dtc-body{flex:1;overflow-y:auto;padding:20px 24px;}
+.dtc-grid{
+display:grid;grid-template-columns:1fr;
+gap:8px;
+}
+@media(min-width:640px){.dtc-grid{grid-template-columns:1fr 1fr;}}
+@media(min-width:1024px){.dtc-grid{grid-template-columns:repeat(3,1fr);}}
+.dtc-card{
+padding:16px;background:var(–bg2);
+border:1px solid var(–line);border-radius:var(–r);
+cursor:pointer;transition:all .15s;
+}
+.dtc-card:hover{border-color:var(–red-bd);background:var(–bg3);}
+.dtc-code{
+font-family:‘DM Mono’,monospace;font-size:18px;
+font-weight:700;color:var(–red);margin-bottom:6px;letter-spacing:.06em;
+}
+.dtc-desc{font-size:13px;color:var(–text);font-weight:500;margin-bottom:8px;}
+.dtc-causes{font-size:12px;color:var(–text2);line-height:1.6;}
+.dtc-badge{
+display:inline-block;margin-top:8px;
+font-family:‘DM Mono’,monospace;font-size:9px;
+padding:2px 8px;border:1px solid var(–line2);
+color:var(–text3);border-radius:2px;letter-spacing:.1em;
+}
+
+/* ═══════════════════════════════════════════
+SCREEN: COMUNIDADE
+═══════════════════════════════════════════ */
+.comm-header{
+padding:20px 24px;border-bottom:1px solid var(–line);
+display:flex;align-items:center;justify-content:space-between;
+gap:12px;background:var(–bg2);flex-shrink:0;flex-wrap:wrap;
+}
+.comm-body{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:12px;}
+.thread{
+padding:16px;background:var(–bg2);
+border:1px solid var(–line);border-radius:var(–r);
+cursor:pointer;transition:all .15s;
+}
+.thread:hover{border-color:var(–line2);background:var(–bg3);}
+.th-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.th-title{font-size:15px;font-weight:700;color:var(–white);line-height:1.35;}
+.th-ver{
+font-family:‘DM Mono’,monospace;font-size:9px;
+padding:3px 8px;border:1px solid var(–green);
+color:var(–green);border-radius:2px;white-space:nowrap;flex-shrink:0;
+}
+.th-body{font-size:13px;color:var(–text2);line-height:1.6;margin-bottom:10px;}
+.th-foot{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.th-author{
+font-family:‘DM Mono’,monospace;font-size:10px;color:var(–text3);
+}
+.th-tag{
+font-family:‘DM Mono’,monospace;font-size:10px;
+color:var(–text3);padding:2px 8px;
+border:1px solid var(–line);border-radius:2px;
+}
+.th-up{
+margin-left:auto;display:flex;align-items:center;gap:5px;
+font-family:‘DM Mono’,monospace;font-size:11px;color:var(–text2);
+}
+.th-up svg{color:var(–text3);}
+
+/* ═══════════════════════════════════════════
+MOBILE BOTTOM NAV
+═══════════════════════════════════════════ */
+.mobile-nav{
+display:none;
+grid-template-columns:repeat(5,1fr);
+background:var(–bg2);border-top:1px solid var(–line);
+padding-bottom:var(–sab);
+}
+@media(max-width:768px){.mobile-nav{display:grid;}}
+.mn-item{
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+gap:4px;padding:10px 4px;
+cursor:pointer;transition:color .15s;color:var(–text3);
+font-family:‘DM Mono’,monospace;font-size:9px;letter-spacing:.06em;
+background:transparent;border:none;
+}
+.mn-item.active{color:var(–red);}
+.mn-item svg{width:20px;height:20px;}
+.mn-dot{
+width:4px;height:4px;border-radius:50%;
+background:var(–red);
+position:absolute;top:6px;right:calc(50% - 14px);
+display:none;
+}
+.mn-item.has-notif .mn-dot{display:block;}
+.mn-item-wrap{position:relative;}
+
+/* ═══════════════════════════════════════════
+SIDEBAR OVERLAY (mobile)
+═══════════════════════════════════════════ */
+.sidebar-overlay{
+display:none;position:fixed;inset:0;
+background:rgba(0,0,0,.5);z-index:39;
+}
+.sidebar-overlay.show{display:block;}
+
+/* ═══════════════════════════════════════════
+EMPTY + LOADING STATES
+═══════════════════════════════════════════ */
+.new-os-card{
+margin:24px;padding:32px;
+background:var(–bg2);border:1px dashed var(–line2);
+border-radius:var(–r);text-align:center;cursor:pointer;
+transition:all .2s;
+}
+.new-os-card:hover{border-color:var(–red-bd);background:var(–red-soft);}
+.new-os-card svg{color:var(–red);margin:0 auto 12px;}
+.new-os-card h3{font-size:16px;font-weight:700;margin-bottom:6px;}
+.new-os-card p{font-size:13px;color:var(–text2);}
+
+/* typing indicator */
+.typing{
+display:flex;align-items:center;gap:5px;
+padding:12px 16px;
+}
+.typing span{
+width:6px;height:6px;border-radius:50%;background:var(–text3);
+animation:typ .9s infinite both;
+}
+.typing span:nth-child(2){animation-delay:.15s;}
+.typing span:nth-child(3){animation-delay:.3s;}
+@keyframes typ{0%,100%{transform:translateY(0);opacity:.4;}50%{transform:translateY(-5px);opacity:1;}}
+
+/* scrollbar hint on mobile */
+@media(max-width:768px){
+.chat-msgs{padding:14px;}
+.msg.ai{max-width:95%;}
+.msg.user{max-width:90%;}
+}
+</style>
+
+</head>
+<body>
+<div class="noise"></div>
+
+<!-- ═══ SHELL ═══ -->
+
+<div class="shell">
+
+  <!-- TOPBAR -->
+
+  <header class="topbar">
+    <div class="logo"><div class="ld"></div>SNX DieselLab</div>
+
+```
+<div class="topbar-search">
+  <svg class="ts-ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+  <input class="ts-input" type="text" placeholder="BUSCAR PLACA...">
+</div>
+
+<div class="topbar-right">
+  <button class="tb-btn tb-notif" title="Notificações">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+  </button>
+  <div class="avatar" title="Ricardo Carvalho">RC</div>
+  <button class="mob-menu-btn" onclick="toggleSidebar()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+```
+
+  </header>
+
+  <!-- SIDEBAR -->
+
+  <nav class="sidebar" id="sidebar">
+    <div class="nav-section">
+      <div class="nav-label">Principal</div>
+      <div class="nav-item active" onclick="goTo('dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </div>
+      <div class="nav-item" onclick="goTo('diagnostico')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><path d="M20 2v4h-4M16 6l4-4"/></svg>
+        Diagnóstico IA
+        <span class="nav-badge">2</span>
+      </div>
+      <div class="nav-item" onclick="goTo('ordens')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Ordens de Serviço
+        <span class="nav-badge gray">12</span>
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Ferramentas</div>
+      <div class="nav-item" onclick="goTo('dtc')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        Dicionário DTC
+      </div>
+      <div class="nav-item" onclick="goTo('comunidade')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Comunidade
+      </div>
+      <div class="nav-item" onclick="goTo('comunidade')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Base Técnica
+      </div>
+    </div>
+
+```
+<div class="sidebar-footer">
+  <div class="sf-user">
+    <div class="avatar" style="width:32px;height:32px;font-size:12px;">RC</div>
+    <div class="sf-info">
+      <div class="sf-name">Ricardo Carvalho</div>
+      <div class="sf-role">TÉCNICO SÊNIOR</div>
+    </div>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text3);flex-shrink:0;"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+  </div>
+</div>
+```
+
+  </nav>
+
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <!-- MAIN -->
+
+  <main class="main" id="main">
+
+```
+<!-- ══ SCREEN: DASHBOARD ══ -->
+<div class="screen active" id="screen-dashboard">
+  <div class="dash-header">
+    <div>
+      <div class="dh-title">BOM DIA, RICARDO ◆</div>
+      <div class="dh-sub">Sexta-feira, 18 de Abril · 4 ordens abertas</div>
+    </div>
+    <button class="btn-primary" onclick="goTo('diagnostico')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+      Nova OS
+    </button>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-val">4<span class="r">.</span></div>
+      <div class="kpi-lbl">OS ABERTAS</div>
+      <div class="kpi-delta">↑ 2 desde ontem</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">94<span class="r">%</span></div>
+      <div class="kpi-lbl">ACERTO IA</div>
+      <div class="kpi-delta">↑ +3% no mês</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">7<span class="r">.</span></div>
+      <div class="kpi-lbl">DIAGNÓSTICOS HOJE</div>
+      <div class="kpi-delta">↑ +2 ontem</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">3<span class="r">H</span></div>
+      <div class="kpi-lbl">TEMPO ECONOMIZADO</div>
+      <div class="kpi-delta">esta semana</div>
+    </div>
+  </div>
+
+  <div class="dash-body">
+    <!-- OS List -->
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">Ordens Ativas</div>
+        <span class="ph-action" onclick="goTo('ordens')">Ver todas →</span>
+      </div>
+      <div class="os-list">
+        <div class="os-item" onclick="goTo('diagnostico')">
+          <div>
+            <div class="os-plate">RKT-4A82</div>
+            <div class="os-vehicle">Chevrolet S10 2.8 Duramax</div>
+          </div>
+          <div><div class="os-time">há 42 min</div></div>
+          <span class="badge badge-open">EM DIAG.</span>
+        </div>
+        <div class="os-item">
+          <div>
+            <div class="os-plate">BRA-2E19</div>
+            <div class="os-vehicle">Toyota Hilux SRX 2.8 1GD</div>
+          </div>
+          <div><div class="os-time">há 1h 12min</div></div>
+          <span class="badge badge-wait">AGUARD.</span>
+        </div>
+        <div class="os-item">
+          <div>
+            <div class="os-plate">MNS-0C57</div>
+            <div class="os-vehicle">Ford Ranger XLT 3.2 Puma</div>
+          </div>
+          <div><div class="os-time">há 2h 30min</div></div>
+          <span class="badge badge-open">EM DIAG.</span>
+        </div>
+        <div class="os-item">
+          <div>
+            <div class="os-plate">JHM-9001</div>
+            <div class="os-vehicle">VW Amarok V6 TDI 3.0</div>
+          </div>
+          <div><div class="os-time">há 4h</div></div>
+          <span class="badge badge-done">CONCLUÍDA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity + quick actions -->
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-title">Atividade Recente</div>
+        </div>
+        <div class="activity">
+          <div class="act-item">
+            <div class="act-ico red">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div>
+              <div class="act-text"><strong>IA</strong> finalizou diagnóstico · <strong>Amarok JHM-9001</strong> · Injetor 3 com desvio.</div>
+              <div class="act-time">há 4 min</div>
+            </div>
+          </div>
+          <div class="act-item">
+            <div class="act-ico green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <div class="act-text">OS <strong>FRC-3377</strong> encerrada com sucesso.</div>
+              <div class="act-time">há 28 min</div>
+            </div>
+          </div>
+          <div class="act-item">
+            <div class="act-ico amber">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            </div>
+            <div>
+              <div class="act-text">Nova resposta na Comunidade · <strong>Fumaça branca Hilux 2.8</strong>.</div>
+              <div class="act-time">há 45 min</div>
+            </div>
+          </div>
+          <div class="act-item">
+            <div class="act-ico red">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+            </div>
+            <div>
+              <div class="act-text">DTC <strong>P0087</strong> consultado · <strong>S10 RKT-4A82</strong>.</div>
+              <div class="act-time">há 1h 10min</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick tools -->
+      <div class="panel">
+        <div class="panel-head"><div class="panel-title">Acesso Rápido</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);">
+          <button onclick="goTo('dtc')" style="background:var(--bg);padding:18px;text-align:left;border:none;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='var(--bg)'">
+            <div style="font-size:20px;margin-bottom:8px;">🔍</div>
+            <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:3px;">Dicionário DTC</div>
+            <div style="font-size:12px;color:var(--text2);">Buscar código OBD</div>
+          </button>
+          <button onclick="goTo('comunidade')" style="background:var(--bg);padding:18px;text-align:left;border:none;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='var(--bg)'">
+            <div style="font-size:20px;margin-bottom:8px;">👥</div>
+            <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:3px;">Comunidade</div>
+            <div style="font-size:12px;color:var(--text2);">3 novos posts</div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN: DIAGNÓSTICO ══ -->
+<div class="screen" id="screen-diagnostico">
+  <div class="diag-layout">
+    <!-- Chat -->
+    <div class="diag-chat">
+      <div class="diag-head">
+        <div class="dh-meta">
+          <div class="dh-plate">RKT-4A82</div>
+          <div class="dh-vehicle">Chevrolet S10 2.8 Duramax LWN · KM 147.820</div>
+        </div>
+        <div class="dh-actions">
+          <button class="tb-btn" title="Histórico do veículo">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg>
+          </button>
+          <button class="tb-btn" title="Encerrar OS">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="flow-bar">
+        <span class="fb-label">ETAPA 3/7</span>
+        <div class="fb-steps">
+          <div class="fb-step done"></div><div class="fb-step done"></div>
+          <div class="fb-step cur"></div><div class="fb-step"></div>
+          <div class="fb-step"></div><div class="fb-step"></div><div class="fb-step"></div>
+        </div>
+        <span class="fb-tree">BOSCH CRIN 2.5 · v2.4</span>
+      </div>
+
+      <div class="chat-msgs" id="chat-msgs">
+        <!-- Msg 1: user -->
+        <div class="msg user" style="animation-delay:.05s">
+          <div class="msg-body">
+            <div class="msg-meta"><span class="msg-author">Você</span><span>14:32</span></div>
+            <div class="msg-bubble">
+              S10 chegou com fumaça branca densa e perda de potência acima de 2000 rpm. Cliente disse que começou gradual na última semana. Scanner sem código.
+            </div>
+          </div>
+          <div class="msg-av">RC</div>
+        </div>
+
+        <!-- Msg 2: AI -->
+        <div class="msg ai" style="animation-delay:.15s">
+          <div class="msg-av">AI</div>
+          <div class="msg-body">
+            <div class="msg-meta"><span class="msg-author">SNX Diagnose</span><span>14:32 · 298ms</span></div>
+            <div class="msg-bubble">
+              Sintoma compatível com <strong>combustão incompleta por insuficiência de pressão no rail</strong>. Fumaça branca progressiva + perda acima de 2000 rpm aponta para falha no estágio de baixa pressão. O histórico do veículo (revisão de bicos há 89k km) reforça a hipótese.
+              <br><br>
+              Iniciei o fluxo <strong>Fumaça Branca — CRI Bosch CRIN 2.5</strong> (confiança 84%). Vamos começar pelo sistema de baixa — descarta 40% dos casos.
+              <div class="citations">
+                <div class="cit-label">◆ REFERÊNCIAS RAG</div>
+                <div class="cit"><span class="cit-w">W10</span><span class="cit-src">Manual Bosch CRIN 2.5 — Diagnóstico de Pressão</span><span class="cit-pg">p.142</span></div>
+                <div class="cit"><span class="cit-w">W08</span><span class="cit-src">14 casos resolvidos · S10 Duramax fumaça branca</span><span class="cit-pg">×14</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Msg 3: question card -->
+        <div class="msg ai" style="animation-delay:.25s">
+          <div class="msg-av">AI</div>
+          <div class="msg-body">
+            <div class="msg-meta"><span class="msg-author">SNX Diagnose</span><span>Etapa 3 de 7</span></div>
+            <div class="q-card">
+              <div class="qc-head">
+                <span class="qc-step">NÓ #N-003 · TESTE FÍSICO</span>
+                <span class="qc-type">INPUT: NÚMERO</span>
+              </div>
+              <div class="qc-body">
+                <div class="qc-prompt">Qual a pressão de baixa medida no rail de entrada?</div>
+                <div class="qc-hint">Manômetro no ponto de teste após filtro primário, motor em marcha lenta a quente.</div>
+                <div class="qc-ref">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  <div>Faixa esperada Duramax 2.8: <strong>3,5 — 4,5 bar</strong> · marcha lenta · quente</div>
+                </div>
+                <div class="qc-inp-row">
+                  <input class="qc-inp" type="text" placeholder="ex: 3.8 bar" id="pressure-input">
+                  <button class="qc-sub" onclick="sendPressure()">OK →</button>
+                </div>
+                <div style="margin-top:10px;font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:.1em;">
+                  OU ENVIE FOTO DO MANÔMETRO — A IA LÊ AUTOMATICAMENTE
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="chat-input">
+        <div class="ci-tools">
+          <button class="ci-tool">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+            FOTO
+          </button>
+          <button class="ci-tool">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+            ÁUDIO
+          </button>
+          <button class="ci-tool">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+            OSCILOSC.
+          </button>
+          <button class="ci-tool">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            ARQUIVO
+          </button>
+        </div>
+        <div class="ci-row">
+          <textarea class="ci-textarea" placeholder="Descreva observação, ou responda o passo acima..." rows="1" id="chat-textarea" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+          <button class="ci-send" onclick="sendMessage()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Context panel -->
+    <div class="diag-ctx">
+      <div class="ctx-block">
+        <div class="ctx-label">Veículo</div>
+        <div class="vc-plate">RKT-4A82</div>
+        <div class="vc-model">Chevrolet S10 LTZ 2.8</div>
+        <div class="vc-engine">LWN Duramax · 2016 · 200cv</div>
+        <div class="vc-specs">
+          <div class="vc-spec"><div class="vc-sl">Sistema</div><div class="vc-sv">Bosch CRIN 2.5</div></div>
+          <div class="vc-spec"><div class="vc-sl">Rail</div><div class="vc-sv">1.800 bar</div></div>
+          <div class="vc-spec"><div class="vc-sl">Bico</div><div class="vc-sv">0445 110 423</div></div>
+          <div class="vc-spec"><div class="vc-sl">KM</div><div class="vc-sv">147.820</div></div>
+        </div>
+      </div>
+
+      <div class="ctx-block">
+        <div class="ctx-label">Histórico</div>
+        <div class="tl">
+          <div class="tl-item cur">
+            <div class="tl-date">HOJE · 14:32</div>
+            <div class="tl-title">Fumaça branca / perda</div>
+            <div class="tl-meta">Em diagnóstico · Etapa 3/7</div>
+          </div>
+          <div class="tl-item ok">
+            <div class="tl-date">AGO 2025</div>
+            <div class="tl-title">Válvula EGR trocada</div>
+            <div class="tl-meta">Resolvido · 132.110 km</div>
+          </div>
+          <div class="tl-item ok">
+            <div class="tl-date">MAR 2024</div>
+            <div class="tl-title">Revisão bomba CP3</div>
+            <div class="tl-meta">Resolvido · 89.400 km</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ctx-block">
+        <div class="ctx-label">Hipóteses IA</div>
+        <div class="hypos" id="hypos">
+          <div class="hypo h">
+            <span class="hypo-lbl">Bomba vácuo tandem</span><span class="hypo-prob">62%</span>
+            <div class="hypo-bar"><div class="hypo-fill" style="width:0%" data-w="62"></div></div>
+          </div>
+          <div class="hypo m">
+            <span class="hypo-lbl">Filtro saturado</span><span class="hypo-prob">24%</span>
+            <div class="hypo-bar"><div class="hypo-fill" style="width:0%" data-w="24"></div></div>
+          </div>
+          <div class="hypo l">
+            <span class="hypo-lbl">Válvula metering</span><span class="hypo-prob">14%</span>
+            <div class="hypo-bar"><div class="hypo-fill" style="width:0%" data-w="14"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN: ORDENS ══ -->
+<div class="screen" id="screen-ordens">
+  <div class="os-header">
+    <div>
+      <div class="dh-title" style="font-size:28px;">ORDENS DE SERVIÇO</div>
+      <div class="dh-sub">12 ordens no total · 4 abertas</div>
+    </div>
+    <button class="btn-primary" onclick="goTo('diagnostico')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+      Nova OS
+    </button>
+  </div>
+  <div class="os-filters">
+    <button class="filter-btn on">Todas</button>
+    <button class="filter-btn">Abertas</button>
+    <button class="filter-btn">Em Diagnóstico</button>
+    <button class="filter-btn">Concluídas</button>
+  </div>
+  <div class="os-table-wrap">
+    <table class="os-table">
+      <thead>
+        <tr>
+          <th>PLACA</th>
+          <th>VEÍCULO</th>
+          <th class="hide-sm">QUEIXA</th>
+          <th class="hide-md">ABERTURA</th>
+          <th>STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr onclick="goTo('diagnostico')">
+          <td class="plate-cell">RKT-4A82</td>
+          <td class="vehicle-cell">S10 2.8 Duramax</td>
+          <td class="hide-sm" style="color:var(--text2);">Fumaça branca e perda de força</td>
+          <td class="hide-md" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">hoje 14:32</td>
+          <td><span class="badge badge-open">EM DIAG.</span></td>
+        </tr>
+        <tr>
+          <td class="plate-cell">BRA-2E19</td>
+          <td class="vehicle-cell">Hilux SRX 2.8</td>
+          <td class="hide-sm" style="color:var(--text2);">Motor sem força acima de 3000 rpm</td>
+          <td class="hide-md" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">hoje 13:20</td>
+          <td><span class="badge badge-wait">AGUARD.</span></td>
+        </tr>
+        <tr>
+          <td class="plate-cell">MNS-0C57</td>
+          <td class="vehicle-cell">Ranger XLT 3.2</td>
+          <td class="hide-sm" style="color:var(--text2);">DTC P0087 + P0193 simultâneos</td>
+          <td class="hide-md" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">hoje 11:58</td>
+          <td><span class="badge badge-open">EM DIAG.</span></td>
+        </tr>
+        <tr>
+          <td class="plate-cell">JHM-9001</td>
+          <td class="vehicle-cell">Amarok V6 TDI</td>
+          <td class="hide-sm" style="color:var(--text2);">Ruído metálico em aceleração</td>
+          <td class="hide-md" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">hoje 10:15</td>
+          <td><span class="badge badge-done">CONCLUÍDA</span></td>
+        </tr>
+        <tr>
+          <td class="plate-cell">FRC-3377</td>
+          <td class="vehicle-cell">F-4000 MWM 4.12</td>
+          <td class="hide-sm" style="color:var(--text2);">Consumo elevado e fumaça preta</td>
+          <td class="hide-md" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">ontem 16:40</td>
+          <td><span class="badge badge-done">CONCLUÍDA</span></td>
+        </tr>
+        <tr>
+          <td class="plate-cell">PLT-7722</td>
+          <td class="vehicle-cell">Iveco Daily 3.0</td>
+          <td class="hide-sm" style="color:var(--text2);">Partida difícil a frio</td>
+          <td class="hide-md" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">ontem 14:10</td>
+          <td><span class="badge badge-done">CONCLUÍDA</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ SCREEN: DTC ══ -->
+<div class="screen" id="screen-dtc">
+  <div class="dtc-header">
+    <div class="dh-title" style="font-size:28px;">DICIONÁRIO DTC</div>
+    <div class="dh-sub" style="margin-bottom:0;">Base com 400+ códigos OBD diesel</div>
+    <div class="dtc-search-wrap">
+      <svg class="dtc-si" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="dtc-search" type="text" placeholder="P0087, P0193, P0201..." oninput="filterDTC(this.value)">
+    </div>
+  </div>
+  <div class="dtc-body">
+    <div class="dtc-grid" id="dtc-grid">
+      <!-- injected by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN: COMUNIDADE ══ -->
+<div class="screen" id="screen-comunidade">
+  <div class="comm-header">
+    <div>
+      <div class="dh-title" style="font-size:28px;">MÃO NA GRAXA</div>
+      <div class="dh-sub">Comunidade técnica diesel</div>
+    </div>
+    <button class="btn-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+      Novo Post
+    </button>
+  </div>
+  <div class="comm-body">
+    <div class="thread">
+      <div class="th-head">
+        <div class="th-title">Hilux 2.8 2023 com DTC P0087 e P0193 simultâneos — bomba ou sensor?</div>
+        <span class="th-ver">✓ VERIFICADO</span>
+      </div>
+      <div class="th-body">Veículo chegou com pressão de rail caindo bruscamente acima de 2500 rpm. Troquei o sensor de pressão e o problema persistiu. Alguém já viu isso na HP3?</div>
+      <div class="th-foot">
+        <span class="th-author">@mauricio.diesel</span>
+        <span class="th-tag">DENSO HP3</span>
+        <span class="th-tag">HILUX</span>
+        <div class="th-up">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+          47
+        </div>
+      </div>
+    </div>
+
+    <div class="thread">
+      <div class="th-head">
+        <div class="th-title">Apostila: Calibração de Bicos Piezo Siemens — método passo a passo</div>
+        <span class="th-ver">✓ VERIFICADO</span>
+      </div>
+      <div class="th-body">Compilei um guia completo de calibração para os bicos piezo da VDO/Siemens usados no Amarok e Passat. Inclui valores de referência e tolerâncias máximas por temperatura.</div>
+      <div class="th-foot">
+        <span class="th-author">@snx_admin</span>
+        <span class="th-tag">APOSTILA</span>
+        <span class="th-tag">PIEZO</span>
+        <span class="th-tag">SIEMENS</span>
+        <div class="th-up">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+          89
+        </div>
+      </div>
+    </div>
+
+    <div class="thread">
+      <div class="th-head">
+        <div class="th-title">S10 Duramax 2016 — fumaça branca intermitente após revisão da CP3</div>
+      </div>
+      <div class="th-body">Fiz revisão completa da CP3 mas o cliente voltou com fumaça branca esporádica em subidas. Pressão de rail está ok (1600 bar em carga). Alguém já viu problema no retorno?</div>
+      <div class="th-foot">
+        <span class="th-author">@rodrigo.tecnico</span>
+        <span class="th-tag">BOSCH CP3</span>
+        <span class="th-tag">S10</span>
+        <span class="th-tag">DURAMAX</span>
+        <div class="th-up">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+          23
+        </div>
+      </div>
+    </div>
+
+    <div class="thread">
+      <div class="th-head">
+        <div class="th-title">Áudio: Como identificar bico com retorno excessivo pelo osciloscópio</div>
+      </div>
+      <div class="th-body">Gravei um áudio de 8 min explicando o método que uso para identificar bico com retorno fora do padrão usando apenas oscilograma. Sem bancada.</div>
+      <div class="th-foot">
+        <span class="th-author">@leo.injecao</span>
+        <span class="th-tag">🎙 ÁUDIO</span>
+        <span class="th-tag">OSCILOSCÓPIO</span>
+        <div class="th-up">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+          61
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+  </main><!-- /main -->
+
+  <!-- MOBILE BOTTOM NAV -->
+
+  <nav class="mobile-nav">
+    <button class="mn-item active" onclick="goTo('dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Início
+    </button>
+    <button class="mn-item has-notif" onclick="goTo('diagnostico')">
+      <div class="mn-item-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><path d="M20 2v4h-4M16 6l4-4"/></svg>
+        <div class="mn-dot"></div>
+      </div>
+      IA
+    </button>
+    <button class="mn-item" onclick="goTo('ordens')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Ordens
+    </button>
+    <button class="mn-item" onclick="goTo('dtc')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+      DTC
+    </button>
+    <button class="mn-item" onclick="goTo('comunidade')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Comunidade
+    </button>
+  </nav>
+
+</div><!-- /shell -->
+
+<script>
+/* ══ NAVIGATION ══ */
+const screens = ['dashboard','diagnostico','ordens','dtc','comunidade'];
+function goTo(id){
+  screens.forEach(s=>{
+    document.getElementById('screen-'+s).classList.remove('active');
+  });
+  document.getElementById('screen-'+id).classList.add('active');
+
+  // update sidebar
+  document.querySelectorAll('.nav-item').forEach(el=>{el.classList.remove('active');});
+  document.querySelectorAll('.nav-item').forEach(el=>{
+    if(el.getAttribute('onclick')&&el.getAttribute('onclick').includes("'"+id+"'")){
+      el.classList.add('active');
+    }
+  });
+
+  // update mobile nav
+  document.querySelectorAll('.mn-item').forEach(el=>{el.classList.remove('active');});
+  const mni = document.querySelectorAll('.mn-item');
+  const map = {dashboard:0,diagnostico:1,ordens:2,dtc:3,comunidade:4};
+  if(map[id]!==undefined) mni[map[id]].classList.add('active');
+
+  // close mobile sidebar
+  closeSidebar();
+
+  // scroll chat to bottom when entering diagnostico
+  if(id==='diagnostico'){
+    setTimeout(()=>{
+      const msgs = document.getElementById('chat-msgs');
+      msgs.scrollTop = msgs.scrollHeight;
+      animateHypos();
+    },100);
+  }
+}
+
+/* ══ SIDEBAR MOBILE ══ */
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar');
+  const ov=document.getElementById('sidebar-overlay');
+  const open=sb.classList.toggle('open');
+  ov.classList.toggle('show',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('show');
+  document.body.style.overflow='';
+}
+
+/* ══ HYPO BARS ANIMATION ══ */
+function animateHypos(){
+  document.querySelectorAll('.hypo-fill').forEach(el=>{
+    const w=el.getAttribute('data-w');
+    setTimeout(()=>{el.style.width=w+'%';},200);
+  });
+}
+
+/* ══ CHAT: send pressure response ══ */
+function sendPressure(){
+  const val = document.getElementById('pressure-input').value.trim();
+  if(!val) return;
+  addUserMsg(val + ' bar');
+  document.getElementById('pressure-input').value='';
+  showTyping();
+  setTimeout(()=>{
+    removeTyping();
+    const num = parseFloat(val.replace(',','.'));
+    if(num < 3.5){
+      addAIMsg(`
+        <strong>Pressão de ${val.replace('.',',')} bar — ${Math.round((3.5-num)/3.5*100)}% abaixo do mínimo técnico.</strong>
+        <br><br>
+        Isso confirma falha no estágio de baixa pressão. A árvore bifurca agora. Vamos isolar se é bomba de vácuo tandem, filtro saturado ou válvula de metering.
+        <div class="hypos" style="margin-top:12px;">
+          <div class="hypo h"><span class="hypo-lbl">Bomba vácuo tandem</span><span class="hypo-prob">68%</span><div class="hypo-bar"><div class="hypo-fill" style="width:68%;background:var(--red);"></div></div></div>
+          <div class="hypo m"><span class="hypo-lbl">Filtro primário saturado</span><span class="hypo-prob">22%</span><div class="hypo-bar"><div class="hypo-fill" style="width:22%;background:var(--amber);"></div></div></div>
+          <div class="hypo l"><span class="hypo-lbl">Válvula metering</span><span class="hypo-prob">10%</span><div class="hypo-bar"><div class="hypo-fill" style="width:10%;background:var(--text3);"></div></div></div>
+        </div>
+      `);
+      setTimeout(()=>addNextQuestion(),800);
+    } else {
+      addAIMsg(`Pressão de ${val.replace('.',',')} bar está <strong>dentro da faixa</strong> (3,5–4,5 bar). O sistema de baixa pressão está ok. Avançando para verificar o sistema de alta pressão e os injetores.`);
+    }
+  },1800);
+}
+
+function addNextQuestion(){
+  const qhtml = `
+    <div class="q-card">
+      <div class="qc-head">
+        <span class="qc-step">NÓ #N-004 · TESTE FÍSICO</span>
+        <span class="qc-type">INPUT: BOOLEAN</span>
+      </div>
+      <div class="qc-body">
+        <div class="qc-prompt">Filtro primário de combustível foi verificado?</div>
+        <div class="qc-hint">Inspecionar elemento filtrante, presença de água ou contaminação.</div>
+        <div class="qc-opts">
+          <button class="qc-opt" onclick="answerFilter(true)">✓ Sim, limpo <span class="kbd">S</span></button>
+          <button class="qc-opt" onclick="answerFilter(false)">✗ Sujo/saturado <span class="kbd">N</span></button>
+        </div>
+      </div>
+    </div>
+  `;
+  const div = document.createElement('div');
+  div.className='msg ai';
+  div.style.animationDelay='0s';
+  div.innerHTML=`
+    <div class="msg-av">AI</div>
+    <div class="msg-body">
+      <div class="msg-meta"><span class="msg-author">SNX Diagnose</span><span>Etapa 4 de 7</span></div>
+      ${qhtml}
+    </div>`;
+  document.getElementById('chat-msgs').appendChild(div);
+  scrollChat();
+  // update progress
+  document.querySelectorAll('.fb-step')[3].classList.add('cur');
+  document.querySelectorAll('.fb-step')[2].classList.remove('cur');
+  document.querySelectorAll('.fb-step')[2].classList.add('done');
+  document.querySelector('.fb-label').textContent='ETAPA 4/7';
+}
+
+function answerFilter(clean){
+  if(clean){
+    addUserMsg('Sim — filtro limpo, sem contaminação.');
+    showTyping();
+    setTimeout(()=>{
+      removeTyping();
+      addAIMsg(`Filtro limpo descarta obstrução. <strong>Probabilidade de bomba tandem sobe para 78%.</strong><br><br>Próximo passo: teste da bomba de vácuo tandem. Verifique volume de retorno com recipiente graduado em 30 segundos.`);
+    },1600);
+  } else {
+    addUserMsg('Filtro está saturado com contaminação.');
+    showTyping();
+    setTimeout(()=>{
+      removeTyping();
+      addAIMsg(`🎯 <strong>PROVÁVEL CAUSA IDENTIFICADA.</strong><br><br>Filtro saturado explica a queda de pressão. Troque o filtro primário e monitore a pressão. Se normalizar, problema resolvido. Se persistir, avançamos para bomba tandem.`);
+    },1600);
+  }
+}
+
+/* ══ CHAT: free text ══ */
+function sendMessage(){
+  const ta=document.getElementById('chat-textarea');
+  const txt=ta.value.trim();
+  if(!txt)return;
+  addUserMsg(txt);
+  ta.value='';
+  ta.style.height='';
+  showTyping();
+  setTimeout(()=>{
+    removeTyping();
+    addAIMsg(`Entendido. Analisando com base no contexto da OS e no histórico do veículo. Continue o fluxo respondendo as perguntas da árvore para um diagnóstico mais preciso — ou descreva mais detalhes do que observou.`);
+  },1800);
+}
+
+function addUserMsg(text){
+  const div=document.createElement('div');
+  div.className='msg user';
+  div.style.animationDelay='0s';
+  div.innerHTML=`
+    <div class="msg-body">
+      <div class="msg-meta"><span class="msg-author">Você</span><span>${now()}</span></div>
+      <div class="msg-bubble">${text}</div>
+    </div>
+    <div class="msg-av">RC</div>`;
+  document.getElementById('chat-msgs').appendChild(div);
+  scrollChat();
+}
+
+function addAIMsg(html){
+  const div=document.createElement('div');
+  div.className='msg ai';
+  div.style.animationDelay='0s';
+  div.innerHTML=`
+    <div class="msg-av">AI</div>
+    <div class="msg-body">
+      <div class="msg-meta"><span class="msg-author">SNX Diagnose</span><span>${now()}</span></div>
+      <div class="msg-bubble">${html}</div>
+    </div>`;
+  document.getElementById('chat-msgs').appendChild(div);
+  scrollChat();
+}
+
+function showTyping(){
+  const div=document.createElement('div');
+  div.className='msg ai';div.id='typing-msg';div.style.animationDelay='0s';
+  div.innerHTML=`
+    <div class="msg-av">AI</div>
+    <div class="msg-body">
+      <div class="msg-bubble" style="padding:10px 14px;">
+        <div class="typing"><span></span><span></span><span></span></div>
+      </div>
+    </div>`;
+  document.getElementById('chat-msgs').appendChild(div);
+  scrollChat();
+}
+function removeTyping(){
+  const t=document.getElementById('typing-msg');
+  if(t)t.remove();
+}
+function scrollChat(){
+  const m=document.getElementById('chat-msgs');
+  requestAnimationFrame(()=>{m.scrollTop=m.scrollHeight;});
+}
+function handleKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}
+}
+function autoResize(el){
+  el.style.height='auto';
+  el.style.height=Math.min(el.scrollHeight,120)+'px';
+}
+function now(){
+  const d=new Date();
+  return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');
+}
+
+/* ══ FILTER BUTTONS ══ */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
+    this.classList.add('on');
+  });
+});
+
+/* ══ DTC DATA ══ */
+const dtcData=[
+  {code:'P0087',desc:'Pressão do rail insuficiente',causes:'Bomba de alta pressão desgastada, filtro entupido, válvula de alívio travada, sensor de pressão defeituoso.',cat:'PRESSÃO'},
+  {code:'P0088',desc:'Pressão do rail excessiva',causes:'Válvula de regulação de pressão travada aberta, sensor de pressão descalibrado.',cat:'PRESSÃO'},
+  {code:'P0089',desc:'Regulação de pressão de combustível',causes:'Atuador da válvula de pressão do rail com falha intermitente.',cat:'PRESSÃO'},
+  {code:'P0093',desc:'Vazamento detectado no sistema',causes:'Retorno excessivo nos bicos, vedação da bomba comprometida, tubulação de alta pressão furada.',cat:'PRESSÃO'},
+  {code:'P0191',desc:'Desempenho do sensor de pressão do rail',causes:'Sensor descalibrado, fiação com resistência elevada, contaminação no conector.',cat:'SENSOR'},
+  {code:'P0192',desc:'Tensão baixa no sensor de pressão',causes:'Curto no circuito, conector oxidado, sensor com falha interna.',cat:'SENSOR'},
+  {code:'P0193',desc:'Tensão alta no sensor de pressão',causes:'Circuito aberto, sensor defeituoso, alimentação 5V com problema.',cat:'SENSOR'},
+  {code:'P0200',desc:'Circuito do injetor — falha geral',causes:'Fiação danificada entre ECU e injetores, conector do chicote oxidado.',cat:'INJETOR'},
+  {code:'P0201',desc:'Circuito do injetor 1 aberto',causes:'Injetor 1 com bobina rompida, fio aberto no chicote, conector frouxo.',cat:'INJETOR'},
+  {code:'P0202',desc:'Circuito do injetor 2 aberto',causes:'Injetor 2 defeituoso, fiação com interrupção, terminal corroído.',cat:'INJETOR'},
+  {code:'P0203',desc:'Circuito do injetor 3 aberto',causes:'Bobina do injetor 3 com desvio de resistência, conector danificado.',cat:'INJETOR'},
+  {code:'P0299',desc:'Pressão do turbo insuficiente',causes:'Turbo com atuador travado, válvula EGR emperrada aberta, intercooler com vazamento.',cat:'TURBO'},
+  {code:'P0404',desc:'Válvula EGR — amplitude fora do esperado',causes:'Válvula EGR travada, depósito de fuligem, sensor de posição da EGR defeituoso.',cat:'EGR'},
+  {code:'P0408',desc:'Sensor da válvula EGR — sinal alto',causes:'Sensor de posição B com sinal fora de faixa, fiação com curto para positivo.',cat:'EGR'},
+  {code:'P2146',desc:'Grupo de alimentação dos injetores A — circuito aberto',causes:'Fusível do grupo de injetores queimado, relé de injetores com falha.',cat:'INJETOR'},
+];
+
+function renderDTC(filter=''){
+  const grid=document.getElementById('dtc-grid');
+  const filtered=filter
+    ?dtcData.filter(d=>d.code.toLowerCase().includes(filter.toLowerCase())||d.desc.toLowerCase().includes(filter.toLowerCase()))
+    :dtcData;
+  grid.innerHTML=filtered.map(d=>`
+    <div class="dtc-card">
+      <div class="dtc-code">${d.code}</div>
+      <div class="dtc-desc">${d.desc}</div>
+      <div class="dtc-causes">${d.causes}</div>
+      <span class="dtc-badge">${d.cat}</span>
+    </div>
+  `).join('');
+}
+function filterDTC(v){renderDTC(v);}
+renderDTC();
+
+/* ══ INIT ══ */
+// Animate hypos when screen loads
+setTimeout(animateHypos,400);
+</script>
+
+<script type="module">
+  import { initPanel } from './snx_integration.js';
+  initPanel();
+</script>
+
+</body>
+</html>
