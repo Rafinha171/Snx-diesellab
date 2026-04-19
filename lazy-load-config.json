@@ -1,0 +1,15 @@
+{
+  "images": {
+    "enabled": true,
+    "threshold": 0.1,
+    "rootMargin": "50px"
+  },
+  "scripts": {
+    "enabled": true,
+    "defer": true
+  },
+  "css": {
+    "enabled": true,
+    "preload": true
+  }
+}
