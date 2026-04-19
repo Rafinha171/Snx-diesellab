@@ -1,0 +1,28 @@
+{
+  "name": "snx-diesellab",
+  "version": "1.1.0",
+  "description": "Diagnóstico inteligente para sistemas de injeção eletrônica diesel",
+  "main": "index.html",
+  "scripts": {
+    "setup": "node setup-local.js",
+    "dev": "python3 -m http.server 8000",
+    "build": "node build.js"
+  },
+  "keywords": [
+    "diesel",
+    "diagnóstico",
+    "ia",
+    "gemini",
+    "supabase",
+    "mecânica"
+  ],
+  "author": "Rafinha171",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rafinha171/Snx-diesellab.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
