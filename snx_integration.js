@@ -113,7 +113,9 @@ export const DiagnosisService = {
             contents: [{ parts: [{ text: fullPrompt }] }],
             generationConfig: {
               temperature: 0.7,
-              maxOutputTokens: 1024,
+              maxOutputTokens: 4096,
+              topP: 0.95,
+              topK: 40,
             },
           }),
         }
@@ -140,14 +142,14 @@ export const DiagnosisService = {
     try {
       const aiResponse = await this.callGemini(
         message,
-        'Você é um especialista em sistemas diesel. Responda de forma técnica e útil para mecânicos.'
+        'Você é um especialista em sistemas diesel altamente experiente. Responda de forma técnica, detalhada e útil para mecânicos. Inclua exemplos práticos quando relevante. Seja completo e não corte a resposta.'
       );
       return { message: aiResponse };
     } catch (error) {
       console.error('Erro no chat:', error);
       throw error;
     }
-  },
+  }
 };
 
 export const DTCService = {
