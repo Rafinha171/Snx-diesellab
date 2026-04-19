@@ -21,7 +21,7 @@ const config = `export const SNX_CONFIG = {
   },
   googleAI: {
     apiKey: ${JSON.stringify(required.GOOGLE_AI_API_KEY)},
-    endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
+    endpoint: 'https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent',
   },
 };
 `;
