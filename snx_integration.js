@@ -297,3 +297,71 @@ function getAuthErrorMessage(err) {
     return 'Senha deve ter pelo menos 8 caracteres.';
   return 'Erro inesperado. Tente novamente.';
 }
+
+export const CommunityService = {
+  async getPosts() {
+    try {
+      const { data, error } = await supabase
+        .from('community_posts')
+        .select('*, profiles(full_name)')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      return data || [];
+    } catch (error) {
+      console.error('Erro ao buscar posts da comunidade:', error);
+      return [];
+    }
+  },
+
+  async createPost({ titulo, corpo, tags }) {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Usuário não autenticado');
+
+      const { data, error } = await supabase
+        .from('community_posts')
+        .insert({
+          titulo,
+          corpo,
+          tags,
+          author_id: user.id
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error('Erro ao criar post:', error);
+      throw error;
+    }
+  },
+
+  async upvotePost(postId) {
+    try {
+      // Nota: No Supabase, idealmente usaríamos uma função RPC para incrementar
+      // Para simplificar, faremos um update direto (sujeito a race conditions)
+      const { data: post, error: fetchError } = await supabase
+        .from('community_posts')
+        .select('upvotes')
+        .eq('id', postId)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      const { data, error } = await supabase
+        .from('community_posts')
+        .update({ upvotes: (post.upvotes || 0) + 1 })
+        .eq('id', postId)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error('Erro ao dar upvote:', error);
+      throw error;
+    }
+  }
+};

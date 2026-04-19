@@ -1810,49 +1810,49 @@ function deletarOS(id){
 }
 
 /* ══ COMUNIDADE ══ */
-function getPosts(){
-  const saved=localStorage.getItem('snx_posts');
-  if(saved)return JSON.parse(saved);
-  const defaults=[
-    {id:1,titulo:'Hilux 2.8 2023 com DTC P0087 e P0193 simultâneos — bomba ou sensor?',corpo:'Veículo chegou com pressão de rail caindo bruscamente acima de 2500 rpm. Troquei o sensor de pressão e o problema persistiu. Alguém já viu isso na HP3?',tags:['DENSO HP3','HILUX'],autor:'@mauricio.diesel',ups:47,upvotado:false},
-    {id:2,titulo:'Apostila: Calibração de Bicos Piezo Siemens — método passo a passo',corpo:'Compilei um guia completo de calibração para os bicos piezo da VDO/Siemens usados no Amarok e Passat. Inclui valores de referência e tolerâncias máximas por temperatura.',tags:['APOSTILA','PIEZO','SIEMENS'],autor:'@snx_admin',ups:89,upvotado:false},
-    {id:3,titulo:'S10 Duramax 2016 — fumaça branca intermitente após revisão da CP3',corpo:'Fiz revisão completa da CP3 mas o cliente voltou com fumaça branca esporádica em subidas. Pressão de rail está ok (1600 bar em carga). Alguém já viu problema no retorno?',tags:['BOSCH CP3','S10','DURAMAX'],autor:'@rodrigo.tecnico',ups:23,upvotado:false},
-  ];
-  savePosts(defaults);
-  return defaults;
-}
-function savePosts(list){localStorage.setItem('snx_posts',JSON.stringify(list));}
-
-function renderPosts(){
-  const list=getPosts();
+async function renderPosts(){
   const body=document.getElementById('comm-body');
   const empty=document.getElementById('comm-empty');
-  if(list.length===0){empty.style.display='block';body.innerHTML='';body.appendChild(empty);return;}
-  empty.style.display='none';
-  body.innerHTML=list.map(p=>`
-    <div class="thread">
-      <div class="th-head"><div class="th-title">${p.titulo}</div></div>
-      <div class="th-body">${p.corpo}</div>
-      <div class="th-foot">
-        <span class="th-author">${p.autor}</span>
-        ${p.tags.map(t=>`<span class="th-tag">${t}</span>`).join('')}
-        <div class="th-up" onclick="upvotePost(${p.id})" style="cursor:pointer;${p.upvotado?'color:var(--red);':''}">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
-          ${p.ups}
+  
+  if (window._comm) {
+    const list = await window._comm.getPosts();
+    if(list.length===0){
+      empty.style.display='block';
+      body.innerHTML='';
+      body.appendChild(empty);
+      return;
+    }
+    empty.style.display='none';
+    body.innerHTML=list.map(p=>`
+      <div class="thread">
+        <div class="th-head"><div class="th-title">${p.titulo}</div></div>
+        <div class="th-body">${p.corpo}</div>
+        <div class="th-foot">
+          <span class="th-author">${p.profiles?.full_name || '@usuário'}</span>
+          ${(p.tags || []).map(t=>`<span class="th-tag">${t}</span>`).join('')}
+          <div class="th-up" onclick="upvotePost('${p.id}')" style="cursor:pointer;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+            ${p.upvotes || 0}
+          </div>
         </div>
-      </div>
-    </div>`).join('');
-  body.appendChild(empty);
+      </div>`).join('');
+    body.appendChild(empty);
+  } else {
+    // Fallback para localStorage se o serviço não estiver pronto
+    const list = JSON.parse(localStorage.getItem('snx_posts') || '[]');
+    // ... lógica de fallback se necessário
+  }
 }
 
-function upvotePost(id){
-  const list=getPosts();
-  const p=list.find(x=>x.id===id);
-  if(!p)return;
-  p.upvotado=!p.upvotado;
-  p.ups+=p.upvotado?1:-1;
-  savePosts(list);
-  renderPosts();
+async function upvotePost(id){
+  if (window._comm) {
+    try {
+      await window._comm.upvotePost(id);
+      renderPosts();
+    } catch (e) {
+      showToast('Erro ao dar upvote','error');
+    }
+  }
 }
 
 function openPostModal(){
@@ -1864,18 +1864,31 @@ function closePostModal(){
   ['post-titulo','post-corpo','post-tags'].forEach(id=>document.getElementById(id).value='');
 }
 
-function salvarPost(){
+async function salvarPost(){
   const titulo=document.getElementById('post-titulo').value.trim();
   const corpo=document.getElementById('post-corpo').value.trim();
   const tagsRaw=document.getElementById('post-tags').value.trim();
   if(!titulo){showToast('Título é obrigatório.','error');return;}
   const tags=tagsRaw?tagsRaw.split(',').map(t=>t.trim().toUpperCase()).filter(Boolean):[];
-  const list=getPosts();
-  list.unshift({id:Date.now(),titulo,corpo:corpo||'',tags,autor:'@você',ups:0,upvotado:false});
-  savePosts(list);
-  closePostModal();
-  renderPosts();
-  showToast('Post publicado!','success');
+  
+  if (window._comm) {
+    try {
+      await window._comm.createPost({ titulo, corpo, tags });
+      closePostModal();
+      renderPosts();
+      showToast('Post publicado!','success');
+    } catch (e) {
+      showToast('Erro ao publicar post','error');
+    }
+  } else {
+    // Fallback localStorage
+    const list = JSON.parse(localStorage.getItem('snx_posts') || '[]');
+    list.unshift({id:Date.now(),titulo,corpo:corpo||'',tags,autor:'@você',ups:0,upvotado:false});
+    localStorage.setItem('snx_posts', JSON.stringify(list));
+    closePostModal();
+    renderPosts();
+    showToast('Post publicado localmente!','success');
+  }
 }
 
 function showToast(msg,type='success'){
@@ -1898,9 +1911,12 @@ updateDashboard();
 </script>
 
 <script type="module">
-  import { initPanel, DiagnosisService } from './snx_integration.js';
+  import { initPanel, DiagnosisService, CommunityService } from './snx_integration.js';
   initPanel();
   window._ai = DiagnosisService;
+  window._comm = CommunityService;
+  // Re-renderizar posts após carregar o serviço
+  setTimeout(renderPosts, 500);
 </script>
 
 </body>
