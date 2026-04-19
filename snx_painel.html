@@ -966,67 +966,35 @@ animation:typ .9s infinite both;
 
   <div class="kpi-row">
     <div class="kpi">
-      <div class="kpi-val">4<span class="r">.</span></div>
+      <div class="kpi-val" id="kpi-abertas">0<span class="r">.</span></div>
       <div class="kpi-lbl">OS ABERTAS</div>
-      <div class="kpi-delta">↑ 2 desde ontem</div>
+      <div class="kpi-delta" id="kpi-abertas-sub">sem ordens</div>
     </div>
     <div class="kpi">
       <div class="kpi-val">94<span class="r">%</span></div>
       <div class="kpi-lbl">ACERTO IA</div>
-      <div class="kpi-delta">↑ +3% no mês</div>
+      <div class="kpi-delta">precisão média</div>
     </div>
     <div class="kpi">
-      <div class="kpi-val">7<span class="r">.</span></div>
-      <div class="kpi-lbl">DIAGNÓSTICOS HOJE</div>
-      <div class="kpi-delta">↑ +2 ontem</div>
+      <div class="kpi-val" id="kpi-total">0<span class="r">.</span></div>
+      <div class="kpi-lbl">TOTAL DE OS</div>
+      <div class="kpi-delta" id="kpi-total-sub">nenhuma cadastrada</div>
     </div>
     <div class="kpi">
-      <div class="kpi-val">3<span class="r">H</span></div>
-      <div class="kpi-lbl">TEMPO ECONOMIZADO</div>
-      <div class="kpi-delta">esta semana</div>
+      <div class="kpi-val" id="kpi-concluidas">0<span class="r">.</span></div>
+      <div class="kpi-lbl">CONCLUÍDAS</div>
+      <div class="kpi-delta" id="kpi-concluidas-sub">nenhuma ainda</div>
     </div>
   </div>
 
   <div class="dash-body">
-    <!-- OS List -->
     <div class="panel">
       <div class="panel-head">
         <div class="panel-title">Ordens Ativas</div>
         <span class="ph-action" onclick="goTo('ordens')">Ver todas →</span>
       </div>
-      <div class="os-list">
-        <div class="os-item" onclick="goTo('diagnostico')">
-          <div>
-            <div class="os-plate">RKT-4A82</div>
-            <div class="os-vehicle">Chevrolet S10 2.8 Duramax</div>
-          </div>
-          <div><div class="os-time">há 42 min</div></div>
-          <span class="badge badge-open">EM DIAG.</span>
-        </div>
-        <div class="os-item">
-          <div>
-            <div class="os-plate">BRA-2E19</div>
-            <div class="os-vehicle">Toyota Hilux SRX 2.8 1GD</div>
-          </div>
-          <div><div class="os-time">há 1h 12min</div></div>
-          <span class="badge badge-wait">AGUARD.</span>
-        </div>
-        <div class="os-item">
-          <div>
-            <div class="os-plate">MNS-0C57</div>
-            <div class="os-vehicle">Ford Ranger XLT 3.2 Puma</div>
-          </div>
-          <div><div class="os-time">há 2h 30min</div></div>
-          <span class="badge badge-open">EM DIAG.</span>
-        </div>
-        <div class="os-item">
-          <div>
-            <div class="os-plate">JHM-9001</div>
-            <div class="os-vehicle">VW Amarok V6 TDI 3.0</div>
-          </div>
-          <div><div class="os-time">há 4h</div></div>
-          <span class="badge badge-done">CONCLUÍDA</span>
-        </div>
+      <div class="os-list" id="dash-os-list">
+        <div style="padding:32px;text-align:center;color:var(--text3);">Nenhuma ordem cadastrada ainda.</div>
       </div>
     </div>
 
@@ -1519,16 +1487,27 @@ async function sendMessage(){
   const txt=ta.value.trim();
   if(!txt)return;
   addUserMsg(txt);
-  ta.value='';
-  ta.style.height='';
+  ta.value='';ta.style.height='';
   showTyping();
+  for(let i=0;i<10;i++){if(window._ai)break;await new Promise(r=>setTimeout(r,400));}
+  if(!window._ai){
+    removeTyping();
+    addAIMsg('<strong>IA não carregou.</strong> Recarregue a página e tente novamente.');
+    return;
+  }
   try{
     const res=await window._ai.freeChat({message:txt});
     removeTyping();
-    addAIMsg(res.message.replace(/\n/g,'<br>'));
+    const html=res.message
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g,'<em>$1</em>')
+      .replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>');
+    addAIMsg(`<p>${html}</p>`);
   }catch(e){
     removeTyping();
-    addAIMsg('Erro ao conectar com a IA. Verifique sua conexão e tente novamente.');
+    addAIMsg(`<strong>Erro na IA:</strong> ${e.message}`);
+    console.error('AI Error:',e);
   }
 }
 
@@ -1667,6 +1646,15 @@ setTimeout(animateHypos,400);
           <option value="concluida">Concluída</option>
         </select>
       </div>
+      <div>
+        <label style="font-size:11px;letter-spacing:.08em;color:var(--text3);display:block;margin-bottom:6px;">FOTOS (antes/depois)</label>
+        <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border:1px solid var(--line2);border-radius:3px;cursor:pointer;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span style="font-size:13px;color:var(--text2);">Selecionar imagens</span>
+          <input id="os-fotos" type="file" accept="image/*" multiple style="display:none;" onchange="previewFotos(this)">
+        </label>
+        <div id="os-fotos-preview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;"></div>
+      </div>
     </div>
     <div style="display:flex;gap:10px;margin-top:20px;">
       <button onclick="closeOSModal()" style="flex:1;padding:12px;background:transparent;border:1px solid var(--line2);border-radius:3px;color:var(--text2);font-family:inherit;font-size:14px;cursor:pointer;">Cancelar</button>
@@ -1718,14 +1706,46 @@ function renderOS(){
   if(filtered.length===0){tbody.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
   const badgeMap={aberta:'<span class="badge badge-wait">ABERTA</span>',diagnostico:'<span class="badge badge-open">EM DIAG.</span>',concluida:'<span class="badge badge-done">CONCLUÍDA</span>'};
-  tbody.innerHTML=filtered.map((o,i)=>`
+  tbody.innerHTML=filtered.map(o=>`
     <tr>
       <td class="plate-cell">${o.placa.toUpperCase()}</td>
-      <td class="vehicle-cell">${o.veiculo}</td>
+      <td class="vehicle-cell">
+        ${o.fotos&&o.fotos.length?`<img src="${o.fotos[0]}" style="width:28px;height:28px;border-radius:3px;object-fit:cover;margin-right:8px;vertical-align:middle;">`:'' }${o.veiculo}
+      </td>
       <td class="hide-sm" style="color:var(--text2);">${o.queixa}</td>
       <td class="hide-md" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);">${o.data}</td>
-      <td style="display:flex;gap:8px;align-items:center;">${badgeMap[o.status]}<button onclick="deletarOS(${o.id})" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:0 4px;" title="Excluir">×</button></td>
+      <td style="display:flex;gap:8px;align-items:center;">${badgeMap[o.status]}<button onclick="deletarOS(${o.id})" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:0 4px;line-height:1;" title="Excluir">×</button></td>
     </tr>`).join('');
+  updateDashboard();
+}
+
+function updateDashboard(){
+  const list=getOS();
+  const abertas=list.filter(o=>o.status==='aberta'||o.status==='diagnostico').length;
+  const concluidas=list.filter(o=>o.status==='concluida').length;
+  const kpiA=document.getElementById('kpi-abertas');
+  const kpiT=document.getElementById('kpi-total');
+  const kpiC=document.getElementById('kpi-concluidas');
+  if(kpiA) kpiA.innerHTML=`${abertas}<span class="r">.</span>`;
+  if(kpiT) kpiT.innerHTML=`${list.length}<span class="r">.</span>`;
+  if(kpiC) kpiC.innerHTML=`${concluidas}<span class="r">.</span>`;
+  const subA=document.getElementById('kpi-abertas-sub');
+  const subT=document.getElementById('kpi-total-sub');
+  const subC=document.getElementById('kpi-concluidas-sub');
+  if(subA) subA.textContent=abertas===0?'sem ordens':abertas===1?'1 em andamento':`${abertas} em andamento`;
+  if(subT) subT.textContent=list.length===0?'nenhuma cadastrada':`${list.length} no total`;
+  if(subC) subC.textContent=concluidas===0?'nenhuma ainda':`${concluidas} finalizada${concluidas!==1?'s':''}`;
+  const dashList=document.getElementById('dash-os-list');
+  if(!dashList)return;
+  const ativas=list.filter(o=>o.status!=='concluida').slice(0,4);
+  if(ativas.length===0){dashList.innerHTML='<div style="padding:32px;text-align:center;color:var(--text3);">Nenhuma ordem aberta. <span style="color:var(--red);cursor:pointer;" onclick="openOSModal()">Criar nova OS →</span></div>';return;}
+  const badgeMap={aberta:'<span class="badge badge-wait">ABERTA</span>',diagnostico:'<span class="badge badge-open">EM DIAG.</span>',concluida:'<span class="badge badge-done">CONCLUÍDA</span>'};
+  dashList.innerHTML=ativas.map(o=>`
+    <div class="os-item" onclick="goTo('ordens')">
+      <div>${o.fotos&&o.fotos.length?`<img src="${o.fotos[0]}" style="width:32px;height:32px;border-radius:3px;object-fit:cover;float:left;margin-right:10px;">`:''}<div class="os-plate">${o.placa.toUpperCase()}</div><div class="os-vehicle">${o.veiculo}</div></div>
+      <div><div class="os-time">${o.data}</div></div>
+      ${badgeMap[o.status]}
+    </div>`).join('');
 }
 
 function filterOS(status,btn){
@@ -1743,20 +1763,44 @@ function closeOSModal(){
   document.getElementById('modal-os').style.display='none';
   ['os-placa','os-veiculo','os-queixa'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('os-status').value='aberta';
+  document.getElementById('os-fotos').value='';
+  document.getElementById('os-fotos-preview').innerHTML='';
 }
 
-function salvarOS(){
+function previewFotos(input){
+  const preview=document.getElementById('os-fotos-preview');
+  preview.innerHTML='';
+  Array.from(input.files).forEach(f=>{
+    const r=new FileReader();
+    r.onload=e=>{
+      const img=document.createElement('img');
+      img.src=e.target.result;
+      img.style.cssText='width:60px;height:60px;object-fit:cover;border-radius:3px;border:1px solid var(--line2);';
+      preview.appendChild(img);
+    };
+    r.readAsDataURL(f);
+  });
+}
+
+async function salvarOS(){
   const placa=document.getElementById('os-placa').value.trim();
   const veiculo=document.getElementById('os-veiculo').value.trim();
   const queixa=document.getElementById('os-queixa').value.trim();
   const status=document.getElementById('os-status').value;
-  if(!placa||!veiculo){alert('Placa e veículo são obrigatórios.');return;}
+  if(!placa||!veiculo){showToast('Placa e veículo são obrigatórios.','error');return;}
+  const files=document.getElementById('os-fotos').files;
+  const fotos=[];
+  for(const f of files){
+    const b64=await new Promise(res=>{const r=new FileReader();r.onload=()=>res(r.result);r.readAsDataURL(f);});
+    fotos.push(b64);
+  }
   const list=getOS();
   const d=new Date();
-  list.unshift({id:Date.now(),placa,veiculo,queixa:queixa||'—',status,data:`${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`});
+  list.unshift({id:Date.now(),placa,veiculo,queixa:queixa||'—',status,fotos,data:`${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`});
   saveOS(list);
   closeOSModal();
   renderOS();
+  showToast('OS criada com sucesso!','success');
 }
 
 function deletarOS(id){
@@ -1824,13 +1868,25 @@ function salvarPost(){
   const titulo=document.getElementById('post-titulo').value.trim();
   const corpo=document.getElementById('post-corpo').value.trim();
   const tagsRaw=document.getElementById('post-tags').value.trim();
-  if(!titulo){alert('Título é obrigatório.');return;}
+  if(!titulo){showToast('Título é obrigatório.','error');return;}
   const tags=tagsRaw?tagsRaw.split(',').map(t=>t.trim().toUpperCase()).filter(Boolean):[];
   const list=getPosts();
   list.unshift({id:Date.now(),titulo,corpo:corpo||'',tags,autor:'@você',ups:0,upvotado:false});
   savePosts(list);
   closePostModal();
   renderPosts();
+  showToast('Post publicado!','success');
+}
+
+function showToast(msg,type='success'){
+  const t=document.createElement('div');
+  t.style.cssText=`position:fixed;bottom:calc(24px + var(--sab));left:50%;transform:translateX(-50%);
+    background:${type==='error'?'#7a0f0a':'#14532d'};color:#fff;padding:12px 20px;border-radius:3px;
+    font-size:13px;font-weight:500;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,.5);
+    white-space:nowrap;animation:fu .3s ease-out;`;
+  t.textContent=(type==='error'?'⚠ ':'✓ ')+msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),3500);
 }
 
 /* ══ INIT ══ */
@@ -1838,6 +1894,7 @@ document.getElementById('modal-os').addEventListener('click',function(e){if(e.ta
 document.getElementById('modal-post').addEventListener('click',function(e){if(e.target===this)closePostModal();});
 renderOS();
 renderPosts();
+updateDashboard();
 </script>
 
 <script type="module">
