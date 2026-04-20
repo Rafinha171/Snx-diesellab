@@ -1,105 +1,1223 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/><meta name="theme-color" content="#090909"/><meta name="description" content="SNX DieselLab — Diagnóstico inteligente para sistemas de injeção eletrônica diesel. IA conversacional + fluxo guiado para mecânicos e técnicos especializados."/><meta property="og:title" content="SNX DieselLab — Diagnóstico Inteligente Diesel"/><meta property="og:description" content="Do sintoma ao diagnóstico em minutos. IA treinada em manuais técnicos reais."/><meta property="og:type" content="website"/><title>SNX DieselLab — Diagnóstico Inteligente Diesel</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"><style>*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}:root{--red:#e8231a;--red-b:#ff2d24;--red-glow:rgba(232,35,26,.18);--red-soft:rgba(232,35,26,.07);--red-border:rgba(232,35,26,.28);--bg:#090909;--bg2:#0e0e0e;--bg3:#141414;--bg4:#1c1c1c;--line:rgba(255,255,255,.06);--line2:rgba(255,255,255,.11);--text:#f0f0f0;--text2:#9a9a9a;--text3:#4a4a4a;--white:#fff;--r:3px;--nav-h:64px;--sat:env(safe-area-inset-top);--sab:env(safe-area-inset-bottom);--sal:env(safe-area-inset-left);--sar:env(safe-area-inset-right);}html{scroll-behavior:smooth;}body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:400;overflow-x:hidden;line-height:1.5;-webkit-font-smoothing:antialiased;}@media(pointer:fine){body{cursor:none;}}img,svg{display:block;}button{font-family:inherit;border:none;cursor:pointer;}a{text-decoration:none;color:inherit;}#cur,#cur-r{position:fixed;top:0;left:0;pointer-events:none;border-radius:50%;z-index:9999;transform:translate(-50%,-50%);display:none;}@media(pointer:fine){#cur{display:block;width:9px;height:9px;background:var(--red);transition:width .18s,height .18s;}#cur-r{display:block;width:34px;height:34px;border:1px solid rgba(232,35,26,.45);transition:width .22s,height .22s,border-color .22s;}}.noise{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.028;background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’/%3E%3C/svg%3E”);}nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);padding:0 24px;padding-left:calc(24px+var(--sal));padding-right:calc(24px+var(--sar));display:flex;align-items:center;justify-content:space-between;transition:background .35s,border-bottom .35s;}nav.scrolled{background:rgba(9,9,9,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--line);}@media(min-width:768px){nav{padding:0 40px;}}@media(min-width:1024px){nav{padding:0 60px;}}.nav-logo{font-family:‘Bebas Neue’,sans-serif;font-size:22px;letter-spacing:.12em;color:var(--white);display:flex;align-items:center;gap:10px;z-index:201;}@media(min-width:768px){.nav-logo{font-size:26px;}}.logo-d{width:18px;height:18px;flex-shrink:0;background:var(--red);transform:rotate(45deg);position:relative;}.logo-d::after{content:’’;position:absolute;inset:4px;background:var(--bg);}@media(min-width:768px){.logo-d{width:22px;height:22px;}}.nav-links{display:none;gap:32px;list-style:none;}@media(min-width:1024px){.nav-links{display:flex;}}.nav-links a{font-size:13px;font-weight:500;letter-spacing:.05em;color:var(--text2);transition:color .2s;}.nav-links a:hover{color:var(--white);}.nav-cta{display:none;align-items:center;gap:10px;}@media(min-width:768px){.nav-cta{display:flex;}}.btn-ghost{padding:9px 20px;border:1px solid var(--line2);background:transparent;color:var(--text);font-size:13px;font-weight:500;letter-spacing:.04em;border-radius:var(--r);transition:all .2s;}.btn-ghost:hover{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.04);}.btn-red{padding:9px 22px;background:var(--red);color:#fff;font-size:13px;font-weight:700;letter-spacing:.06em;border-radius:var(--r);transition:all .2s;position:relative;overflow:hidden;}.btn-red:hover{background:var(--red-b);box-shadow:0 0 32px var(--red-glow);}.ham{display:flex;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:transparent;border:none;padding:8px;z-index:201;}@media(min-width:768px){.ham{display:none;}}.ham span{display:block;height:1.5px;background:var(--text);border-radius:2px;transition:all .3s;transform-origin:center;}.ham.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}.ham.open span:nth-child(2){opacity:0;transform:scaleX(0);}.ham.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}.mobile-menu{position:fixed;inset:0;z-index:199;background:rgba(9,9,9,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .35s;}.mobile-menu.open{opacity:1;pointer-events:all;}.mobile-menu a{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(36px,8vw,52px);letter-spacing:.06em;color:var(--text2);padding:12px 32px;transition:color .2s;opacity:0;transform:translateY(16px);transition:color .2s,opacity .4s,transform .4s;}.mobile-menu.open a{opacity:1;transform:translateY(0);}.mobile-menu.open a:nth-child(1){transition-delay:.05s;}.mobile-menu.open a:nth-child(2){transition-delay:.1s;}.mobile-menu.open a:nth-child(3){transition-delay:.15s;}.mobile-menu.open a:nth-child(4){transition-delay:.2s;}.mobile-menu a:hover{color:var(--white);}.mobile-menu-btns{margin-top:32px;display:flex;flex-direction:column;gap:12px;width:240px;opacity:0;transform:translateY(16px);transition:opacity .4s .28s,transform .4s .28s;}.mobile-menu.open .mobile-menu-btns{opacity:1;transform:translateY(0);}.mobile-menu .btn-ghost,.mobile-menu .btn-red{width:100%;padding:14px;text-align:center;font-size:15px;}.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h)+48px) 24px 200px;position:relative;overflow-x:hidden;overflow-y:visible;}@media(min-width:768px){.hero{padding:calc(var(--nav-h)+64px) 40px 220px;}}@media(min-width:1024px){.hero{padding:calc(var(--nav-h)+80px) 60px 240px;}}.h-glow{position:absolute;pointer-events:none;border-radius:50%;}.h-glow1{width:min(900px,140vw);height:min(900px,140vw);background:radial-gradient(ellipse,rgba(232,35,26,.13) 0%,transparent 65%);top:-20%;right:-30%;animation:g-drift 14s ease-in-out infinite alternate;}.h-glow2{width:min(500px,80vw);height:min(500px,80vw);background:radial-gradient(ellipse,rgba(232,35,26,.07) 0%,transparent 65%);bottom:-10%;left:-10%;animation:g-drift 18s ease-in-out infinite alternate-reverse;}@keyframes g-drift{from{transform:translate(0,0);}to{transform:translate(-40px,50px);}}.v-lines{display:none;position:absolute;right:0;top:0;bottom:0;width:50%;pointer-events:none;}@media(min-width:640px){.v-lines{display:flex;gap:1px;opacity:.45;}}.v-line{flex:1;border-left:1px solid var(--line);animation:vl .8s ease-out backwards;}.v-line:nth-child(n){animation-delay:calc(n * .08s);}@keyframes vl{from{opacity:0;transform:scaleY(0);}to{opacity:1;transform:scaleY(1);}}.h-eye{display:inline-flex;align-items:center;gap:9px;padding:6px 14px;border-radius:999px;border:1px solid var(--red-border);background:var(--red-soft);font-family:‘DM Mono’,monospace;font-size:10px;letter-spacing:.14em;color:var(--red);margin-bottom:28px;width:fit-content;animation:fu .8s ease-out backwards;}@media(min-width:768px){.h-eye{font-size:11px;margin-bottom:36px;}}.h-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:blink 2s infinite;}@keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}.h-title{font-family:’Bebas Neue’,sans-serif;font-size:clamp(52px,14vw,148px);line-height:.9;letter-spacing:.02em;color:var(--white);margin-bottom:24px;animation:fu .8s .12s ease-out backwards;}@media(max-width:400px){.h-title{font-size:clamp(40px,11vw,52px);}}@media(min-width:768px){.h-title{margin-bottom:28px;}}.h-title .r{color:var(--red);}.h-title .sk{-webkit-text-stroke:2px rgba(255,255,255,.22);color:transparent;}.h-sub{font-size:clamp(15px,2.2vw,17px);line-height:1.65;color:var(--text2);max-width:480px;margin-bottom:40px;animation:fu .8s .24s ease-out backwards;}@media(min-width:768px){.h-sub{margin-bottom:48px;}}.h-sub strong{color:var(--text);font-weight:500;}.h-btns{display:flex;flex-direction:column;gap:12px;animation:fu .8s .36s ease-out backwards;}@media(min-width:480px){.h-btns{flex-direction:row;align-items:center;gap:16px;}}.btn-hero{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 32px;background:var(--red);color:#fff;font-size:14px;font-weight:700;letter-spacing:.08em;border-radius:var(--r);transition:all .25s;position:relative;overflow:hidden;width:100%;}@media(min-width:480px){.btn-hero{width:auto;}}.btn-hero::after{content:’’;position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.18),transparent 60%);opacity:0;transition:opacity .25s;}.btn-hero:hover{transform:translateY(-2px);box-shadow:0 20px 60px rgba(232,35,26,.38);background:var(--red-b);}.btn-hero:hover::after{opacity:1;}.btn-hero svg{flex-shrink:0;transition:transform .25s;}.btn-hero:hover svg{transform:translateX(4px);}.btn-hero:active{transform:scale(.97);}.btn-ol{display:inline-flex;align-items:center;justify-content:center;padding:16px 28px;border:1px solid var(--line2);background:transparent;color:var(--text);font-size:14px;font-weight:500;border-radius:var(--r);transition:all .22s;width:100%;}@media(min-width:480px){.btn-ol{width:auto;}}.btn-ol:hover{border-color:rgba(255,255,255,.26);background:rgba(255,255,255,.04);}.btn-ol:active{transform:scale(.97);}.h-stats{position:absolute;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line);animation:fu .8s .48s ease-out backwards;}@media(min-width:640px){.h-stats{grid-template-columns:repeat(4,1fr);}}.h-stat{background:var(--bg2);padding:20px 18px;transition:background .2s;}@media(min-width:768px){.h-stat{padding:24px 28px;}}.h-stat:hover{background:var(--bg3);}.h-stat-n{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(32px,6vw,44px);letter-spacing:.02em;color:var(--white);line-height:1;margin-bottom:4px;}.h-stat-n .r{color:var(--red);}.h-stat-l{font-size:11px;color:var(--text3);letter-spacing:.07em;font-weight:500;}@media(min-width:768px){.h-stat-l{font-size:12px;letter-spacing:.08em;}}@keyframes fu{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}.ticker-w{overflow:hidden;position:relative;z-index:2;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2);padding:12px 0;}.ticker{display:flex;width:max-content;animation:tick 30s linear infinite;}@media(prefers-reduced-motion:reduce){.ticker{animation:none;}}.ticker-item{white-space:nowrap;padding:0 28px;font-family:‘DM Mono’,monospace;font-size:11px;letter-spacing:.1em;color:var(--text3);display:flex;align-items:center;gap:28px;}.ticker-item .d{color:var(--red);}@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}section{padding:80px 24px;position:relative;z-index:2;}@media(min-width:768px){section{padding:100px 40px;}}@media(min-width:1024px){section{padding:120px 60px;}}.s-tag{font-family:‘DM Mono’,monospace;font-size:11px;letter-spacing:.18em;color:var(--red);margin-bottom:16px;display:flex;align-items:center;gap:10px;}.s-tag::before{content:’’;width:24px;height:1px;background:var(--red);}.s-title{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(38px,7vw,80px);line-height:.95;letter-spacing:.02em;color:var(--white);margin-bottom:16px;}.features{background:var(--bg);}.feat-intro{margin-bottom:52px;}.feat-intro p{font-size:16px;color:var(--text2);line-height:1.7;max-width:520px;}.feat-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line);}@media(min-width:640px){.feat-grid{grid-template-columns:1fr 1fr;}}@media(min-width:1024px){.feat-grid{grid-template-columns:repeat(12,1fr);}.fc-7{grid-column:span 7;}.fc-5{grid-column:span 5;}.fc-4{grid-column:span 4;}}.feat{background:var(--bg);padding:32px 28px;position:relative;overflow:hidden;transition:background .25s;}@media(min-width:768px){.feat{padding:40px 36px;}}.feat::before{content:’’;position:absolute;inset:0;opacity:0;background:linear-gradient(135deg,var(--red-soft),transparent 60%);transition:opacity .35s;pointer-events:none;}.feat:hover{background:var(--bg2);}.feat:hover::before{opacity:1;}.feat-ico{width:44px;height:44px;background:var(--bg3);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;margin-bottom:24px;border-radius:var(--r);transition:border-color .25s,box-shadow .25s;}.feat:hover .feat-ico{border-color:var(--red-border);box-shadow:0 0 16px var(--red-glow);}.feat-ico svg{color:var(--red);width:20px;height:20px;}.feat-n{font-family:‘DM Mono’,monospace;font-size:10px;letter-spacing:.18em;color:var(--text3);margin-bottom:12px;}.feat h3{font-family:‘Bebas Neue’,sans-serif;font-size:26px;letter-spacing:.04em;color:var(--white);margin-bottom:10px;}.feat p{font-size:14px;color:var(--text2);line-height:1.7;max-width:300px;}.feat-vis{width:100%;height:180px;background:var(--bg3);border:1px solid var(--line);margin-top:24px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:var(--r);}@media(min-width:768px){.feat-vis{height:220px;}}.tree-viz{display:flex;flex-direction:column;align-items:center;gap:10px;padding:16px;width:100%;}.tn{padding:7px 14px;border:1px solid var(--line2);font-family:‘DM Mono’,monospace;font-size:10px;color:var(--text2);background:var(--bg4);border-radius:var(--r);white-space:nowrap;}.tn.on{border-color:var(--red);color:var(--red);background:var(--red-soft);}.t-conn{width:1px;height:16px;background:var(--line2);}.t-br{display:flex;gap:16px;align-items:flex-start;}.t-brc{display:flex;flex-direction:column;align-items:center;gap:8px;}.t-h{width:48px;height:1px;background:var(--line2);}.plate-hist{padding:16px;width:100%;}.ph-plate{font-family:‘DM Mono’,monospace;font-size:17px;color:var(--white);letter-spacing:.08em;margin-bottom:14px;display:flex;align-items:center;gap:10px;}.ph-badge{font-family:‘DM Mono’,monospace;font-size:9px;color:var(--red);padding:2px 8px;border:1px solid var(--red-border);border-radius:999px;}.ph-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}.ph-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}.ph-dot.on{background:var(--red);}.ph-dot.off{background:transparent;border:1px solid var(--line2);}.ph-txt{font-size:12px;color:var(--text2);}.ph-txt.dim{color:var(--text3);}.how{background:var(--bg2);}.how-grid{display:grid;grid-template-columns:1fr;gap:52px;margin-top:52px;}@media(min-width:900px){.how-grid{grid-template-columns:1fr 1fr;gap:72px;align-items:start;}}.how-steps{display:flex;flex-direction:column;}.how-step{padding:24px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:48px 1fr;gap:20px;align-items:start;transition:padding-left .2s;}@media(min-width:768px){.how-step{padding:28px 0;}}.how-step:first-child{border-top:1px solid var(--line);}.how-step:hover{padding-left:6px;}.sn{font-family:‘Bebas Neue’,sans-serif;font-size:32px;color:var(--text3);line-height:1;transition:color .2s;}@media(min-width:768px){.sn{font-size:36px;}}.how-step:hover .sn{color:var(--red);}.sc h3{font-size:17px;font-weight:700;color:var(--white);margin-bottom:6px;letter-spacing:-.01em;}.sc p{font-size:14px;color:var(--text2);line-height:1.65;}.stag{display:inline-block;margin-top:10px;font-family:‘DM Mono’,monospace;font-size:10px;letter-spacing:.1em;color:var(--red);padding:3px 9px;border:1px solid var(--red-border);border-radius:var(--r);}.app-wrap{position:relative;}.app-prev{background:var(--bg);border:1px solid var(--line);border-radius:6px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.55);}.app-bar{background:var(--bg3);padding:10px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;}.app-dot{width:9px;height:9px;border-radius:50%;}.ad1{background:#ff5f57;}.ad2{background:#febc2e;}.ad3{background:#28c840;}.app-url{flex:1;margin:0 10px;background:var(--bg2);padding:4px 10px;border-radius:2px;font-family:‘DM Mono’,monospace;font-size:9px;color:var(--text3);letter-spacing:.06em;text-align:center;}.app-body{padding:16px;}.ap-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;}.ap-plate{font-family:‘DM Mono’,monospace;font-size:16px;color:var(--white);letter-spacing:.08em;}.ap-badge{padding:2px 8px;border-radius:999px;font-family:‘DM Mono’,monospace;font-size:9px;background:rgba(232,35,26,.14);color:var(--red);letter-spacing:.08em;}.ap-ai{background:var(--bg2);border:1px solid var(--line);border-left:2px solid var(--red);padding:10px 12px;border-radius:var(--r);font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:10px;}.ap-ai strong{color:var(--white);}.ap-q{background:var(--bg3);border:1px solid var(--line2);padding:12px;border-radius:var(--r);}.ap-ql{font-family:‘DM Mono’,monospace;font-size:9px;color:var(--red);letter-spacing:.1em;margin-bottom:7px;}.ap-qt{font-size:13px;font-weight:600;color:var(--white);margin-bottom:10px;}.ap-btns{display:flex;gap:6px;}.ap-btn{flex:1;padding:8px;border:1px solid var(--line2);background:transparent;color:var(--text2);font-size:12px;font-weight:600;text-align:center;border-radius:var(--r);cursor:pointer;transition:all .2s;}.ap-btn:hover{border-color:var(--red);color:var(--red);}.ap-prog{display:flex;gap:3px;margin-top:14px;}.ap-p{flex:1;height:2px;background:var(--bg4);border-radius:1px;}.ap-p.d{background:var(--red);}.ap-p.a{background:var(--red);opacity:.5;animation:pa 1.2s infinite;}@keyframes pa{0%,100%{opacity:.4;}50%{opacity:1;}}.app-float{position:absolute;bottom:-20px;right:-16px;background:var(--red);color:#fff;padding:10px 16px;border-radius:var(--r);font-size:12px;font-weight:700;box-shadow:0 12px 40px rgba(232,35,26,.4);white-space:nowrap;}@media(max-width:480px){.app-float{right:0;bottom:-24px;font-size:11px;}}.modules{background:var(--bg);}.mod-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:52px;}@media(min-width:640px){.mod-grid{grid-template-columns:1fr 1fr;}}@media(min-width:1024px){.mod-grid{grid-template-columns:repeat(3,1fr);}}.mod{background:var(--bg);padding:36px 32px;position:relative;overflow:hidden;transition:background .25s;}@media(min-width:768px){.mod{padding:44px 40px;}}.mod:hover{background:var(--bg2);}.mod-g{font-family:‘Bebas Neue’,sans-serif;font-size:90px;line-height:1;color:rgba(255,255,255,.025);position:absolute;bottom:-10px;right:16px;letter-spacing:0;transition:color .3s;pointer-events:none;}.mod:hover .mod-g{color:rgba(232,35,26,.055);}.mod-icon{font-size:26px;margin-bottom:20px;display:block;}.mod h3{font-family:‘Bebas Neue’,sans-serif;font-size:24px;letter-spacing:.04em;color:var(--white);margin-bottom:10px;}.mod p{font-size:14px;color:var(--text2);line-height:1.7;max-width:240px;}.mod-lk{display:inline-flex;align-items:center;gap:7px;margin-top:20px;font-size:13px;font-weight:600;color:var(--red);transition:gap .2s;}.mod:hover .mod-lk{gap:13px;}.logos-b{padding:40px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2);position:relative;z-index:2;overflow:hidden;}.logos-lbl{font-family:‘DM Mono’,monospace;font-size:10px;letter-spacing:.18em;color:var(--text3);text-align:center;margin-bottom:24px;padding:0 24px;}.logos-row{display:flex;gap:52px;align-items:center;width:max-content;animation:tick 22s linear infinite;}@media(prefers-reduced-motion:reduce){.logos-row{animation:none;}}.lb{font-family:‘Bebas Neue’,sans-serif;font-size:20px;letter-spacing:.12em;color:var(--text3);white-space:nowrap;}.cta-b{background:var(--red);padding:64px 24px;display:flex;flex-direction:column;align-items:flex-start;gap:32px;position:relative;overflow:hidden;z-index:2;}@media(min-width:768px){.cta-b{padding:80px 40px;}}@media(min-width:1024px){.cta-b{padding:80px 60px;flex-direction:row;align-items:center;justify-content:space-between;}}.cta-b::before{content:‘SNX’;position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-family:‘Bebas Neue’,sans-serif;font-size:clamp(120px,22vw,200px);color:rgba(0,0,0,.1);pointer-events:none;letter-spacing:.05em;line-height:1;}.cta-b h2{font-family:‘Bebas Neue’,sans-serif;font-size:clamp(32px,6vw,64px);letter-spacing:.02em;color:#fff;line-height:1;margin-bottom:10px;}.cta-b p{font-size:16px;color:rgba(255,255,255,.75);max-width:460px;line-height:1.6;}.btn-w{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;background:#fff;color:var(--red);font-size:15px;font-weight:700;letter-spacing:.06em;border-radius:var(--r);transition:all .25s;white-space:nowrap;flex-shrink:0;width:100%;justify-content:center;}@media(min-width:480px){.btn-w{width:auto;justify-content:flex-start;}}.btn-w:hover{transform:translateY(-2px);box-shadow:0 20px 60px rgba(0,0,0,.25);}.btn-w:active{transform:scale(.97);}footer{background:var(--bg2);border-top:1px solid var(--line);padding:52px 24px calc(52px+var(--sab));position:relative;z-index:2;}@media(min-width:768px){footer{padding:60px 40px;}}@media(min-width:1024px){footer{padding:60px;}}.footer-grid{display:grid;grid-template-columns:1fr;gap:40px;margin-bottom:48px;}@media(min-width:640px){.footer-grid{grid-template-columns:1fr 1fr;}}@media(min-width:1024px){.footer-grid{grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;}}.f-brand{font-family:‘Bebas Neue’,sans-serif;font-size:20px;letter-spacing:.12em;color:var(--white);display:flex;align-items:center;gap:10px;margin-bottom:12px;}.f-desc{font-size:14px;color:var(--text3);line-height:1.7;max-width:280px;}.f-col h4{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--text2);text-transform:uppercase;margin-bottom:16px;}.f-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}.f-col a{font-size:14px;color:var(--text3);transition:color .15s;}.f-col a:hover{color:var(--text);}.f-bottom{padding-top:28px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px;}@media(min-width:640px){.f-bottom{flex-direction:row;justify-content:space-between;align-items:center;}}.f-bottom p{font-size:12px;color:var(--text3);letter-spacing:.04em;}.f-ver{font-family:‘DM Mono’,monospace;font-size:11px;color:var(--text3);letter-spacing:.1em;}.m-back{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0);backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s,backdrop-filter .3s,background .3s;}@media(min-width:640px){.m-back{align-items:center;}}.m-back.open{opacity:1;pointer-events:all;background:rgba(0,0,0,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}.modal{width:100%;max-width:460px;background:var(--bg2);border:1px solid var(--line2);border-radius:8px 8px 0 0;overflow:hidden;transform:translateY(40px);transition:transform .4s cubic-bezier(.16,1,.3,1);box-shadow:0 -20px 80px rgba(0,0,0,.5);padding-bottom:var(--sab);max-height:92svh;overflow-y:auto;}@media(min-width:640px){.modal{border-radius:6px;transform:translateY(24px) scale(.96);max-height:90vh;}}.m-back.open .modal{transform:translateY(0) scale(1);}.m-handle{width:40px;height:4px;background:var(--line2);border-radius:2px;margin:12px auto 0;}@media(min-width:640px){.m-handle{display:none;}}.m-top{background:var(--bg3);padding:24px 28px 20px;border-bottom:1px solid var(--line);position:relative;}.m-close{position:absolute;top:18px;right:20px;background:transparent;border:none;color:var(--text3);width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:2px;transition:color .2s,background .2s;}.m-close:hover{color:var(--text);background:var(--bg4);}.m-logo{font-family:‘Bebas Neue’,sans-serif;font-size:19px;letter-spacing:.12em;color:var(--white);display:flex;align-items:center;gap:9px;margin-bottom:4px;}.m-sub{font-size:12px;color:var(--text3);}.m-body{padding:28px;}.m-tabs{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:24px;}.m-tab{flex:1;padding:10px;background:var(--bg3);border:none;color:var(--text3);font-size:13px;font-weight:600;letter-spacing:.04em;transition:all .2s;}.m-tab.on{background:var(--red);color:#fff;}.fg{margin-bottom:18px;}.fl{display:block;font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--text2);margin-bottom:7px;text-transform:uppercase;}.fi{width:100%;background:var(--bg3);border:1px solid var(--line2);color:var(--text);padding:13px 15px;font-family:‘DM Sans’,sans-serif;font-size:15px;border-radius:var(--r);outline:none;transition:border-color .2s,box-shadow .2s;min-height:48px;}.fi:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(232,35,26,.12);}.fi::placeholder{color:var(--text3);}.fs{width:100%;padding:15px;min-height:52px;background:var(--red);color:#fff;border:none;font-family:‘DM Sans’,sans-serif;font-size:15px;font-weight:700;letter-spacing:.07em;border-radius:var(--r);margin-top:6px;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:9px;position:relative;overflow:hidden;}.fs::before{content:’’;position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);opacity:0;transition:opacity .2s;}.fs:hover{background:var(--red-b);box-shadow:0 0 40px rgba(232,35,26,.32);}.fs:hover::before{opacity:1;}.fs:active{transform:scale(.98);}.tc{display:none;}.tc.on{display:block;}.m-note{text-align:center;font-size:12px;color:var(--text3);margin-top:14px;}.m-note a{color:var(--text2);text-underline-offset:3px;text-decoration:underline;}.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease-out,transform .55s ease-out;}.reveal.vis{opacity:1;transform:none;}.scroll-ind{position:absolute;bottom:200px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:fu .8s .6s ease-out backwards;pointer-events:none;}@media(max-width:640px){.scroll-ind{display:none;}}.si-txt{font-family:‘DM Mono’,monospace;font-size:10px;letter-spacing:.2em;color:var(--text3);}.si-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--text3),transparent);animation:si-drop 2s ease-in-out infinite;}@keyframes si-drop{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}</style></head><body><div class="noise"></div><div id="cur"></div><div id="cur-r"></div><!-- ══ NAV ══ --><nav id="nav"><div class="nav-logo"><div class="logo-d"></div>
-    SNX DieselLab
-  </div><ul class="nav-links"><li><a href="#features">Plataforma</a></li><li><a href="#how">Como Funciona</a></li><li><a href="#modules">Módulos</a></li></ul><div class="nav-cta"><button class="btn-ghost" onclick="openModal('login')">Entrar</button><button class="btn-red" onclick="openModal('register')">Começar Grátis</button></div><button class="ham" id="ham" aria-label="Menu" onclick="toggleMenu()"><span></span><span></span><span></span></button></nav><!-- Mobile Drawer --><div class="mobile-menu" id="mob-menu"><a href="#features" onclick="closeMenu()">Plataforma</a><a href="#how" onclick="closeMenu()">Como Funciona</a><a href="#modules" onclick="closeMenu()">Módulos</a><a href="#" onclick="closeMenu()">Contato</a><div class="mobile-menu-btns"><button class="btn-ghost" onclick="closeMenu();openModal('login')">Entrar na Plataforma</button><button class="btn-red" onclick="closeMenu();openModal('register')">Criar Conta Grátis</button></div></div><!-- ══ HERO ══ --><section class="hero" id="home"><div class="hero-bg" aria-hidden="true"><div class="h-glow h-glow1"></div><div class="h-glow h-glow2"></div><div class="v-lines"><div class="v-line"></div><div class="v-line"></div><div class="v-line"></div><div class="v-line"></div><div class="v-line"></div><div class="v-line"></div><div class="v-line"></div><div class="v-line"></div></div></div><div class="h-eye"><span class="h-dot"></span>
-    DIAGNÓSTICO COM INTELIGÊNCIA ARTIFICIAL
-  </div><h1 class="h-title">
-    INJEÇÃO<br>
-    DIESEL<br><span class="r">DIAGNOS</span><span class="sk">TICADA.</span></h1><p class="h-sub">
-    O primeiro sistema que combina <strong>IA conversacional</strong> com <strong>fluxos técnicos guiados</strong>. Para mecânicos e técnicos que não têm tempo para erro.
-  </p><div class="h-btns"><button class="btn-hero" onclick="window.location.href='/painel'">
-      Acessar a Plataforma
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><button class="btn-ol" onclick="openModal('login')">Já tenho conta</button></div><div class="scroll-ind" aria-hidden="true"><span class="si-txt">SCROLL</span><div class="si-line"></div></div><div class="h-stats" aria-label="Estatísticas"><div class="h-stat"><div class="h-stat-n">12<span class="r">K</span></div><div class="h-stat-l">DIAGNÓSTICOS / MÊS</div></div><div class="h-stat"><div class="h-stat-n">94<span class="r">%</span></div><div class="h-stat-l">TAXA DE ACERTO</div></div><div class="h-stat"><div class="h-stat-n">340<span class="r">+</span></div><div class="h-stat-l">OFICINAS ATIVAS</div></div><div class="h-stat"><div class="h-stat-n">48<span class="r">H</span></div><div class="h-stat-l">ECONOMIZADAS / SEMANA</div></div></div></section><!-- ══ TICKER ══ --><div class="ticker-w" aria-hidden="true"><div class="ticker"><div class="ticker-item">BOSCH COMMON RAIL <span class="d">◆</span> DENSO CRI <span class="d">◆</span> DELPHI MULTEC <span class="d">◆</span> SIEMENS PIEZO <span class="d">◆</span> CONTINENTAL VDO <span class="d">◆</span> CUMMINS ISB <span class="d">◆</span> MWM ACTEON <span class="d">◆</span> P0087 · P0193 · P0201 <span class="d">◆</span> HILUX · RANGER · S10 · AMAROK · IVECO <span class="d">◆</span></div><div class="ticker-item">BOSCH COMMON RAIL <span class="d">◆</span> DENSO CRI <span class="d">◆</span> DELPHI MULTEC <span class="d">◆</span> SIEMENS PIEZO <span class="d">◆</span> CONTINENTAL VDO <span class="d">◆</span> CUMMINS ISB <span class="d">◆</span> MWM ACTEON <span class="d">◆</span> P0087 · P0193 · P0201 <span class="d">◆</span> HILUX · RANGER · S10 · AMAROK · IVECO <span class="d">◆</span></div></div></div><!-- ══ FEATURES ══ --><section class="features" id="features"><div class="feat-intro reveal"><div class="s-tag">PLATAFORMA</div><h2 class="s-title">TUDO QUE A<br>OFICINA PRECISA</h2><p>Do sintoma ao diagnóstico em minutos. IA treinada em manuais técnicos reais, guiando cada passo com precisão.</p></div><div class="feat-grid"><!-- 1: IA + Árvore --><div class="feat fc-7 reveal"><div class="feat-n">01</div><div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><path d="M20 2v4h-4"/><path d="M16 6l4-4"/></svg></div><h3>IA + ÁRVORE DE DECISÃO</h3><p>Descreva o sintoma, a IA analisa e inicia um fluxo técnico guiado por testes físicos reais. Cada resposta avança o diagnóstico com precisão.</p><div class="feat-vis"><div class="tree-viz"><div class="tn on">Fumaça branca + sem força?</div><div class="t-conn"></div><div class="t-br"><div class="t-brc"><div class="tn on">Pressão &lt; 3.5 bar</div><div class="t-conn"></div><div class="tn on" style="color:var(--red);border-color:var(--red);">Bomba tandem 62%</div></div><div style="display:flex;align-items:center;padding-top:4px;"><div class="t-h"></div></div><div class="t-brc"><div class="tn">Pressão normal</div><div class="t-conn"></div><div class="tn">Injetores</div></div></div></div></div></div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SNX Diesel Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root {
+  --red: #CA2D28;
+  --red2: #E03530;
+  --red-dim: rgba(202,45,40,0.12);
+  --red-border: rgba(202,45,40,0.3);
+  --bg: #0E0E0E;
+  --bg1: #141414;
+  --bg2: #1A1A1A;
+  --bg3: #222222;
+  --bg4: #2C2C2C;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #E8E6E3;
+  --text2: #8A8A8A;
+  --text3: #4A4A4A;
+  --green: #22C55E;
+  --green-dim: rgba(34,197,94,0.1);
+  --yellow: #EAB308;
+  --yellow-dim: rgba(234,179,8,0.1);
+  --blue: #3B82F6;
+  --blue-dim: rgba(59,130,246,0.1);
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+  --cond: 'IBM Plex Sans Condensed', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--sans);overflow:hidden;}
 
-```
-<!-- 2: Histórico --><div class="feat fc-5 reveal"><div class="feat-n">02</div><div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h.01M12 12h.01M16 12h.01M8 16h8M8 8h8"/></svg></div><h3>HISTÓRICO POR PLACA</h3><p>Busque qualquer placa e veja o histórico completo: ordens, fotos antes/depois e diagnósticos anteriores.</p><div class="feat-vis" style="height:150px;"><div class="plate-hist"><div class="ph-plate">RKT-4A82 <span class="ph-badge">3ª VISITA</span></div><div class="ph-row"><span class="ph-dot on"></span><span class="ph-txt">HOJE · Fumaça branca · em diagnóstico</span></div><div class="ph-row"><span class="ph-dot off"></span><span class="ph-txt dim">AGO 25 · Válvula EGR · resolvido</span></div><div class="ph-row"><span class="ph-dot off"></span><span class="ph-txt dim">MAR 24 · Bomba CP3 · resolvido</span></div></div></div></div><!-- 3: DTC --><div class="feat fc-4 reveal"><div class="feat-n">03</div><div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg></div><h3>DICIONÁRIO DTC</h3><p>Busca instantânea de P-codes. Causas, soluções e fluxos vinculados a cada código OBD.</p></div><!-- 4: Comunidade --><div class="feat fc-4 reveal"><div class="feat-n">04</div><div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>COMUNIDADE MÃO NA GRAXA</h3><p>Troca de casos, áudios e apostilas. A IA processa e incorpora o conhecimento ao sistema.</p></div><!-- 5: Audio --><div class="feat fc-4 reveal"><div class="feat-n">05</div><div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg></div><h3>ÁUDIO E FOTO</h3><p>Manda um áudio ou foto. A IA transcreve, interpreta e avança o diagnóstico automaticamente.</p></div>
-```
-
-  </div></section><!-- ══ LOGOS ══ --><div class="logos-b" aria-label="Sistemas compatíveis"><p class="logos-lbl">COMPATÍVEL COM OS PRINCIPAIS SISTEMAS DE INJEÇÃO</p><div class="logos-row" aria-hidden="true"><span class="lb">BOSCH</span><span class="lb">DENSO</span><span class="lb">DELPHI</span><span class="lb">SIEMENS</span><span class="lb">CONTINENTAL</span><span class="lb">CUMMINS</span><span class="lb">MWM</span><span class="lb">CATERPILLAR</span><span class="lb">BOSCH</span><span class="lb">DENSO</span><span class="lb">DELPHI</span><span class="lb">SIEMENS</span><span class="lb">CONTINENTAL</span><span class="lb">CUMMINS</span><span class="lb">MWM</span><span class="lb">CATERPILLAR</span></div></div><!-- ══ HOW ══ --><section class="how" id="how"><div class="reveal"><div class="s-tag">PROCESSO</div><h2 class="s-title">DO SINTOMA AO<br>DIAGNÓSTICO</h2></div><div class="how-grid"><div class="how-steps"><div class="how-step reveal"><div class="sn">01</div><div class="sc"><h3>Abra a OS pela placa</h3><p>Digite a placa do veículo. O sistema recupera o histórico completo e pré-carrega o contexto do motor para a IA.</p><span class="stag">HISTÓRICO INSTANTÂNEO</span></div></div><div class="how-step reveal"><div class="sn">02</div><div class="sc"><h3>Descreva o problema</h3><p>Texto, áudio ou foto. A IA analisa o sintoma, consulta manuais técnicos e seleciona o fluxo mais adequado.</p><span class="stag">IA + RAG TÉCNICO</span></div></div><div class="how-step reveal"><div class="sn">03</div><div class="sc"><h3>Siga o fluxo guiado</h3><p>A árvore de decisão conduz teste por teste. Envie a foto do manômetro — a IA lê e avança automaticamente.</p><span class="stag">ÁRVORE DE DECISÃO</span></div></div><div class="how-step reveal"><div class="sn">04</div><div class="sc"><h3>Diagnóstico + fechamento</h3><p>O sistema entrega o diagnóstico com % de confiança. Feche a OS e alimente a base de conhecimento.</p><span class="stag">APRENDIZADO CONTÍNUO</span></div></div></div>
-
-```
-<!-- App preview --><div class="app-wrap reveal"><div class="app-prev"><div class="app-bar"><div class="app-dot ad1"></div><div class="app-dot ad2"></div><div class="app-dot ad3"></div><div class="app-url">snx.diesellab.com.br</div></div><div class="app-body"><div class="ap-row"><span class="ap-plate">RKT-4A82</span><span class="ap-badge">● ABERTA</span></div><div class="ap-ai"><strong>SNX IA:</strong> Pressão em <strong style="color:var(--red)">2.1 bar</strong> — abaixo do mínimo. Hipótese principal: <strong>bomba tandem com desgaste</strong> (62%).
-      </div><div class="ap-q"><div class="ap-ql">◆ ETAPA 4 DE 7 · TESTE FÍSICO</div><div class="ap-qt">Filtro primário verificado e limpo?</div><div class="ap-btns"><div class="ap-btn">✓ Sim, limpo</div><div class="ap-btn">✗ Está sujo</div></div></div><div class="ap-prog"><div class="ap-p d"></div><div class="ap-p d"></div><div class="ap-p d"></div><div class="ap-p a"></div><div class="ap-p"></div><div class="ap-p"></div><div class="ap-p"></div></div></div></div><div class="app-float">⚡ IA ativa · etapa 4/7</div></div>
-```
-
-  </div></section><!-- ══ MODULES ══ --><section class="modules" id="modules"><div class="reveal"><div class="s-tag">MÓDULOS</div><h2 class="s-title">FERRAMENTAS<br>INTEGRADAS</h2></div><div class="mod-grid"><div class="mod reveal"><span class="mod-icon">⚡</span><h3>Diagnóstico IA</h3><p>Chat técnico com IA treinada em manuais Bosch, Denso, Delphi. Análise de fotos, áudios e osciloscópio.</p><span class="mod-lk">Explorar →</span><div class="mod-g">IA</div></div><div class="mod reveal"><span class="mod-icon">📋</span><h3>Ordens de Serviço</h3><p>OS por placa com timeline completa, fotos antes/depois e rastreio de todas as intervenções anteriores.</p><span class="mod-lk">Explorar →</span><div class="mod-g">OS</div></div><div class="mod reveal"><span class="mod-icon">🔍</span><h3>Dicionário DTC</h3><p>Busca instantânea de P-codes com causas, soluções e fluxos de diagnóstico específicos por motor.</p><span class="mod-lk">Explorar →</span><div class="mod-g">DTC</div></div><div class="mod reveal"><span class="mod-icon">👥</span><h3>Comunidade</h3><p>Fórum técnico com suporte a áudio, foto, vídeo e PDF. Apostilas indexadas pela IA para enriquecer o sistema.</p><span class="mod-lk">Explorar →</span><div class="mod-g">MG</div></div><div class="mod reveal"><span class="mod-icon">📚</span><h3>Base Técnica RAG</h3><p>Manuais vetorizados com citação de fonte e página em cada resposta. Conhecimento rastreável.</p><span class="mod-lk">Explorar →</span><div class="mod-g">KB</div></div><div class="mod reveal"><span class="mod-icon">🌐</span><h3>Árvore de Decisão</h3><p>Fluxos técnicos editáveis por admins. Crie, ajuste e publique novos protocolos sem escrever código.</p><span class="mod-lk">Explorar →</span><div class="mod-g">AD</div></div></div></section><!-- ══ CTA ══ --><div class="cta-b"><div class="reveal"><h2>PRONTO PARA<br>DIAGNOSTICAR MELHOR?</h2><p>340 oficinas já resolvem casos complexos de injeção diesel em minutos com IA.</p></div><button class="btn-w reveal" onclick="openModal('register')">
-    Criar conta gratuita
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div><!-- ══ FOOTER ══ --><footer><div class="footer-grid"><div><div class="f-brand"><div class="logo-d"></div>SNX DieselLab</div><p class="f-desc">Diagnóstico inteligente para sistemas de injeção eletrônica diesel. IA para mecânicos e técnicos especializados.</p></div><div class="f-col"><h4>Plataforma</h4><ul><li><a href="#">Diagnóstico IA</a></li><li><a href="#">Ordens de Serviço</a></li><li><a href="#">Dicionário DTC</a></li><li><a href="#">Comunidade</a></li></ul></div><div class="f-col"><h4>Empresa</h4><ul><li><a href="#">Sobre</a></li><li><a href="#">Blog Técnico</a></li><li><a href="#">Planos</a></li><li><a href="#">Contato</a></li></ul></div><div class="f-col"><h4>Legal</h4><ul><li><a href="#">Privacidade</a></li><li><a href="#">Termos de Uso</a></li><li><a href="#">Segurança</a></li></ul></div></div><div class="f-bottom"><p>© 2026 SNX DieselLab — Todos os direitos reservados</p><span class="f-ver">v2.4.1 · BUILD 20260418</span></div></footer><!-- ══ MODAL ══ --><div class="m-back" id="m-back" onclick="backdropClick(event)" role="dialog" aria-modal="true" aria-label="Acesso à plataforma"><div class="modal" id="modal"><div class="m-handle" aria-hidden="true"></div><div class="m-top"><button class="m-close" onclick="closeModal()" aria-label="Fechar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div class="m-logo"><div class="logo-d" style="width:15px;height:15px;"></div>SNX DieselLab</div><div class="m-sub">Acesso à plataforma de diagnóstico</div></div><div class="m-body"><div class="m-tabs"><button class="m-tab on" id="t-login" onclick="switchTab('login')">Entrar</button><button class="m-tab" id="t-register" onclick="switchTab('register')">Criar Conta</button></div>
-
-```
-  <!-- LOGIN --><div class="tc on" id="c-login"><div class="fg"><label class="fl" for="l-email">E-mail</label><input id="l-email" type="email" class="fi" placeholder="voce@oficina.com.br" autocomplete="email"></div><div class="fg"><label class="fl" for="l-pass">Senha</label><input id="l-pass" type="password" class="fi" placeholder="••••••••" autocomplete="current-password"></div><button class="fs"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-      Entrar na Plataforma
-    </button><p class="m-note"><a href="#">Esqueci minha senha</a></p></div><!-- REGISTER --><div class="tc" id="c-register"><div class="fg"><label class="fl" for="r-name">Nome Completo</label><input id="r-name" type="text" class="fi" placeholder="Ricardo Carvalho" autocomplete="name"></div><div class="fg"><label class="fl" for="r-email">E-mail</label><input id="r-email" type="email" class="fi" placeholder="voce@oficina.com.br" autocomplete="email"></div><div class="fg"><label class="fl" for="r-shop">Oficina / Laboratório</label><input id="r-shop" type="text" class="fi" placeholder="Diesel Tech Ltda" autocomplete="organization"></div><div class="fg"><label class="fl" for="r-pass">Senha</label><input id="r-pass" type="password" class="fi" placeholder="Mínimo 8 caracteres" autocomplete="new-password"></div><button class="fs">
-      Criar Conta Gratuita
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><p class="m-note">Ao criar sua conta você concorda com os <a href="#">Termos de Uso</a></p></div></div>
-```
-
-  </div></div><script>
-/* ── Custom cursor (desktop only) ── */
-const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
-if(window.matchMedia('(pointer:fine)').matches){
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove',e=>{
-    mx=e.clientX;my=e.clientY;
-    cur.style.left=mx+'px';cur.style.top=my+'px';
-  });
-  (function anim(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(anim);})();
+/* ── SCANLINE OVERLAY ── */
+body::before{
+content:'';position:fixed;inset:0;
+background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);
+pointer-events:none;z-index:9998;
 }
 
-/* ── Nav ── */
-const nav=document.getElementById('nav');
-const onScroll=()=>nav.classList.toggle('scrolled',window.scrollY>36);
-window.addEventListener('scroll',onScroll,{passive:true});
+/* ── SPLASH ── */
+#splash{
+position:fixed;inset:0;background:var(--bg);z-index:9999;
+display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;
+transition:opacity 0.6s ease 2s;
+}
+#splash.out{opacity:0;pointer-events:none;}
+.splash-snx-logo{width:120px;height:auto;animation:splashDrop 0.7s cubic-bezier(.22,1,.36,1) both;}
+@keyframes splashDrop{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:none;}}
+.splash-wordmark{
+font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:4px;
+color:var(--text2);text-transform:uppercase;margin-top:18px;
+animation:splashDrop 0.7s 0.2s cubic-bezier(.22,1,.36,1) both;
+}
+.splash-line{
+width:1px;height:0;background:var(--red);margin-top:24px;
+animation:lineGrow 0.8s 0.5s ease forwards;
+}
+@keyframes lineGrow{to{height:40px;}}
+.splash-boot{
+font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:16px;
+animation:splashDrop 0.5s 1.2s ease both;
+}
+.splash-boot span{color:var(--green);}
 
-/* ── Mobile menu ── */
-const ham=document.getElementById('ham'),mob=document.getElementById('mob-menu');
-function toggleMenu(){
-  const open=mob.classList.toggle('open');
-  ham.classList.toggle('open',open);
-  document.body.style.overflow=open?'hidden':'';
+/* ── APP ── */
+#app{display:flex;flex-direction:column;height:100vh;max-width:430px;margin:0 auto;position:relative;}
+
+/* ── HEADER ── */
+.hdr{
+background:var(--bg1);border-bottom:1px solid var(--border);
+padding:0 16px;height:52px;display:flex;align-items:center;gap:12px;
+position:sticky;top:0;z-index:100;flex-shrink:0;
 }
-function closeMenu(){
-  mob.classList.remove('open');ham.classList.remove('open');
-  document.body.style.overflow='';
+.hdr-logo{display:flex;align-items:center;gap:10px;flex:1;}
+.hdr-snx{height:22px;width:auto;}
+.hdr-sep{width:1px;height:20px;background:var(--border2);}
+.hdr-name{font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:2px;color:var(--text2);text-transform:uppercase;}
+.hdr-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.hdr-status{
+display:flex;align-items:center;gap:6px;
+font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.5px;
+}
+.hdr-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.hdr-btn{
+width:34px;height:34px;border-radius:6px;background:var(--bg3);border:1px solid var(--border);
+display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
+.hdr-btn svg{width:16px;height:16px;stroke:var(--text2);}
+
+/* ── CONTENT ── */
+.content{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:72px;scroll-behavior:smooth;}
+.page{display:none;animation:pgIn 0.2s ease both;}
+.page.active{display:block;}
+@keyframes pgIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+/* ── BOTTOM NAV ── */
+.bnav{
+position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+width:100%;max-width:430px;
+background:var(--bg1);border-top:1px solid var(--border);
+display:flex;align-items:center;padding:0 0 calc(env(safe-area-inset-bottom));
+z-index:100;height:60px;
+}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:10px 4px;transition:all 0.15s;}
+.ni svg{width:20px;height:20px;stroke:var(--text3);transition:all 0.15s;}
+.ni span{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:0.8px;color:var(--text3);text-transform:uppercase;transition:all 0.15s;}
+.ni.on svg{stroke:var(--red);}
+.ni.on span{color:var(--red);}
+.ni-fab{flex:0 0 60px;}
+.fab{
+width:46px;height:46px;border-radius:8px;background:var(--red);border:none;
+display:flex;align-items:center;justify-content:center;cursor:pointer;
+box-shadow:0 0 20px rgba(202,45,40,0.4);margin-top:-10px;transition:all 0.15s;
+}
+.fab:active{transform:scale(0.92);}
+.fab svg{width:22px;height:22px;stroke:white;}
+
+/* ── TOKENS / CHIPS ── */
+.tag{
+display:inline-flex;align-items:center;gap:4px;
+font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:0.5px;
+padding:3px 8px;border-radius:4px;text-transform:uppercase;
+}
+.tag-recv{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(59,130,246,0.2);}
+.tag-anal{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(234,179,8,0.2);}
+.tag-mant{background:var(--red-dim);color:var(--red2);border:1px solid var(--red-border);}
+.tag-fin{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,0.2);}
+.tag-ent{background:rgba(255,255,255,0.05);color:var(--text3);border:1px solid var(--border);}
+
+/* ── SECTIONS ── */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 10px;}
+.sec-label{
+font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:2px;
+text-transform:uppercase;color:var(--text3);display:flex;align-items:center;gap:8px;
+}
+.sec-label::before{content:'//';color:var(--red);font-weight:700;}
+.sec-action{font-family:var(--mono);font-size:10px;color:var(--red);cursor:pointer;letter-spacing:0.5px;}
+
+/* ── DASHBOARD ── */
+.dash-hero{
+padding:16px;border-bottom:1px solid var(--border);
+background:var(--bg1);
+}
+.dash-row1{display:flex;align-items:flex-start;justify-content:space-between;}
+.dash-datebox{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:1px;}
+.dash-dateval{font-family:var(--mono);font-size:12px;color:var(--text2);margin-top:2px;}
+.terminal-line{
+font-family:var(--mono);font-size:10px;color:var(--text3);
+display:flex;align-items:center;gap:6px;margin-top:10px;
+}
+.terminal-line .prompt{color:var(--red);}
+.terminal-line .cmd{color:var(--text2);}
+.terminal-line .val{color:var(--green);}
+
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-bottom:1px solid var(--border);}
+.stat{
+background:var(--bg1);padding:14px 16px;position:relative;overflow:hidden;
+}
+.stat::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.stat.s-red::after{background:var(--red);}
+.stat.s-green::after{background:var(--green);}
+.stat.s-yellow::after{background:var(--yellow);}
+.stat.s-blue::after{background:var(--blue);}
+.stat-lbl{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:1.5px;color:var(--text3);text-transform:uppercase;}
+.stat-num{font-family:var(--mono);font-weight:700;font-size:28px;line-height:1;margin-top:6px;}
+.stat-num.red{color:var(--red2);}
+.stat-num.green{color:var(--green);}
+.stat-num.yellow{color:var(--yellow);}
+.stat-num.blue{color:var(--blue);}
+.stat-sub{font-family:var(--mono);font-size:9px;color:var(--text3);margin-top:3px;letter-spacing:0.5px;}
+
+.filter-scroll{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;scrollbar-width:none;}
+.filter-scroll::-webkit-scrollbar{display:none;}
+.fchip{
+flex-shrink:0;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:1px;
+padding:5px 12px;border-radius:4px;cursor:pointer;transition:all 0.15s;
+background:var(--bg3);border:1px solid var(--border);color:var(--text3);text-transform:uppercase;
+}
+.fchip.on{background:var(--red-dim);border-color:var(--red-border);color:var(--red2);}
+
+/* ── OS CARD ── */
+.os-feed{padding:0 16px;display:flex;flex-direction:column;gap:8px;}
+.osc{
+background:var(--bg2);border:1px solid var(--border);border-radius:6px;
+cursor:pointer;transition:border-color 0.15s;overflow:hidden;position:relative;
+}
+.osc:active{border-color:var(--red-border);}
+.osc-accent{position:absolute;left:0;top:0;bottom:0;width:2px;}
+.osc-accent.recv{background:var(--blue);}
+.osc-accent.anal{background:var(--yellow);}
+.osc-accent.mant{background:var(--red);}
+.osc-accent.fin{background:var(--green);}
+.osc-accent.ent{background:var(--text3);}
+.osc-inner{padding:12px 14px 12px 18px;}
+.osc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.osc-id{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:1px;}
+.osc-client{font-family:var(--cond);font-weight:700;font-size:17px;line-height:1;letter-spacing:0.3px;}
+.osc-vehicle{font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:3px;}
+.osc-bot{
+display:flex;align-items:center;justify-content:space-between;
+margin-top:10px;padding-top:10px;border-top:1px solid var(--border);
+}
+.osc-type{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.5px;}
+.osc-val{font-family:var(--mono);font-weight:700;font-size:14px;color:var(--green);}
+
+/* ── DETAIL PAGE ── */
+.back-row{
+display:flex;align-items:center;gap:8px;padding:12px 16px;
+font-family:var(--mono);font-size:11px;color:var(--text3);cursor:pointer;
+border-bottom:1px solid var(--border);letter-spacing:0.5px;
+}
+.back-row svg{width:14px;height:14px;stroke:var(--text3);}
+.det-hero{padding:16px;border-bottom:1px solid var(--border);background:var(--bg1);}
+.det-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.det-osid{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:1px;}
+.det-client{font-family:var(--cond);font-weight:700;font-size:26px;line-height:1;letter-spacing:0.3px;}
+.det-vehicle{font-family:var(--mono);font-size:12px;color:var(--text2);margin-top:4px;}
+.det-terminal{
+margin-top:12px;background:var(--bg);border:1px solid var(--border);border-radius:6px;
+padding:10px 12px;font-family:var(--mono);font-size:10px;
+}
+.det-terminal .tl{display:flex;gap:8px;padding:2px 0;}
+.det-terminal .tk{color:var(--text3);min-width:80px;}
+.det-terminal .tv{color:var(--text);}
+.det-terminal .tv.g{color:var(--green);}
+.det-terminal .tv.y{color:var(--yellow);}
+.det-terminal .tv.r{color:var(--red2);}
+
+.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-bottom:1px solid var(--border);}
+.det-cell{background:var(--bg1);padding:14px 16px;}
+.det-cell-lbl{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
+.det-cell-val{font-family:var(--mono);font-weight:700;font-size:16px;margin-top:4px;}
+.det-cell-val.g{color:var(--green);}
+.det-cell-val.r{color:var(--red2);}
+
+.det-section{padding:16px;border-bottom:1px solid var(--border);}
+.det-blk{font-family:var(--sans);font-size:14px;line-height:1.5;color:var(--text2);}
+.svc-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.svc-tag{background:var(--bg3);border:1px solid var(--border);padding:4px 10px;border-radius:4px;font-family:var(--mono);font-size:10px;color:var(--text2);}
+
+.photo-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.p-box{
+aspect-ratio:1;background:var(--bg3);border:1px solid var(--border);border-radius:6px;
+display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+position:relative;overflow:hidden;
+}
+.p-box img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+.p-box svg{width:20px;height:20px;stroke:var(--text3);}
+.p-box span{font-family:var(--mono);font-size:8px;color:var(--text3);text-transform:uppercase;}
+
+.action-bar{display:flex;gap:8px;padding:16px;}
+.act-btn{
+flex:1;height:44px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);
+display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;
+}
+.act-btn svg{width:18px;height:18px;stroke:var(--text2);}
+.act-btn span{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--text2);letter-spacing:0.5px;}
+.act-btn.act-green{background:var(--green-dim);border-color:rgba(34,197,94,0.2);}
+.act-btn.act-green svg{stroke:var(--green);}
+.act-btn.act-green span{color:var(--green);}
+.act-btn.act-red{background:var(--red-dim);border-color:var(--red-border);}
+.act-btn.act-red svg{stroke:var(--red2);}
+.act-btn.act-red span{color:var(--red2);}
+
+.status-stack{display:flex;flex-direction:column;gap:6px;}
+.sto{
+background:var(--bg3);border:1px solid var(--border);border-radius:6px;
+padding:12px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.15s;
+}
+.sto.sel{border-color:var(--red-border);background:var(--red-dim);}
+.sto-bar{width:4px;height:16px;border-radius:2px;}
+.sto-lbl{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:1px;color:var(--text2);}
+
+/* ── SEARCH WRAP ── */
+.srch-wrap{padding:12px 16px;background:var(--bg1);border-bottom:1px solid var(--border);}
+.srch-inner{
+background:var(--bg3);border:1px solid var(--border);border-radius:8px;
+height:40px;display:flex;align-items:center;padding:0 12px;gap:10px;
+}
+.srch-inner svg{width:16px;height:16px;stroke:var(--text3);}
+.srch-in{
+background:none;border:none;outline:none;color:var(--text);flex:1;
+font-family:var(--mono);font-size:11px;letter-spacing:0.5px;
 }
 
-/* ── Modal ── */
-const back=document.getElementById('m-back');
-function openModal(tab){
-  back.classList.add('open');
-  document.body.style.overflow='hidden';
-  switchTab(tab);
-  // Focus first input for accessibility
-  setTimeout(()=>{
-    const fi=document.querySelector('#c-'+tab+' .fi');
-    if(fi)fi.focus();
-  },400);
+/* ── CLIENTS ── */
+.cl-feed{padding:16px;display:flex;flex-direction:column;gap:8px;}
+.cl-item{
+background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+padding:12px;display:flex;align-items:center;gap:14px;
 }
-function closeModal(){
-  back.classList.remove('open');
-  document.body.style.overflow='';
+.cl-av{
+width:40px;height:40px;border-radius:8px;background:var(--bg3);
+display:flex;align-items:center;justify-content:center;
+font-family:var(--mono);font-weight:700;font-size:14px;color:var(--red2);
 }
-function backdropClick(e){if(e.target===back)closeModal();}
-function switchTab(tab){
-  document.querySelectorAll('.m-tab').forEach(t=>t.classList.remove('on'));
-  document.querySelectorAll('.tc').forEach(t=>t.classList.remove('on'));
-  document.getElementById('t-'+tab).classList.add('on');
-  document.getElementById('c-'+tab).classList.add('on');
-}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+.cl-name{font-family:var(--cond);font-weight:700;font-size:16px;}
+.cl-meta{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:2px;}
+.cl-arr{margin-left:auto;}
+.cl-arr svg{width:16px;height:16px;stroke:var(--text3);}
 
-/* ── Scroll reveal ── */
-const ro=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');ro.unobserve(e.target);}});
-},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+/* ── FINANCE ── */
+.period-bar{display:flex;padding:0 16px 16px;gap:8px;}
+.ptab{
+flex:1;height:32px;border-radius:4px;background:var(--bg3);border:1px solid var(--border);
+display:flex;align-items:center;justify-content:center;
+font-family:var(--mono);font-size:10px;font-weight:600;color:var(--text3);cursor:pointer;
+}
+.ptab.on{background:var(--red-dim);border-color:var(--red-border);color:var(--red2);}
+.fin-cards{padding:0 16px 16px;display:flex;flex-direction:column;gap:8px;}
+.fin-card{background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:16px;}
+.fin-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.fin-lbl{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
+.fin-val{font-family:var(--mono);font-weight:700;font-size:24px;margin-top:6px;}
+.fin-val.sm{font-size:18px;}
+.fin-val.r{color:var(--red2);}
+.fin-val.y{color:var(--yellow);}
+.trans-feed{padding:0 16px;display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.tr-item{background:var(--bg);padding:12px 16px;display:flex;align-items:center;gap:12px;}
+.tr-dot{width:8px;height:8px;border-radius:50%;}
+.tr-info{flex:1;}
+.tr-name{font-family:var(--cond);font-weight:600;font-size:15px;}
+.tr-sub{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:2px;}
+.tr-amt{font-family:var(--mono);font-weight:700;font-size:14px;}
 
-/* ── Mobile: swipe down to close modal ── */
-let startY=0;
-document.getElementById('modal').addEventListener('touchstart',e=>{startY=e.touches[0].clientY;},{passive:true});
-document.getElementById('modal').addEventListener('touchmove',e=>{
-  if(e.touches[0].clientY-startY>80)closeModal();
-},{passive:true});
-</script><script type="module">
-  import { initLandingAuth } from './snx_integration.js';
-  initLandingAuth();
-</script></body></html>
+/* ── STOCK ── */
+.sk-feed{padding:16px;display:flex;flex-direction:column;gap:8px;}
+.sk-item{
+background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+padding:12px;display:flex;align-items:center;gap:14px;
+}
+.sk-ico{
+width:40px;height:40px;border-radius:8px;background:var(--bg3);
+display:flex;align-items:center;justify-content:center;
+}
+.sk-ico svg{width:20px;height:20px;stroke:var(--text2);}
+.sk-name{font-family:var(--cond);font-weight:700;font-size:16px;}
+.sk-ref{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:2px;}
+.sk-qty{margin-left:auto;text-align:right;}
+.sk-n{font-family:var(--mono);font-weight:700;font-size:18px;}
+.sk-n.low{color:var(--red2);}
+.sk-n.ok{color:var(--green);}
+.sk-nu{font-family:var(--mono);font-size:9px;color:var(--text3);text-transform:uppercase;}
+.sk-warn{display:flex;align-items:center;gap:4px;color:var(--yellow);font-family:var(--mono);font-size:9px;margin-top:4px;}
+.sk-warn svg{width:10px;height:10px;stroke:var(--yellow);}
+
+/* ── DRAWER ── */
+.dwr-overlay{
+position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(4px);
+z-index:200;opacity:0;pointer-events:none;transition:all 0.3s;
+}
+.dwr-overlay.on{opacity:1;pointer-events:auto;}
+.dwr{
+position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);
+width:100%;max-width:430px;background:var(--bg1);
+border-top:1px solid var(--border);border-radius:16px 16px 0 0;
+z-index:201;max-height:90vh;display:flex;flex-direction:column;
+transition:transform 0.3s cubic-bezier(.22,1,.36,1);
+}
+.dwr.on{transform:translateX(-50%) translateY(0);}
+.dwr-hdr{
+padding:16px;border-bottom:1px solid var(--border);
+display:flex;align-items:center;justify-content:space-between;
+}
+.dwr-title{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:2px;color:var(--text2);text-transform:uppercase;}
+.dwr-close{width:32px;height:32px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.dwr-close svg{width:16px;height:16px;stroke:var(--text3);}
+.dwr-body{flex:1;overflow-y:auto;padding:16px;}
+
+/* ── FORMS ── */
+.f-group{margin-bottom:16px;}
+.f-lbl{display:block;font-family:var(--mono);font-size:10px;font-weight:600;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;}
+.f-in{
+width:100%;height:44px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;
+padding:0 12px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;
+}
+.f-in:focus{border-color:var(--red-border);}
+textarea.f-in{height:80px;padding:12px;resize:none;}
+select.f-in{appearance:none;}
+
+.diag-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.diag-c{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;}
+.diag-lbl{font-family:var(--mono);font-size:9px;color:var(--text3);margin-bottom:8px;}
+.diag-row{display:flex;align-items:baseline;gap:4px;}
+.diag-v{font-family:var(--mono);font-weight:700;font-size:20px;color:var(--yellow);}
+.diag-u{font-family:var(--mono);font-size:10px;color:var(--text3);}
+.diag-bar-w{height:4px;background:rgba(255,255,255,0.05);border-radius:2px;margin-top:10px;overflow:hidden;}
+.diag-bar{height:100%;background:var(--yellow);width:0;transition:width 0.3s;}
+
+.svc-cbg{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.cb{
+background:var(--bg3);border:1px solid var(--border);border-radius:6px;
+padding:10px;display:flex;align-items:center;gap:10px;cursor:pointer;
+}
+.cb.on{border-color:var(--red-border);background:var(--red-dim);}
+.cb-box{width:16px;height:16px;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;}
+.cb.on .cb-box{background:var(--red);border-color:var(--red);}
+.cb-box svg{width:10px;height:10px;stroke:white;display:none;}
+.cb.on .cb-box svg{display:block;}
+.cb-lbl{font-family:var(--mono);font-size:10px;color:var(--text2);text-transform:uppercase;}
+
+.btn-main{
+width:100%;height:50px;background:var(--red);border:none;border-radius:8px;
+color:white;font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:2px;
+cursor:pointer;box-shadow:0 0 20px rgba(202,45,40,0.3);
+margin-top:8px;
+}
+.btn-main:active{transform:scale(0.98);}
+
+/* ── TOAST ── */
+#toast{
+position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);
+background:var(--bg4);border:1px solid var(--border2);padding:12px 20px;
+border-radius:8px;z-index:9999;transition:all 0.4s cubic-bezier(.18,.89,.32,1.28);
+display:flex;align-items:center;gap:10px;box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+#toast.on{transform:translateX(-50%) translateY(0);}
+#toast svg{width:18px;height:18px;stroke:var(--green);}
+#toast span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text);}
+
+/* ── EMPTY STATE ── */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;opacity:0.3;}
+.empty svg{width:48px;height:48px;stroke:var(--text3);margin-bottom:16px;}
+.empty-t{font-family:var(--mono);font-size:11px;letter-spacing:2px;}
+
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <svg class="splash-snx-logo" viewBox="0 0 800 1312">
+    <g fill="#CA2D28">
+      <path d="M377.7 1176.3 c-2.4 -2.6 -7.2 -8 -10.6 -11.9 l-6.1 -7.2 0 -74.2 0 -74.2 2.3 0.6 c1.2 0.3 12.1 0.6 24.2 0.6 l22 0 -0.3 71.6 -0.3 71.6 -2.7 3.3 c-6.8 8.1 -21.8 24 -22.8 24.3 -0.6 0.2 -3.2 -1.9 -5.7 -4.5z"/>
+      <path d="M457.4 1139.7 c-0.2 -0.7 -0.3 -10.2 -0.2 -21.2 l0.3 -20 97.5 -0.5 c53.6 -0.3 97.6 -0.6 97.8 -0.8 0.5 -0.5 0.1 -211.9 -0.4 -213.9 -0.4 -1.3 -1.3 -2.3 -2 -2.3 -0.8 0 -1.4 -0.9 -1.4 -2.1 0 -2.1 -0.2 -2.1 -23.6 -1.8 -20.3 0.3 -23.8 0.2 -24.5 -1.1 -0.8 -1.4 -4.3 -13.1 -16.3 -54.5 -6 -20.7 -13.4 -45.5 -16.4 -55 l-1.8 -6 -1.7 5 c-0.9 2.8 -4.3 14.7 -7.6 26.5 -3.2 11.8 -8.9 32.3 -12.6 45.5 -10.8 38.8 -17.1 61.7 -22.7 82.5 l-5.4 19.5 -41.2 0.3 -41.2 0.2 -0.2 18.3 -0.3 18.2 -51.2 0.3 -51.3 0.2 -0.2 -18.7 c-0.1 -10.4 -0.3 -17.1 -0.5 -15 -0.5 4 -2.7 5.1 -3.6 1.7 -0.5 -2 -1.4 -2 -45.5 -2 l-45 0 -7 -17.2 c-3.9 -9.5 -9.3 -22.9 -12 -29.8 l-5 -12.5 -50.6 -0.3 -50.6 -0.2 0 107 0 107 97.8 0.2 97.7 0.3 0.3 19.8 0.2 19.7 -119.5 0 -119.5 0 0 -430 0 -430 85.5 0 85.5 0 0 18.4 0 18.3 -6.7 0.6 c-3.8 0.4 -33.5 0.7 -66.1 0.7 l-59.2 0 0.2 264.2 0.3 264.3 64.7 0 c41.8 0 65 0.4 65.7 1 0.5 0.6 4.1 8.9 7.9 18.5 13.8 34.3 15.5 38.5 16.1 39.2 0.8 0.8 66.7 1.5 67.5 0.7 0.4 -0.4 0.7 -14.7 0.8 -31.8 0.1 -30.6 0.2 -31.2 2.2 -31.7 3.5 -0.8 99.4 0 100.3 0.9 0.4 0.5 1 14.9 1.3 32 l0.5 31.2 26.9 0 26.9 0 0.8 -2.5 c0.4 -1.4 5.3 -19.1 10.9 -39.5 5.6 -20.3 12.1 -44 14.5 -52.5 2.4 -8.5 9.8 -35.1 16.5 -59 6.7 -23.9 13.4 -47.8 15 -53 1.5 -5.2 4.5 -15.7 6.6 -23.2 l3.7 -13.8 9.7 0 9.7 0 2 7.3 c5.6 19.8 41.3 141.8 48.6 166.2 l2.4 8 10.9 0.3 c6 0.2 11.9 0 13.2 -0.3 l2.2 -0.5 0 -263 0 -263 -63.7 -0.2 -63.8 -0.3 0 -18.5 0 -18.5 82.5 0 82.5 0 0.3 424.5 c0.1 233.5 0 426.8 -0.3 429.7 l-0.6 5.2 -111.3 0.3 c-104.4 0.3 -111.4 0.4 -113 2.1 -2.1 2 -9.4 2.4 -10.2 0.4z"/>
+      <path d="M318.7 802.3 c-0.4 -0.3 -0.7 -25.3 -0.7 -55.5 0 -54.1 0 -54.8 -2 -54.8 -1.9 0 -2 -0.7 -2 -18 0 -17.3 0.1 -18 2 -18 1.2 0 2 0.7 2 1.8 0 1.6 3.7 1.7 63.2 1.7 l63.3 0 0.3 71.8 0.2 71.7 -62.8 0 c-34.6 0 -63.2 -0.3 -63.5 -0.7z"/>
+      <path d="M297.2 517.3 l0.3 -105.8 85.2 -0.3 85.1 -0.2 0.7 6.2 c0.3 3.5 0.5 51.1 0.3 105.8 l-0.3 99.5 -85.8 0.3 -85.7 0.2 0.2 -105.7z"/>
+      <path d="M222 543.9 l-31.5 -31.1 -0.3 -40.5 c-0.2 -29.5 0 -40.9 0.9 -41.9 0.9 -1.1 7.4 -1.4 35.5 -1.4 l34.4 0 0 73 0 73 -3.7 0 c-3.6 -0.1 -5.4 -1.7 -35.3 -31.1z"/>
+      <path d="M286.5 372.8 c-0.3 -0.7 -0.4 -23.8 -0.3 -51.3 l0.3 -50 95.5 0 95.5 0 0 51 0 51 -95.3 0.3 c-75.7 0.2 -95.4 0 -95.7 -1z"/>
+      <path d="M287.8 197.8 c0.2 -22.1 0.5 -40.5 0.8 -40.8 0.8 -0.7 180 -1.2 185.2 -0.5 l4.2 0.6 0 38.5 0 38.4 -18 0 -18 0 -0.2 -20.2 -0.3 -20.3 -58.7 -0.3 -58.8 -0.2 0 20.5 c0 19.8 0.1 20.5 2 20.5 1.3 0 2 0.7 2 2 0 1.9 -0.7 2 -20.2 2 l-20.3 0 0.3 -40.2z"/>
+    </g>
+  </svg>
+  <div class="splash-wordmark">SNX DIESEL LAB</div>
+  <div class="splash-line"></div>
+  <div class="splash-boot">BOOTING SYSTEM... <span>READY</span></div>
+</div>
+
+<div id="app">
+  <div class="hdr">
+    <div class="hdr-logo">
+      <svg class="hdr-snx logo-snx" style="height:20px;width:auto" viewBox="0 0 800 1312">
+        <g fill="#CA2D28">
+          <path d="M377.7 1176.3 c-2.4 -2.6 -7.2 -8 -10.6 -11.9 l-6.1 -7.2 0 -74.2 0 -74.2 2.3 0.6 c1.2 0.3 12.1 0.6 24.2 0.6 l22 0 -0.3 71.6 -0.3 71.6 -2.7 3.3 c-6.8 8.1 -21.8 24 -22.8 24.3 -0.6 0.2 -3.2 -1.9 -5.7 -4.5z"/>
+          <path d="M457.4 1139.7 c-0.2 -0.7 -0.3 -10.2 -0.2 -21.2 l0.3 -20 97.5 -0.5 c53.6 -0.3 97.6 -0.6 97.8 -0.8 0.5 -0.5 0.1 -211.9 -0.4 -213.9 -0.4 -1.3 -1.3 -2.3 -2 -2.3 -0.8 0 -1.4 -0.9 -1.4 -2.1 0 -2.1 -0.2 -2.1 -23.6 -1.8 -20.3 0.3 -23.8 0.2 -24.5 -1.1 -0.8 -1.4 -4.3 -13.1 -16.3 -54.5 -6 -20.7 -13.4 -45.5 -16.4 -55 l-1.8 -6 -1.7 5 c-0.9 2.8 -4.3 14.7 -7.6 26.5 -3.2 11.8 -8.9 32.3 -12.6 45.5 -10.8 38.8 -17.1 61.7 -22.7 82.5 l-5.4 19.5 -41.2 0.3 -41.2 0.2 -0.2 18.3 -0.3 18.2 -51.2 0.3 -51.3 0.2 -0.2 -18.7 c-0.1 -10.4 -0.3 -17.1 -0.5 -15 -0.5 4 -2.7 5.1 -3.6 1.7 -0.5 -2 -1.4 -2 -45.5 -2 l-45 0 -7 -17.2 c-3.9 -9.5 -9.3 -22.9 -12 -29.8 l-5 -12.5 -50.6 -0.3 -50.6 -0.2 0 107 0 107 97.8 0.2 97.7 0.3 0.3 19.8 0.2 19.7 -119.5 0 -119.5 0 0 -430 0 -430 85.5 0 85.5 0 0 18.4 0 18.3 -6.7 0.6 c-3.8 0.4 -33.5 0.7 -66.1 0.7 l-59.2 0 0.2 264.2 0.3 264.3 64.7 0 c41.8 0 65 0.4 65.7 1 0.5 0.6 4.1 8.9 7.9 18.5 13.8 34.3 15.5 38.5 16.1 39.2 0.8 0.8 66.7 1.5 67.5 0.7 0.4 -0.4 0.7 -14.7 0.8 -31.8 0.1 -30.6 0.2 -31.2 2.2 -31.7 3.5 -0.8 99.4 0 100.3 0.9 0.4 0.5 1 14.9 1.3 32 l0.5 31.2 26.9 0 26.9 0 0.8 -2.5 c0.4 -1.4 5.3 -19.1 10.9 -39.5 5.6 -20.3 12.1 -44 14.5 -52.5 2.4 -8.5 9.8 -35.1 16.5 -59 6.7 -23.9 13.4 -47.8 15 -53 1.5 -5.2 4.5 -15.7 6.6 -23.2 l3.7 -13.8 9.7 0 9.7 0 2 7.3 c5.6 19.8 41.3 141.8 48.6 166.2 l2.4 8 10.9 0.3 c6 0.2 11.9 0 13.2 -0.3 l2.2 -0.5 0 -263 0 -263 -63.7 -0.2 -63.8 -0.3 0 -18.5 0 -18.5 82.5 0 82.5 0 0.3 424.5 c0.1 233.5 0 426.8 -0.3 429.7 l-0.6 5.2 -111.3 0.3 c-104.4 0.3 -111.4 0.4 -113 2.1 -2.1 2 -9.4 2.4 -10.2 0.4z"/>
+          <path d="M318.7 802.3 c-0.4 -0.3 -0.7 -25.3 -0.7 -55.5 0 -54.1 0 -54.8 -2 -54.8 -1.9 0 -2 -0.7 -2 -18 0 -17.3 0.1 -18 2 -18 1.2 0 2 0.7 2 1.8 0 1.6 3.7 1.7 63.2 1.7 l63.3 0 0.3 71.8 0.2 71.7 -62.8 0 c-34.6 0 -63.2 -0.3 -63.5 -0.7z"/>
+          <path d="M297.2 517.3 l0.3 -105.8 85.2 -0.3 85.1 -0.2 0.7 6.2 c0.3 3.5 0.5 51.1 0.3 105.8 l-0.3 99.5 -85.8 0.3 -85.7 0.2 0.2 -105.7z"/>
+          <path d="M222 543.9 l-31.5 -31.1 -0.3 -40.5 c-0.2 -29.5 0 -40.9 0.9 -41.9 0.9 -1.1 7.4 -1.4 35.5 -1.4 l34.4 0 0 73 0 73 -3.7 0 c-3.6 -0.1 -5.4 -1.7 -35.3 -31.1z"/>
+          <path d="M286.5 372.8 c-0.3 -0.7 -0.4 -23.8 -0.3 -51.3 l0.3 -50 95.5 0 95.5 0 0 51 0 51 -95.3 0.3 c-75.7 0.2 -95.4 0 -95.7 -1z"/>
+          <path d="M287.8 197.8 c0.2 -22.1 0.5 -40.5 0.8 -40.8 0.8 -0.7 180 -1.2 185.2 -0.5 l4.2 0.6 0 38.5 0 38.4 -18 0 -18 0 -0.2 -20.2 -0.3 -20.3 -58.7 -0.3 -58.8 -0.2 0 20.5 c0 19.8 0.1 20.5 2 20.5 1.3 0 2 0.7 2 2 0 1.9 -0.7 2 -20.2 2 l-20.3 0 0.3 -40.2z"/>
+        </g>
+      </svg>
+      <div class="hdr-sep"></div>
+      <div class="hdr-name">Diesel Lab</div>
+    </div>
+    <div class="hdr-status">
+      <div class="hdr-dot"></div>ONLINE
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dash">
+      <div class="dash-hero">
+        <div class="dash-row1">
+          <div>
+            <div class="dash-datebox">// STATUS DO SISTEMA</div>
+            <div class="dash-dateval" id="dash-date-val">—</div>
+          </div>
+        </div>
+        <div class="terminal-line" style="margin-top:12px">
+          <span class="prompt">›</span>
+          <span class="cmd">os.today</span>
+          <span style="color:var(--text3)">→</span>
+          <span class="val" id="tl-today">0 abertas</span>
+        </div>
+        <div class="terminal-line">
+          <span class="prompt">›</span>
+          <span class="cmd">fin.hoje</span>
+          <span style="color:var(--text3)">→</span>
+          <span class="val" id="tl-fin">R$ 0,00</span>
+        </div>
+        <div class="terminal-line">
+          <span class="prompt">›</span>
+          <span class="cmd">sys.status</span>
+          <span style="color:var(--green);font-family:var(--mono);font-size:10px;">OPERACIONAL ✓</span>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat s-red">
+          <div class="stat-lbl">OS HOJE</div>
+          <div class="stat-num red" id="s-today">0</div>
+          <div class="stat-sub">ordens abertas</div>
+        </div>
+        <div class="stat s-yellow">
+          <div class="stat-lbl">EM ANDAMENTO</div>
+          <div class="stat-num yellow" id="s-ongoing">0</div>
+          <div class="stat-sub">em manutenção</div>
+        </div>
+        <div class="stat s-green">
+          <div class="stat-lbl">FATURAMENTO</div>
+          <div class="stat-num green" id="s-rev">R$0</div>
+          <div class="stat-sub">hoje</div>
+        </div>
+        <div class="stat s-blue">
+          <div class="stat-lbl">TICKET MÉDIO</div>
+          <div class="stat-num blue" id="s-ticket">R$0</div>
+          <div class="stat-sub">por OS</div>
+        </div>
+      </div>
+      <div class="sec-hdr">
+        <div class="sec-label">Ordens de Serviço</div>
+        <div class="sec-action" onclick="navTo('os')">ver todas →</div>
+      </div>
+      <div class="filter-scroll" id="dash-filters">
+        <div class="fchip on" onclick="fDash(this,'todos')">TODOS</div>
+        <div class="fchip" onclick="fDash(this,'recv')">RECEBIDO</div>
+        <div class="fchip" onclick="fDash(this,'anal')">ANÁLISE</div>
+        <div class="fchip" onclick="fDash(this,'mant')">MANUTENÇÃO</div>
+        <div class="fchip" onclick="fDash(this,'fin')">FINALIZADO</div>
+        <div class="fchip" onclick="fDash(this,'ent')">ENTREGUE</div>
+      </div>
+      <div class="os-feed" id="dash-feed"></div>
+    </div>
+
+    <!-- OS PAGE -->
+    <div class="page" id="page-os">
+      <div class="srch-wrap">
+        <div class="srch-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input class="srch-in" placeholder="BUSCAR OS, CLIENTE, VEÍCULO..." oninput="srchOS(this.value)">
+        </div>
+      </div>
+      <div class="os-feed" id="os-feed"></div>
+    </div>
+
+    <!-- CLIENTES -->
+    <div class="page" id="page-clients">
+      <div class="srch-wrap">
+        <div class="srch-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input class="srch-in" placeholder="BUSCAR CLIENTE..." oninput="srchCL(this.value)">
+        </div>
+      </div>
+      <div class="cl-feed" id="cl-feed"></div>
+    </div>
+
+    <!-- FINANCEIRO -->
+    <div class="page" id="page-finance">
+      <div class="sec-hdr" style="padding-top:16px"><div class="sec-label">Financeiro</div></div>
+      <div class="period-bar">
+        <div class="ptab on" onclick="setPer(this,'dia')">DIA</div>
+        <div class="ptab" onclick="setPer(this,'semana')">SEMANA</div>
+        <div class="ptab" onclick="setPer(this,'mes')">MÊS</div>
+      </div>
+      <div class="fin-cards">
+        <div class="fin-card full">
+          <div class="fin-lbl">FATURAMENTO TOTAL</div>
+          <div class="fin-val" id="f-total">R$ 0,00</div>
+        </div>
+        <div class="fin-pair">
+          <div class="fin-card">
+            <div class="fin-lbl">CUSTO PEÇAS</div>
+            <div class="fin-val r sm" id="f-cost">R$ 0,00</div>
+          </div>
+          <div class="fin-card">
+            <div class="fin-lbl">LUCRO LÍQUIDO</div>
+            <div class="fin-val y sm" id="f-profit">R$ 0,00</div>
+          </div>
+        </div>
+      </div>
+      <div class="sec-hdr"><div class="sec-label">Transações</div></div>
+      <div class="trans-feed" id="trans-feed"></div>
+    </div>
+
+    <!-- ESTOQUE -->
+    <div class="page" id="page-stock">
+      <div class="sec-hdr" style="padding-top:16px">
+        <div class="sec-label">Estoque</div>
+        <div class="sec-action" onclick="openDrawer('dwr-stock')">+ ADICIONAR</div>
+      </div>
+      <div class="sk-feed" id="sk-feed"></div>
+    </div>
+
+    <!-- DETALHE OS -->
+    <div class="page" id="page-det">
+      <div class="back-row" onclick="closeDetail()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        VOLTAR
+      </div>
+      <div id="det-content"></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bnav">
+    <div class="ni on" id="ni-dash" onclick="navTo('dash')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      <span>DASH</span>
+    </div>
+    <div class="ni" id="ni-os" onclick="navTo('os')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      <span>OS</span>
+    </div>
+    <div class="ni-fab">
+      <button class="fab" onclick="openDrawer('dwr-os')">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+    </div>
+    <div class="ni" id="ni-clients" onclick="navTo('clients')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      <span>CLIENTES</span>
+    </div>
+    <div class="ni" id="ni-finance" onclick="navTo('finance')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      <span>FINANÇAS</span>
+    </div>
+  </nav>
+</div>
+
+<!-- DRAWERS -->
+<div class="dwr-overlay" id="dwr-overlay" onclick="closeAllDrawers()"></div>
+
+<!-- DRAWER OS -->
+<div class="dwr" id="dwr-os">
+  <div class="dwr-hdr">
+    <div class="dwr-title">Nova Ordem de Serviço</div>
+    <div class="dwr-close" onclick="closeDrawer('dwr-os')"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+  </div>
+  <div class="dwr-body">
+    <div class="f-group"><label class="f-lbl">Cliente</label><input class="f-in" id="f-client" placeholder="Nome Completo"></div>
+    <div class="f-group"><label class="f-lbl">WhatsApp</label><input class="f-in" id="f-phone" placeholder="(00) 00000-0000"></div>
+    <div class="diag-grid">
+      <div class="f-group"><label class="f-lbl">Veículo</label><input class="f-in" id="f-veh" placeholder="Ex: Hilux 2.8"></div>
+      <div class="f-group"><label class="f-lbl">Motor</label><input class="f-in" id="f-eng" placeholder="Ex: 1GD-FTV"></div>
+    </div>
+    <div class="f-group">
+      <label class="f-lbl">Tipo de Bico / Sistema</label>
+      <select class="f-in" id="f-itype">
+        <option value="">Selecione...</option>
+        <option>Common Rail - Bosch</option>
+        <option>Common Rail - Denso</option>
+        <option>Common Rail - Delphi</option>
+        <option>Common Rail - Siemens</option>
+        <option>Unidade Injetora (EUI)</option>
+        <option>Bomba Injetora</option>
+      </select>
+    </div>
+    <div class="f-group"><label class="f-lbl">Defeito Relatado</label><textarea class="f-in" id="f-defect" placeholder="Descreva os sintomas..."></textarea></div>
+    
+    <div class="sec-label" style="margin-bottom:12px">Diagnóstico Rápido</div>
+    <div class="diag-grid">
+      <div class="diag-c">
+        <div class="diag-lbl">PRESSÃO (BAR)</div>
+        <div class="diag-row"><span class="diag-v" id="dp-val">0</span><span class="diag-u">bar</span></div>
+        <input type="range" min="0" max="2500" value="0" style="width:100%;accent-color:var(--yellow)" oninput="updDiag('p',this.value,2500)">
+        <div class="diag-bar-w"><div class="diag-bar" id="dp-bar"></div></div>
+      </div>
+      <div class="diag-c">
+        <div class="diag-lbl">RETORNO (ML)</div>
+        <div class="diag-row"><span class="diag-v" id="dr-val">0</span><span class="diag-u">ml</span></div>
+        <input type="range" min="0" max="100" value="0" style="width:100%;accent-color:var(--yellow)" oninput="updDiag('r',this.value,100)">
+        <div class="diag-bar-w"><div class="diag-bar" id="dr-bar"></div></div>
+      </div>
+    </div>
+    <div class="f-group">
+      <label class="f-lbl">Vazamento Estanqueidade</label>
+      <select class="f-in" id="f-vaz">
+        <option>Sem Vazamento</option>
+        <option>Vazamento Leve</option>
+        <option>Vazamento Crítico</option>
+      </select>
+    </div>
+    <div class="f-group"><label class="f-lbl">Observações Técnicas</label><textarea class="f-in" id="f-obs" placeholder="Notas adicionais..."></textarea></div>
+    
+    <div class="sec-label" style="margin-bottom:12px">Serviços</div>
+    <div class="svc-cbg" id="svc-cbg">
+      <div class="cb" onclick="togCB(this)"><div class="cb-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div><span class="cb-lbl">Limpeza Ultrassom</span><input type="checkbox" hidden value="Limpeza Ultrassom"></div>
+      <div class="cb" onclick="togCB(this)"><div class="cb-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div><span class="cb-lbl">Troca de Reparo</span><input type="checkbox" hidden value="Troca de Reparo"></div>
+      <div class="cb" onclick="togCB(this)"><div class="cb-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div><span class="cb-lbl">Regulagem Bancada</span><input type="checkbox" hidden value="Regulagem Bancada"></div>
+      <div class="cb" onclick="togCB(this)"><div class="cb-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div><span class="cb-lbl">Codificação IMA</span><input type="checkbox" hidden value="Codificação IMA"></div>
+    </div>
+
+    <div class="sec-label" style="margin-top:20px;margin-bottom:12px">Status Inicial</div>
+    <div class="status-stack">
+      <div class="sto sel" onclick="selSts(this,'recv')"><div class="sto-bar" style="background:var(--blue)"></div><span class="sto-lbl">RECEBIDO / AGUARDANDO</span></div>
+      <div class="sto" onclick="selSts(this,'anal')"><div class="sto-bar" style="background:var(--yellow)"></div><span class="sto-lbl">EM ANÁLISE TÉCNICA</span></div>
+    </div>
+
+    <div class="sec-label" style="margin-top:20px;margin-bottom:12px">Fotos</div>
+    <div class="photo-trio">
+      <div class="p-box" id="pb-before" onclick="document.getElementById('in-before').click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <span>ANTES</span>
+        <input type="file" id="in-before" hidden accept="image/*" onchange="hdlImg(this,'pb-before')">
+      </div>
+      <div class="p-box" id="pb-dur" onclick="document.getElementById('in-dur').click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <span>PROCESSO</span>
+        <input type="file" id="in-dur" hidden accept="image/*" onchange="hdlImg(this,'pb-dur')">
+      </div>
+      <div class="p-box" id="pb-after" onclick="document.getElementById('in-after').click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <span>DEPOIS</span>
+        <input type="file" id="in-after" hidden accept="image/*" onchange="hdlImg(this,'pb-after')">
+      </div>
+    </div>
+
+    <div class="diag-grid" style="margin-top:20px">
+      <div class="f-group"><label class="f-lbl">Valor Cobrado</label><input type="number" class="f-in" id="f-val" placeholder="0.00"></div>
+      <div class="f-group"><label class="f-lbl">Custo Peças</label><input type="number" class="f-in" id="f-cost2" placeholder="0.00"></div>
+    </div>
+
+    <button class="btn-main" onclick="saveOS()">FINALIZAR E SALVAR</button>
+    <div style="height:40px"></div>
+  </div>
+</div>
+
+<!-- DRAWER STOCK -->
+<div class="dwr" id="dwr-stock">
+  <div class="dwr-hdr">
+    <div class="dwr-title">Adicionar ao Estoque</div>
+    <div class="dwr-close" onclick="closeDrawer('dwr-stock')"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+  </div>
+  <div class="dwr-body">
+    <div class="f-group"><label class="f-lbl">Nome da Peça</label><input class="f-in" id="sk-name" placeholder="Ex: Bico Injetor Hilux"></div>
+    <div class="f-group"><label class="f-lbl">Referência / Código</label><input class="f-in" id="sk-ref" placeholder="Ex: 0445110..."></div>
+    <div class="diag-grid">
+      <div class="f-group"><label class="f-lbl">Qtd Atual</label><input type="number" class="f-in" id="sk-qty" value="0"></div>
+      <div class="f-group"><label class="f-lbl">Qtd Mínima</label><input type="number" class="f-in" id="sk-min" value="2"></div>
+    </div>
+    <div class="f-group"><label class="f-lbl">Preço de Venda (Un)</label><input type="number" class="f-in" id="sk-price" placeholder="0.00"></div>
+    <button class="btn-main" onclick="saveStock()">SALVAR NO ESTOQUE</button>
+  </div>
+</div>
+
+<div id="toast"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span id="toast-t">Mensagem</span></div>
+
+<script>
+// ═══════════════════════════ SUPABASE CONFIG ══════════════════════════
+const SUPABASE_URL = "https://foipkrjzgettszsuqqfp.supabase.co";
+const SUPABASE_KEY = "sb_publishable_XrWLB9uQ4JP_IO7HTAkbHQ_7jqloSOU";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ═══════════════════════════ APP STATE ══════════════════════════
+const S = {
+  page: 'dash',
+  prev: 'dash',
+  orders: [],
+  clients: [],
+  stock: [],
+  finPer: 'dia',
+  selSts: 'recv',
+  ctr: 1
+};
+
+const STS_LBL = { recv:'RECEBIDO', anal:'ANÁLISE', mant:'MANUTENÇÃO', fin:'FINALIZADO', ent:'ENTREGUE' };
+const STS_TAG = { recv:'tag-recv', anal:'tag-anal', mant:'tag-mant', fin:'tag-fin', ent:'tag-ent' };
+const SC = {
+  recv: ['var(--blue)', 'RECEBIDO / AGUARDANDO'],
+  anal: ['var(--yellow)', 'EM ANÁLISE TÉCNICA'],
+  mant: ['var(--red)', 'EM MANUTENÇÃO'],
+  fin: ['var(--green)', 'FINALIZADO / PRONTO'],
+  ent: ['var(--text3)', 'ENTREGUE AO CLIENTE']
+};
+const allSts = ['recv','anal','mant','fin','ent'];
+
+// ═══════════════════════════ CORE ════════════════════════════
+window.onload = async () => {
+  document.getElementById('dash-date-val').textContent = new Date().toLocaleDateString('pt-BR', {weekday:'long', day:'2-digit', month:'long'}).toUpperCase();
+  await loadData();
+  setTimeout(() => document.getElementById('splash').classList.add('out'), 1000);
+};
+
+async function loadData() {
+  try {
+    const { data: orders } = await supabaseClient.from('orders_snx').select('*').order('created_at', { ascending: false });
+    const { data: stock } = await supabaseClient.from('stock_snx').select('*');
+    const { data: clients } = await supabaseClient.from('clients_snx').select('*');
+
+    S.orders = orders || [];
+    S.stock = stock || [];
+    S.clients = clients || [];
+    
+    if (S.orders.length > 0) {
+      const lastId = S.orders[0].id;
+      S.ctr = parseInt(lastId.replace('SNX', '')) + 1;
+    }
+
+    rdDash();
+    rdStock();
+    rdClients();
+  } catch (e) {
+    console.error(e);
+    toast('Erro ao carregar dados');
+  }
+}
+
+function navTo(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.querySelectorAll('.ni').forEach(x=>x.classList.remove('on'));
+  const ni = document.getElementById('ni-'+p);
+  if(ni) ni.classList.add('on');
+  S.prev = S.page; S.page = p;
+  if(p==='dash') rdDash();
+  if(p==='os') rdOS();
+  if(p==='clients') rdClients();
+  if(p==='finance') rdFin();
+  if(p==='stock') rdStock();
+}
+
+function openDrawer(id){
+  document.getElementById('dwr-overlay').classList.add('on');
+  document.getElementById(id).classList.add('on');
+}
+function closeDrawer(id){
+  document.getElementById('dwr-overlay').classList.remove('on');
+  document.getElementById(id).classList.remove('on');
+}
+function closeAllDrawers(){
+  document.querySelectorAll('.dwr').forEach(d=>d.classList.remove('on'));
+  document.getElementById('dwr-overlay').classList.remove('on');
+}
+
+function toast(t){
+  const el = document.getElementById('toast');
+  document.getElementById('toast-t').textContent = t;
+  el.classList.add('on');
+  setTimeout(()=>el.classList.remove('on'), 2500);
+}
+
+// ═══════════════════════════ DASHBOARD ════════════════════════
+function rdDash(){
+  const t = today();
+  const oToday = S.orders.filter(o=>o.date === t);
+  const oOngoing = S.orders.filter(o=>['recv','anal','mant'].includes(o.status));
+  const rev = oToday.reduce((s,o)=>s+(o.value||0),0);
+  const tkt = oToday.length ? rev/oToday.length : 0;
+
+  document.getElementById('tl-today').textContent = `${oOngoing.length} abertas`;
+  document.getElementById('tl-fin').textContent = 'R$ ' + rev.toFixed(2).replace('.',',');
+  document.getElementById('s-today').textContent = oToday.length;
+  document.getElementById('s-ongoing').textContent = oOngoing.length;
+  document.getElementById('s-rev').textContent = 'R$ ' + Math.floor(rev);
+  document.getElementById('s-ticket').textContent = 'R$ ' + Math.floor(tkt);
+  
+  fDash(null, 'todos');
+}
+
+function fDash(el, f){
+  if(el){
+    document.querySelectorAll('#dash-filters .fchip').forEach(c=>c.classList.remove('on'));
+    el.classList.add('on');
+  }
+  const list = f==='todos' ? S.orders.slice(0,5) : S.orders.filter(o=>o.status===f).slice(0,5);
+  const feed = document.getElementById('dash-feed');
+  if(!list.length){
+    feed.innerHTML = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div class="empty-t">NADA POR AQUI</div></div>`;
+    return;
+  }
+  feed.innerHTML = list.map(o=>renderOSCard(o)).join('');
+}
+
+function renderOSCard(o){
+  return `
+    <div class="osc" onclick="showDetail('${o.id}')">
+      <div class="osc-accent ${o.status}"></div>
+      <div class="osc-inner">
+        <div class="osc-top">
+          <span class="osc-id">${o.id}</span>
+          <span class="tag ${STS_TAG[o.status]}">${STS_LBL[o.status]}</span>
+        </div>
+        <div class="osc-client">${o.client_name}</div>
+        <div class="osc-vehicle">${o.vehicle} · ${o.engine}</div>
+        <div class="osc-bot">
+          <span class="osc-type">${o.inj_type}</span>
+          <span class="osc-val">R$ ${(o.value||0).toFixed(2)}</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ═══════════════════════════ OS LIST ══════════════════════════
+function rdOS(q=''){
+  const list = q ? S.orders.filter(o=>o.id.includes(q.toUpperCase()) || o.client_name.toLowerCase().includes(q.toLowerCase()) || o.vehicle.toLowerCase().includes(q.toLowerCase())) : S.orders;
+  const feed = document.getElementById('os-feed');
+  if(!list.length){feed.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><div class="empty-t">NENHUMA OS</div></div>`;return;}
+  feed.innerHTML = list.map(o=>renderOSCard(o)).join('');
+}
+function srchOS(v){rdOS(v);}
+
+// ═══════════════════════════ OS DETAIL ════════════════════════
+function showDetail(id){
+  const o = S.orders.find(x=>x.id===id); if(!o)return;
+  const profit = (o.value||0) - (o.cost||0);
+  const det = document.getElementById('det-content');
+  det.innerHTML = `
+    <div class="det-hero">
+      <div class="det-meta">
+        <span class="det-osid">${o.id}</span>
+        <span class="tag ${STS_TAG[o.status]}">${STS_LBL[o.status]}</span>
+      </div>
+      <div class="det-client">${o.client_name}</div>
+      <div class="det-vehicle">${o.vehicle} · ${o.engine} · ${fmtDate(o.date)}</div>
+      <div class="det-terminal">
+        <div class="tl"><span class="tk">tipo_bico</span><span class="tv">${o.inj_type}</span></div>
+        <div class="tl"><span class="tk">pressao</span><span class="tv y">${o.diag_p} bar</span></div>
+        <div class="tl"><span class="tk">retorno</span><span class="tv y">${o.diag_r} ml</span></div>
+        <div class="tl"><span class="tk">vazamento</span><span class="tv ${o.diag_v==='Sem Vazamento'?'g':'r'}">${o.diag_v}</span></div>
+        <div class="tl"><span class="tk">whatsapp</span><span class="tv">${o.phone||'—'}</span></div>
+        <div class="tl"><span class="tk">lucro</span><span class="tv ${profit>=0?'g':'r'}">R$ ${profit.toFixed(2)}</span></div>
+      </div>
+    </div>
+    <div class="det-grid">
+      <div class="det-cell"><div class="det-cell-lbl">VALOR COBRADO</div><div class="det-cell-val g">R$ ${(o.value||0).toFixed(2)}</div></div>
+      <div class="det-cell"><div class="det-cell-lbl">CUSTO PEÇAS</div><div class="det-cell-val r">R$ ${(o.cost||0).toFixed(2)}</div></div>
+    </div>
+    <div class="det-section">
+      <div class="sec-hdr" style="padding:0 0 8px"><div class="sec-label">Defeito Relatado</div></div>
+      <div class="det-blk">${o.defect}</div>
+    </div>
+    ${o.diag_o?`<div class="det-section">
+      <div class="sec-hdr" style="padding:0 0 8px"><div class="sec-label">Observações Técnicas</div></div>
+      <div class="det-blk">${o.diag_o}</div>
+    </div>`:''}
+    <div class="det-section">
+      <div class="sec-hdr" style="padding:0 0 8px"><div class="sec-label">Serviços Realizados</div></div>
+      <div class="svc-tags">${(o.services||[]).map(s=>`<span class="svc-tag">${s}</span>`).join('')}</div>
+    </div>
+    <div class="det-section">
+      <div class="sec-hdr" style="padding:0 0 8px"><div class="sec-label">Fotos</div></div>
+      <div class="photo-trio">${renderSavedPhotos(o.photos)}</div>
+    </div>
+    <div class="action-bar">
+      <div class="act-btn act-green" onclick="sendWA('${o.id}')">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span>WHATSAPP</span>
+      </div>
+      <div class="act-btn" onclick="toast('PDF gerado! (demo)')">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        <span>PDF</span>
+      </div>
+      <div class="act-btn act-red" onclick="delOS('${o.id}')">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+        <span>EXCLUIR</span>
+      </div>
+    </div>
+    <div class="det-section">
+      <div class="sec-hdr" style="padding:0 0 10px"><div class="sec-label">Atualizar Status</div></div>
+      <div class="status-stack">
+        ${allSts.map(s=>`<div class="sto ${o.status===s?'sel':''}" onclick="setOStsSt('${o.id}','${s}',this)">
+          <div class="sto-bar" style="background:${SC[s][0]}"></div>
+          <span class="sto-lbl">${SC[s][1]}</span>
+        </div>`).join('')}
+      </div>
+    </div>
+  `;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-det').classList.add('active');
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
+  S.prev=S.page; S.page='det';
+}
+
+function renderSavedPhotos(photos){
+  if(!photos || !photos.length) return `<div class="p-box"><span>SEM FOTO</span></div>`.repeat(3);
+  return photos.map(p=>`
+    <div class="p-box">
+      ${p.url ? `<img src="${p.url}">` : `<span>${p.label}</span>`}
+    </div>
+  `).join('');
+}
+
+function closeDetail(){ navTo(S.prev==='det'?'dash':S.prev); }
+
+async function setOStsSt(id, st, el){
+  try {
+    const { error } = await supabaseClient.from('orders_snx').update({ status: st }).eq('id', id);
+    if(error) throw error;
+    
+    const o = S.orders.find(x=>x.id===id); if(o) o.status = st;
+    el.closest('.status-stack').querySelectorAll('.sto').forEach(x=>x.classList.remove('sel'));
+    el.classList.add('sel');
+    toast('Status atualizado!');
+  } catch (e) {
+    console.error(e);
+    toast('Erro ao atualizar status');
+  }
+}
+
+async function delOS(id){
+  if(!confirm('Deseja realmente excluir esta OS?')) return;
+  try {
+    const { error } = await supabaseClient.from('orders_snx').delete().eq('id', id);
+    if(error) throw error;
+    S.orders = S.orders.filter(o=>o.id!==id);
+    toast('OS removida');
+    closeDetail();
+  } catch (e) {
+    console.error(e);
+    toast('Erro ao excluir OS');
+  }
+}
+
+function sendWA(id){
+  const o = S.orders.find(x=>x.id===id); if(!o)return;
+  const msg = `*SNX Diesel Lab*\nOS: ${o.id}\nCliente: ${o.client_name}\nVeículo: ${o.vehicle}\nStatus: *${STS_LBL[o.status]}*\n\nEntraremos em contato quando houver atualização.`;
+  const ph = (o.phone||'').replace(/\D/g,'');
+  window.open(`https://wa.me/55${ph}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// ═══════════════════════════ CLIENTS ══════════════════════════
+function rdClients(q=''){
+  const list = q ? S.clients.filter(c=>c.name.toLowerCase().includes(q.toLowerCase())) : S.clients;
+  const el = document.getElementById('cl-feed');
+  if(!list.length){el.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><div class="empty-t">NENHUM CLIENTE</div></div>`;return;}
+  el.innerHTML = list.map(c=>{
+    const init = c.name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+    const cnt = S.orders.filter(o=>o.client_name===c.name).length;
+    return `<div class="cl-item">
+      <div class="cl-av">${init}</div>
+      <div><div class="cl-name">${c.name}</div><div class="cl-meta">${c.phone} · ${cnt} OS</div></div>
+      <div class="cl-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>`;
+  }).join('');
+}
+function srchCL(v){rdClients(v);}
+
+// ═══════════════════════════ FINANCE ══════════════════════════
+function rdFin(){
+  const t = today();
+  let list;
+  if(S.finPer==='dia') list = S.orders.filter(o=>o.date === t);
+  else if(S.finPer==='semana'){const d=new Date();d.setDate(d.getDate()-7);list=S.orders.filter(o=>o.date>=d.toISOString().split('T')[0]);}
+  else list = S.orders;
+  const tot = list.reduce((s,o)=>s+(o.value||0),0);
+  const cst = list.reduce((s,o)=>s+(o.cost||0),0);
+  const prf = tot - cst;
+  document.getElementById('f-total').textContent = 'R$ '+tot.toFixed(2).replace('.',',');
+  document.getElementById('f-cost').textContent = 'R$ '+cst.toFixed(2).replace('.',',');
+  document.getElementById('f-profit').textContent = 'R$ '+prf.toFixed(2).replace('.',',');
+  const el = document.getElementById('trans-feed');
+  if(!list.length){el.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg><div class="empty-t">SEM REGISTROS</div></div>`;return;}
+  el.innerHTML = list.map(o=>`<div class="tr-item">
+    <div class="tr-dot" style="background:var(--green)"></div>
+    <div class="tr-info"><div class="tr-name">${o.client_name} · ${o.vehicle}</div><div class="tr-sub">${o.id} · ${fmtDate(o.date)}</div></div>
+    <div class="tr-amt">R$ ${(o.value||0).toFixed(2)}</div>
+  </div>`).join('');
+}
+function setPer(el,p){
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on'); S.finPer=p; rdFin();
+}
+
+// ═══════════════════════════ STOCK ════════════════════════════
+function rdStock(){
+  const el = document.getElementById('sk-feed');
+  if(!S.stock.length){el.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg><div class="empty-t">ESTOQUE VAZIO</div></div>`;return;}
+  el.innerHTML = S.stock.map(s=>`<div class="sk-item">
+    <div class="sk-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M16.95 7.05A7 7 0 105.05 16.95M4.93 19.07l1.41-1.41"/></svg></div>
+    <div><div class="sk-name">${s.name}</div><div class="sk-ref">${s.ref} · R$ ${s.price.toFixed(2)}</div>${s.qty<=s.min_qty?`<div class="sk-warn"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01"/></svg>ESTOQUE BAIXO</div>`:''}</div>
+    <div class="sk-qty"><div class="sk-n ${s.qty<=s.min_qty?'low':'ok'}">${s.qty}</div><div class="sk-nu">unid.</div></div>
+  </div>`).join('');
+}
+
+async function saveStock(){
+  const name = document.getElementById('sk-name').value.trim();
+  if(!name){toast('Informe o nome do item');return;}
+  const item = {
+    name,
+    ref: document.getElementById('sk-ref').value.trim(),
+    qty: parseInt(document.getElementById('sk-qty').value)||0,
+    min_qty: parseInt(document.getElementById('sk-min').value)||2,
+    price: parseFloat(document.getElementById('sk-price').value)||0
+  };
+  
+  try {
+    const { data, error } = await supabaseClient.from('stock_snx').insert([item]).select();
+    if(error) throw error;
+    S.stock.push(data[0]);
+    ['sk-name','sk-ref','sk-qty','sk-min','sk-price'].forEach(id=>document.getElementById(id).value='');
+    closeDrawer('dwr-stock'); rdStock(); toast('Item adicionado ao estoque!');
+  } catch (e) {
+    console.error(e);
+    toast('Erro ao salvar no estoque');
+  }
+}
+
+// ═══════════════════════════ SAVE OS ══════════════════════════
+async function saveOS(){
+  const cl = document.getElementById('f-client').value.trim();
+  const ve = document.getElementById('f-veh').value.trim();
+  const ph = document.getElementById('f-phone').value.trim();
+  if(!cl){toast('Informe o nome do cliente');return;}
+  if(!ve){toast('Informe o veículo');return;}
+  
+  const svcs = [...document.querySelectorAll('#svc-cbg .cb.on input')].map(i=>i.value);
+  const id = 'SNX'+String(S.ctr).padStart(3,'0');
+  const t = today();
+  
+  // Upload photos to Supabase Storage
+  const photos = [];
+  const slots = ['before', 'dur', 'after'];
+  const labels = ['antes', 'processo', 'depois'];
+  
+  toast('Salvando fotos e dados...');
+  
+  for(let i=0; i<slots.length; i++){
+    const fileInput = document.getElementById('in-'+slots[i]);
+    if(fileInput.files[0]){
+      const file = fileInput.files[0];
+      const ext = file.name.split('.').pop();
+      const path = `${id}/${slots[i]}_${Date.now()}.${ext}`;
+      const { data, error } = await supabaseClient.storage.from('photos').upload(path, file);
+      if(!error){
+        const { data: urlData } = supabaseClient.storage.from('photos').getPublicUrl(path);
+        photos.push({ label: labels[i], url: urlData.publicUrl, path: path });
+      }
+    } else {
+      photos.push({ label: labels[i], url: null });
+    }
+  }
+
+  const newOS = {
+    id, client_name: cl, phone: ph, vehicle: ve,
+    engine: document.getElementById('f-eng').value,
+    inj_type: document.getElementById('f-itype').value || 'Não especificado',
+    defect: document.getElementById('f-defect').value,
+    diag_p: parseInt(document.getElementById('dp-val').textContent)||0,
+    diag_r: parseInt(document.getElementById('dr-val').textContent)||0,
+    diag_v: document.getElementById('f-vaz').value,
+    diag_o: document.getElementById('f-obs').value,
+    services: svcs.length ? svcs : ['Não especificado'],
+    status: S.selSts,
+    value: parseFloat(document.getElementById('f-val').value)||0,
+    cost: parseFloat(document.getElementById('f-cost2').value)||0,
+    date: t,
+    photos: photos
+  };
+
+  try {
+    const { error } = await supabaseClient.from('orders_snx').insert([newOS]);
+    if(error) throw error;
+    
+    // Salvar cliente se não existir
+    if(!S.clients.find(c=>c.name === cl)){
+      const { data: newCl } = await supabaseClient.from('clients_snx').insert([{name: cl, phone: ph}]).select();
+      if(newCl) S.clients.push(newCl[0]);
+    }
+
+    S.orders.unshift(newOS);
+    S.ctr++;
+    
+    // Reset Form
+    ['f-client','f-phone','f-veh','f-eng','f-defect','f-obs','f-val','f-cost2'].forEach(x=>document.getElementById(x).value='');
+    document.getElementById('f-itype').selectedIndex=0;
+    document.getElementById('f-vaz').selectedIndex=0;
+    document.querySelectorAll('#svc-cbg .cb').forEach(c=>{c.classList.remove('on');c.querySelector('input').checked=false;});
+    document.querySelectorAll('.status-stack .sto').forEach(s=>s.classList.remove('sel'));
+    document.querySelector('.status-stack .sto').classList.add('sel');
+    S.selSts='recv';
+    
+    // Reset photo slots
+    ['pb-before','pb-dur','pb-after'].forEach(sid=>{
+      const box=document.getElementById(sid);
+      box.querySelectorAll('img').forEach(x=>x.remove());
+      box.querySelectorAll('svg,span').forEach(x=>x.style.display='');
+      const inp=box.querySelector('input'); if(inp) inp.value='';
+    });
+
+    closeDrawer('dwr-os'); rdDash(); toast(`OS ${id} criada com sucesso!`);
+  } catch (e) {
+    console.error(e);
+    toast('Erro ao salvar OS');
+  }
+}
+
+// ═══════════════════════════ HELPERS ══════════════════════════
+function updDiag(t,v,mx){
+  const pct=(v/mx)*100;
+  document.getElementById('d'+t+'-bar').style.width=pct+'%';
+  document.getElementById('d'+t+'-val').textContent=v;
+}
+function togCB(el){el.classList.toggle('on');el.querySelector('input').checked=el.classList.contains('on');}
+function selSts(el,s){
+  el.closest('.status-stack').querySelectorAll('.sto').forEach(x=>x.classList.remove('sel'));
+  el.classList.add('sel'); S.selSts=s;
+}
+function hdlImg(inp,boxId){
+  if(!inp.files[0])return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const box=document.getElementById(boxId);
+    box.querySelectorAll('img').forEach(x=>x.remove());
+    box.querySelectorAll('svg,span').forEach(x=>x.style.display='none');
+    const img=document.createElement('img'); img.src=e.target.result;
+    box.appendChild(img);
+  };
+  reader.readAsDataURL(inp.files[0]);
+}
+function today(){ return new Date().toISOString().split('T')[0]; }
+function fmtDate(s){ if(!s)return'—'; const [y,m,d]=s.split('-'); return `${d}/${m}/${y.slice(2)}`; }
+
+</script>
+</body>
+</html>
+<-- Políticas para v2.0.1 -->
